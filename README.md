@@ -24,6 +24,8 @@ npm i min-fetch
 
 Inspired by [axios](https://github.com/axios/axios)
 
+Get axios request experience in `微信小程序`, `快应用`, `jQuery`
+
 Usage
 ---
 
