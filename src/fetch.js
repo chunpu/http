@@ -4,29 +4,30 @@ var qs = require('min-qs')
 
 function Client() {
   this.baseUrl = ''
-  this.beforeRequest = _.identity
-  this.afterResponse = _.identity
+  this.interceptors = {
+    request: new Queue(),
+    response: new Queue()
+  }
   this.mode = 'axios' // default is axios
 }
 
 Client.modes = ['axios', 'jquery', 'wxapp'] // may have fetch in future
 
-var client = Client.prototype
+var proto = Client.prototype
 
 module.exports = new Client()
 
-client.init = function(opt) {
+proto.init = function(opt) {
   _.extend(this, opt)
 }
 
-client.fetch = function(config) {
+proto.fetch = function(config) {
   config = config || {}
-  var query = config.query || config.params
   var url = config.url
   if (this.baseUrl) {
     url = this.baseUrl + url
   }
-  url = Url.appendQuery(url, query)
+  url = Url.appendQuery(url, config.params)
   var method = _.upper(config.method)
   var headers = config.headers || config.header || {}
   var contentType = headers['content-type']
@@ -45,21 +46,38 @@ client.fetch = function(config) {
     }
   }
 
-  var realConfig = {
+  // TODO withCredentials auth...
+  var config = {
     url,
     data,
     header: headers,
     method
   }
 
-  return Promise.resolve(realConfig)
-    .then(this.beforeRequest)
-    .then(promisify('request'))
-    .then(this.afterResponse)
+  var ret = Promise.resolve(config)
+    .then(this.interceptors.request.exec)
+    .then(this.innerFetch)
+    .then(this.interceptors.response.exec)
+}
+
+proto.innerFetch = function(ret) {
+  if (this.mode === 'wxapp') {
+    return ret.then(config => {
+      return {
+        url: config.url,
+        data: config.data,
+        header: config.headers,
+        method: config.method
+      }
+    }).then(wxappPromisify('request'))
+  } else if (this.mode === 'axios') {
+    return axios.request(config)
+  }
+  return ret
 }
 
 _.each('get head delete options'.split(' '), method => {
-  client[method] = function(url, config) {
+  proto[method] = function(url, config) {
     return this.fetch(_.extend({
       method,
       url
@@ -68,7 +86,7 @@ _.each('get head delete options'.split(' '), method => {
 })
 
 _.each('post put patch'.split(' '), method => {
-  client[method] = function(url, data, config) {
+  proto[method] = function(url, data, config) {
     return this.fetch(_.extend({
       url,
       method,
@@ -77,7 +95,7 @@ _.each('post put patch'.split(' '), method => {
   }
 })
 
-function promisify(funcName, wxCtx) {
+function wxappPromisify(funcName, wxCtx) {
   return function (opt) {
     return new Promise((resolve, reject) => {
       opt = _.extend({
@@ -88,4 +106,22 @@ function promisify(funcName, wxCtx) {
       ctx[funcName](opt)
     })
   }
+}
+
+//---------------------
+
+function Queue() {
+  this.queue = []
+}
+
+var proto = Queue.prototype
+
+proto.use = function(middleware) {
+  this.queue.push(middleware)
+}
+
+proto.exec = function(value) {
+  return _.reduce(this.queue, (prev, middleware) => {
+    return prev.then(middleware)
+  }, Promise.resolve(value))
 }
