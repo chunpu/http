@@ -2,36 +2,42 @@ var _ = require('min-util')
 var Url = require('min-url')
 var qs = require('min-qs')
 
-function Client() {
+function HttpClient () {
+  this.mode = 'axios' // default is axios
   this.baseUrl = ''
+  this.timeout = null // default no timeout, TODO
   this.interceptors = {
     request: new Queue(),
     response: new Queue()
   }
-  this.mode = 'axios' // default is axios
 }
 
-Client.modes = ['axios', 'jquery', 'wxapp'] // may have fetch in future
+HttpClient.modes = ['axios', 'jquery', 'wxapp'] // may have fetch in future
 
-var proto = Client.prototype
+var proto = HttpClient.prototype
 
-module.exports = new Client()
-
-proto.init = function(opt) {
+proto.init = function (opt) {
   _.extend(this, opt)
 }
 
-proto.fetch = function(config) {
-  config = config || {}
+proto.request = function (arg1, arg2) {
+  if (_.isString(arg1)) {
+    return this.request(_.extend({url: arg1}, arg2))
+  }
+  var config = arg1 || {}
   var url = config.url
   if (this.baseUrl) {
     url = this.baseUrl + url
   }
   url = Url.appendQuery(url, config.params)
-  var method = _.upper(config.method)
+  var method = _.upper(config.method) || 'GET'
   var headers = config.headers || config.header || {}
-  var contentType = headers['content-type']
+  var contentType = headers['content-type'] // all lowercase
   var data = config.data
+  var timeout = config.timeout
+  if (timeout == null) {
+    timeout = this.timeout
+  }
 
   if (config.data) {
     if (contentType === 'application/x-www-form-urlencoded') {
@@ -47,38 +53,58 @@ proto.fetch = function(config) {
   }
 
   // TODO withCredentials auth...
-  var config = {
+  config = {
     url,
     data,
-    header: headers,
+    headers,
     method
   }
 
-  var ret = Promise.resolve(config)
-    .then(this.interceptors.request.exec)
-    .then(this.innerFetch)
-    .then(this.interceptors.response.exec)
+  if (timeout != null) {
+    config.timeout = timeout
+  }
+
+  return Promise.resolve(config)
+    .then(config => this.interceptors.request.exec(config))
+    .then(config => this.innerFetch(config))
+    .then(response => this.interceptors.response.exec(response))
 }
 
-proto.innerFetch = function(ret) {
+proto.innerFetch = function (config) {
   if (this.mode === 'wxapp') {
-    return ret.then(config => {
+    return wxappPromisify('request')({
+      url: config.url,
+      data: config.data,
+      header: config.headers,
+      method: config.method
+    })
+  } else if (this.axios) {
+    return this.axios.request(config).then(response => {
+      return _.extend(response, {config})
+    })
+  } else if (/jquery/i.test(this.mode)) {
+    /* eslint-disable */
+    // TODO 优化 jquery 结果
+    return $.ajax(config).then((data, textStatus, jqXHR) => {
+    /* eslint-enable */
       return {
-        url: config.url,
-        data: config.data,
-        header: config.headers,
-        method: config.method
+        data,
+        textStatus,
+        jqXHR
       }
-    }).then(wxappPromisify('request'))
-  } else if (this.mode === 'axios') {
-    return axios.request(config)
+    }, (jqXHR, textStatus, errorThrown) => {
+      return {
+        errorThrown,
+        textStatus,
+        jqXHR
+      }
+    })
   }
-  return ret
 }
 
 _.each('get head delete options'.split(' '), method => {
-  proto[method] = function(url, config) {
-    return this.fetch(_.extend({
+  proto[method] = function (url, config) {
+    return this.request(_.extend({
       method,
       url
     }, config))
@@ -86,8 +112,8 @@ _.each('get head delete options'.split(' '), method => {
 })
 
 _.each('post put patch'.split(' '), method => {
-  proto[method] = function(url, data, config) {
-    return this.fetch(_.extend({
+  proto[method] = function (url, data, config) {
+    return this.request(_.extend({
       url,
       method,
       data
@@ -95,33 +121,37 @@ _.each('post put patch'.split(' '), method => {
   }
 })
 
-function wxappPromisify(funcName, wxCtx) {
+function wxappPromisify (funcName, wxCtx) {
   return function (opt) {
     return new Promise((resolve, reject) => {
       opt = _.extend({
         success: resolve,
         fail: reject
       }, opt)
+      /* eslint-disable */
       var ctx = wxCtx || wx
+      /* eslint-enable */
       ctx[funcName](opt)
     })
   }
 }
 
-//---------------------
+export default new HttpClient()
 
-function Queue() {
+// Queue ---------------------
+
+function Queue () {
   this.queue = []
 }
 
-var proto = Queue.prototype
-
-proto.use = function(middleware) {
-  this.queue.push(middleware)
-}
-
-proto.exec = function(value) {
-  return _.reduce(this.queue, (prev, middleware) => {
-    return prev.then(middleware)
-  }, Promise.resolve(value))
-}
+_.extend(Queue.prototype, {
+  use (middleware) {
+    this.queue.push(middleware)
+    return this
+  },
+  exec (value) {
+    return _.reduce(this.queue, (prev, middleware) => {
+      return prev.then(middleware)
+    }, Promise.resolve(value))
+  }
+})
