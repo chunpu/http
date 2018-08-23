@@ -13,7 +13,7 @@ min-fetch
 [david-url]: https://david-dm.org/chunpu/min-fetch
 
 
-$http/fetch/request For Real Project
+request / fetch / http For Real Project For Real Project
 
 Installation
 ---
