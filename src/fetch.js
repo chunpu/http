@@ -71,8 +71,8 @@ proto.request = function (arg1, arg2) {
 }
 
 proto.innerFetch = function (config) {
-  if (this.mode === 'wxapp') {
-    return wxappPromisify('request')({
+  if (this.wx) {
+    return wxappPromisify('request', this.wx)({
       url: config.url,
       data: config.data,
       header: config.headers,
@@ -128,9 +128,7 @@ function wxappPromisify (funcName, wxCtx) {
         success: resolve,
         fail: reject
       }, opt)
-      /* eslint-disable */
-      var ctx = wxCtx || wx
-      /* eslint-enable */
+      var ctx = wxCtx
       ctx[funcName](opt)
     })
   }

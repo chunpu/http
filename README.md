@@ -77,7 +77,7 @@ Api
 Interceptors / hook
 ---
 
-```
+```js
 const http = require('min-fetch')
 
 http.init({
