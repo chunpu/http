@@ -22,8 +22,8 @@
     "fetch"
   ],
   "dependencies": {
-    "min-qs": "^1.3.0",
-    "min-url": "^1.4.1",
-    "min-util": "^3.2.0"
+    "min-qs": "github:chunpu/min-qs",
+    "min-url": "github:chunpu/min-url",
+    "min-util": "github:chunpu/min-util"
   }
 }
