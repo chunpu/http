@@ -19,7 +19,7 @@ Installation
 ---
 
 ```sh
-npm i min-fetch
+npm i chunpu/min-fetch
 ```
 
 Inspired by [axios](https://github.com/axios/axios)
@@ -30,7 +30,7 @@ Usage
 ---
 
 ```js
-const http = require('min-fetch')
+import http from 'min-fetch'
 
 http.init({
   baseUrl: 'https://my.domain'
@@ -80,7 +80,7 @@ Interceptors / hook
 ---
 
 ```js
-const http = require('min-fetch')
+import http from 'min-fetch'
 
 http.init({
   baseUrl: 'https://my.domain'
