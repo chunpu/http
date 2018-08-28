@@ -19,7 +19,7 @@ Installation
 ---
 
 ```sh
-npm i chunpu/min-fetch
+npm i min-fetch
 ```
 
 Inspired by [axios](https://github.com/axios/axios)
@@ -39,6 +39,68 @@ http.init({
 let {data} = await http.get('/data')
 ```
 
+
+Platform Support
+---
+
+### 微信小程序
+
+```js
+import http from 'min-fetch'
+
+http.init({
+  baseUrl: 'https://my.domain',
+  wx: wx
+})
+
+http.get('/data').then(({data}) => {
+  console.log(data)
+})
+```
+
+
+### 快应用
+
+```js
+import http from 'min-fetch'
+import fetch from '@system.fetch'
+
+http.init({
+  baseUrl: 'https://my.domain',
+  quickapp: fetch
+})
+
+http.get('/data').then(({data}) => {
+  console.log(data)
+})
+```
+
+### axios
+
+```js
+const axios = require('axios')
+import http from 'min-fetch'
+
+http.init({
+  baseUrl: 'https://my.domain',
+  axios: axios
+})
+
+let {data} = await http.get('/data')
+```
+
+### jQuery / Zepto
+
+```js
+import http from 'min-fetch'
+
+http.init({
+  baseUrl: 'https://my.domain',
+  jQuery: $
+})
+
+let {data} = await http.get('/data')
+```
 
 Config Params
 ---

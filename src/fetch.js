@@ -32,7 +32,11 @@ proto.request = function (arg1, arg2) {
   url = Url.appendQuery(url, config.params)
   var method = _.upper(config.method) || 'GET'
   var headers = config.headers || config.header || {}
-  var contentType = headers['content-type'] // all lowercase
+  var headerKeys = _.keys(headers)
+  var typeKey = _.find(headerKeys, key => {
+    return /content-type/i.test(key)
+  })
+  var contentType = headers[typeKey]
   var data = config.data
   var timeout = config.timeout
   if (timeout == null) {
@@ -82,11 +86,9 @@ proto.innerFetch = function (config) {
     return this.axios.request(config).then(response => {
       return _.extend(response, {config})
     })
-  } else if (/jquery/i.test(this.mode)) {
-    /* eslint-disable */
+  } else if (this.jQuery) {
     // TODO 优化 jquery 结果
-    return $.ajax(config).then((data, textStatus, jqXHR) => {
-    /* eslint-enable */
+    return this.jQuery.ajax(config).then((data, textStatus, jqXHR) => {
       return {
         data,
         textStatus,
@@ -98,6 +100,21 @@ proto.innerFetch = function (config) {
         textStatus,
         jqXHR
       }
+    })
+  } else if (this.quickapp) {
+    return new Promise((resolve, reject) => {
+      this.quickapp.fetch({
+        url: config.url,
+        data: config.data,
+        header: config.headers,
+        method: config.method,
+        success (data, code, headers) {
+          resolve({code, data, headers})
+        },
+        error (data, code, headers) {
+          reject({code, data, headers})
+        }
+      })
     })
   }
 }
