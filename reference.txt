@@ -1,0 +1,43 @@
+## jquery
+
+default post body application/x-www-form-urlencoded
+
+auto parse response application/json
+
+根据 dataType 处理返回结果, dataType 默认自动猜测
+
+response: data, statusText, xhr(status)
+
+error: xhr, errorMessage, error
+
+post 发送 string 自动使用 application/x-www-form-urlencoded
+
+jquery 通过 application/json 判断是否解析 json, 返回 mime = text 的话不会解析成json
+
+dataType 只是改变 accepts
+
+## axios
+
+default post body application/json
+
+auto parse response application/json, even parse text/html
+
+根据 responseType 处理返回结果, responseType 默认 json, 还支持 text
+
+axios 始终尝试用 JSON.parse 来解析 body, 无视 responseType
+
+response object
+
+  status
+  headers
+  data
+  statusText
+  config
+
+post 发送 string 自动使用 application/x-www-form-urlencoded
+
+## fetch
+
+返回 response 对象
+
+fetch 无视 response content-type
