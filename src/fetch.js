@@ -3,7 +3,6 @@ var Url = require('min-url')
 var qs = require('min-qs')
 
 function HttpClient () {
-  this.mode = 'axios' // default is axios
   this.baseUrl = ''
   this.timeout = null // default no timeout, TODO
   this.interceptors = {
@@ -12,7 +11,7 @@ function HttpClient () {
   }
 }
 
-HttpClient.modes = ['axios', 'jquery', 'wxapp'] // may have fetch in future
+HttpClient.qs = qs
 
 var proto = HttpClient.prototype
 
@@ -65,7 +64,7 @@ proto.request = function (arg1, arg2) {
   }
 
   return Promise.resolve(config)
-    .then(config => this.interceptors.request.exec(config))
+    .then(config => this.interceptors.request.exec(config)) // after get config
     .then(config => this.innerFetch(config))
     .then(response => {
       if (_.isString(response.data)) {
@@ -76,7 +75,7 @@ proto.request = function (arg1, arg2) {
       }
       return response
     })
-    .then(response => this.interceptors.response.exec(response))
+    .then(response => this.interceptors.response.exec(response)) // after parse data
 }
 
 proto.innerFetch = function (config) {
@@ -122,6 +121,22 @@ proto.innerFetch = function (config) {
           reject({data, code})
         }
       })
+    })
+  } else if (typeof XMLHttpRequest === 'function') {
+    // TODO timeout, reject
+    return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest()
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          resolve({
+            status: xhr.status,
+            data: xhr.responseText,
+            headers: xhr.headers
+          })
+        }
+      }
+      xhr.open(config.method, config.url, true)
+      xhr.send(config.data)
     })
   }
 }

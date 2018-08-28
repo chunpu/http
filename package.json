@@ -25,5 +25,9 @@
     "min-qs": "github:chunpu/min-qs",
     "min-url": "github:chunpu/min-url",
     "min-util": "github:chunpu/min-util"
+  },
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
   }
 }

@@ -4,8 +4,67 @@
   <meta charset="utf-8">
   <title>min-fetch</title>
   <script src="//lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+  <script src="//lib.baomitu.com/axios/0.18.0/axios.min.js"></script>
 </head>
 <body>
+<script>
+$(() => {
+  $.post('/jsontext', {a: 1}, {dataType: 'json'}).then((...args) => {
+    console.log('jquery success', ...args)
+  }, (...args) => {
+    console.log('jquery error', ...args, args)
+  })
 
+  axios.interceptors.request.use(config => {
+    console.log('config', config)
+    return config
+  })
+
+  axios.interceptors.response.use(response => {
+    console.log('response', response)
+    return response
+  })
+
+  axios.request({
+    url: '/json',
+    method: 'POST',
+    data: {a: 1},
+    responseType: 'text'
+  }).then((...args) => {
+    console.log('axios success', ...args)
+  }).catch((...args) => {
+    console.log('axios error', ...args)
+  })
+
+  fetch('/badjson', {
+    body: JSON.stringify({
+      fetch: true
+    }),
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'POST'
+  }).then((...args) => {
+    console.log('fetch success', ...args)
+    var response = args[0]
+    var headers = [...response.headers]
+    console.log('headers', headers)
+    return response.text()
+  }).then(data => {
+    console.log(7777, data)
+  }).catch((...args) => {
+    console.log('fetch error', ...args)
+  })
+
+  // axios.post('/body', {
+  //   key: 'value',
+  //   axios: true,
+  // }, {
+  //   responseType: 'text'
+  // }).then((...args) => {
+  //   console.log(2222, args)
+  // })
+})
+</script>
 </body>
 </html>
