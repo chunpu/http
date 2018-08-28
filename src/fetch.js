@@ -86,7 +86,7 @@ proto.innerFetch = function (config) {
       data: config.data,
       header: config.headers,
       method: config.method,
-      timeout: timeout
+      timeout: config.timeout
     })
   } else if (this.axios) {
     return this.axios.request(config).then(response => {
@@ -114,12 +114,12 @@ proto.innerFetch = function (config) {
         data: config.data,
         header: config.headers,
         method: config.method,
-        timeout: timeout,
+        timeout: config.timeout,
         success (response) {
           resolve(response)
         },
         fail (data, code) {
-          resolve({data, code})
+          reject({data, code})
         }
       })
     })
