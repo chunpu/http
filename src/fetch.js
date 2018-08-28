@@ -2,6 +2,9 @@ var _ = require('min-util')
 var Url = require('min-url')
 var qs = require('min-qs')
 
+const JSON_TYPE = 'application/json'
+const URL_TYPE = 'application/x-www-form-urlencoded'
+
 function HttpClient () {
   this.baseUrl = ''
   this.timeout = null // default no timeout, TODO
@@ -29,25 +32,36 @@ proto.request = function (arg1, arg2) {
     url = this.baseUrl + url
   }
   url = Url.appendQuery(url, config.params)
-  var method = _.upper(config.method) || 'GET'
+  var method = _.toUpper(config.method) || 'GET'
   var headers = config.headers || config.header || {}
+  headers = _.extend({}, headers)
   var contentType = getContentType(headers)
-  var data = config.data
+  var guessRequestType = contentType
+
   var timeout = config.timeout
   if (timeout == null) {
     timeout = this.timeout
   }
 
-  if (config.data) {
-    if (contentType === 'application/x-www-form-urlencoded') {
+  // 序列化 data
+  var data = config.data
+  if (data) {
+    if (contentType === URL_TYPE) {
       data = qs.stringify(data)
-    } else if (_.isObject(data)) {
+    } else if (contentType === JSON_TYPE) {
       data = JSON.stringify(data)
-      if (!contentType) {
-        headers = _.extend({
-          'content-type': 'application/json'
-        }, headers)
+    }
+    if (!guessRequestType) {
+      if (_.isString(data)) {
+        guessRequestType = URL_TYPE
       }
+    }
+    if (!_.isString(data)) {
+      data = JSON.stringify(data) // 默认用 json
+      guessRequestType = guessRequestType || JSON_TYPE
+    }
+    if (!contentType && guessRequestType) {
+      headers['content-type'] = guessRequestType
     }
   }
 
@@ -67,10 +81,15 @@ proto.request = function (arg1, arg2) {
     .then(config => this.interceptors.request.exec(config)) // after get config
     .then(config => this.innerFetch(config))
     .then(response => {
+      // 尝试解析 response.data, 总是尝试解析成 json(就像 axios 一样), 因为后端通常写不对 mime
       if (_.isString(response.data)) {
-        var contentType = getContentType(response.headers)
-        if (_.includes(contentType, 'application/json')) {
-          response.data = JSON.parse(response.data)
+        if (!this.axios) {
+          var rawResponse = response.data
+          try {
+            response.data = JSON.parse(response.data)
+          } catch (err) {
+            response.data = rawResponse
+          }
         }
       }
       return response
@@ -80,12 +99,26 @@ proto.request = function (arg1, arg2) {
 
 proto.innerFetch = function (config) {
   if (this.wx) {
-    return wxappPromisify('request', this.wx)({
-      url: config.url,
-      data: config.data,
-      header: config.headers,
-      method: config.method,
-      timeout: config.timeout
+    // https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html#wxrequestobject
+    return new Promise((resolve, reject) => {
+      this.wx.request({
+        url: config.url,
+        data: config.data,
+        header: config.headers,
+        method: config.method,
+        timeout: config.timeout,
+        success (response) {
+          var {data, statusCode, header} = response
+          resolve({
+            data,
+            status: statusCode,
+            headers: header
+          })
+        },
+        fail (err) {
+          reject(err)
+        }
+      })
     })
   } else if (this.axios) {
     return this.axios.request(config).then(response => {
@@ -107,6 +140,7 @@ proto.innerFetch = function (config) {
       }
     })
   } else if (this.quickapp) {
+    // https://doc.quickapp.cn/features/system/fetch.html
     return new Promise((resolve, reject) => {
       this.quickapp.fetch({
         url: config.url,
@@ -115,7 +149,13 @@ proto.innerFetch = function (config) {
         method: config.method,
         timeout: config.timeout,
         success (response) {
-          resolve(response)
+          // {data, code, headers}
+          var {data, code, headers} = response
+          resolve({
+            data,
+            status: code,
+            headers
+          })
         },
         fail (data, code) {
           reject({data, code})
@@ -159,19 +199,6 @@ _.each('post put patch'.split(' '), method => {
     }, config))
   }
 })
-
-function wxappPromisify(funcName, wxCtx) {
-  return function (opt) {
-    return new Promise((resolve, reject) => {
-      opt = _.extend({
-        success: resolve,
-        fail: reject
-      }, opt)
-      var ctx = wxCtx
-      ctx[funcName](opt)
-    })
-  }
-}
 
 function getContentType(headers) {
   var headerKeys = _.keys(headers)
