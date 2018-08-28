@@ -32,11 +32,7 @@ proto.request = function (arg1, arg2) {
   url = Url.appendQuery(url, config.params)
   var method = _.upper(config.method) || 'GET'
   var headers = config.headers || config.header || {}
-  var headerKeys = _.keys(headers)
-  var typeKey = _.find(headerKeys, key => {
-    return /content-type/i.test(key)
-  })
-  var contentType = headers[typeKey]
+  var contentType = getContentType(headers)
   var data = config.data
   var timeout = config.timeout
   if (timeout == null) {
@@ -71,6 +67,15 @@ proto.request = function (arg1, arg2) {
   return Promise.resolve(config)
     .then(config => this.interceptors.request.exec(config))
     .then(config => this.innerFetch(config))
+    .then(response => {
+      if (_.isString(response.data)) {
+        var contentType = getContentType(response.headers)
+        if (_.includes(contentType, 'application/json')) {
+          response.data = JSON.parse(response.data)
+        }
+      }
+      return response
+    })
     .then(response => this.interceptors.response.exec(response))
 }
 
@@ -140,7 +145,7 @@ _.each('post put patch'.split(' '), method => {
   }
 })
 
-function wxappPromisify (funcName, wxCtx) {
+function wxappPromisify(funcName, wxCtx) {
   return function (opt) {
     return new Promise((resolve, reject) => {
       opt = _.extend({
@@ -151,6 +156,14 @@ function wxappPromisify (funcName, wxCtx) {
       ctx[funcName](opt)
     })
   }
+}
+
+function getContentType(headers) {
+  var headerKeys = _.keys(headers)
+  var typeKey = _.find(headerKeys, key => {
+    return /content-type/i.test(key)
+  })
+  return headers[typeKey]
 }
 
 export default new HttpClient()
