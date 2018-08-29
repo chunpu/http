@@ -1,6 +1,6 @@
 {
   "name": "min-fetch",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "request / fetch / http For Real Project For Real Project",
   "main": "index.js",
   "scripts": {

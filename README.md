@@ -40,6 +40,28 @@ let {data} = await http.get('/data')
 ```
 
 
+Api
+---
+
+### Basic Request
+
+- `.request(config)`
+- `.request(url, config)`
+
+### Simple Request
+
+- `.get(url, config)`
+- `.delete(url, config)`
+- `.head(url, config)`
+- `.options(url, config)`
+
+### Request with Data
+
+- `.post(url, data, config)`
+- `.put(url, data, config)`
+- `.patch(url, data, config)`
+
+
 Platform Support
 ---
 
@@ -102,14 +124,15 @@ http.init({
 let {data} = await http.get('/data')
 ```
 
-Config Params
+Request Config Params
 ---
 
-- `params` query object
+- `params` the url querystring object
 - `data` data for request body
-- `method` request http method
+- `method` request http method, default `GET`
 - `headers` request headers
 - `timeout` request timeout
+- `withCredentials` whether use cors, default `false`
 
 data will be stringify by the value of `headers['content-type']`
 
@@ -117,28 +140,46 @@ data will be stringify by the value of `headers['content-type']`
 - `application/x-www-form-urlencoded` will `qs.stringify` the data object
 
 
-Api
+Response Schema
 ---
 
-### Basic Request
+- `data` response data, will always try to `JSON.parse`, because most server not respect the response mime
+- `status` status code, number
+- `headers` only axios get headers
+- `config` the request config
 
-- `.request(config)`
-- `.request(url, config)`
+Config Defaults / Init
+---
 
-### Simple Request
+```js
+// support axios style
+http.defaults.baseURL = 'https://my.domain'
+http.defaults.timeout = 1000 * 20
 
-- `.get(url, config)`
-- `.delete(url, config)`
-- `.head(url, config)`
-- `.options(url, config)`
+// can also use http.init
+http.init({
+  baseURL: 'https://my.domain',
+  timeout: 1000 * 20
+})
+```
 
-### Request with Data
+> Config default Post request `Content-Type`
 
-- `.post(url, data, config)`
-- `.put(url, data, config)`
-- `.patch(url, data, config)`
+default is `JSON`
 
-Interceptors / hook
+Always stringify Data to `JSON`
+
+```js
+http.defaults.headers.post['Content-Type'] = 'application/json'
+```
+
+Always stringify Data to `querystring`, which can really work not like axios...
+
+```js
+http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+```
+
+Interceptors / Hook
 ---
 
 ```js
@@ -149,12 +190,55 @@ http.init({
 })
 
 http.interceptors.request.use(config => {
+  // Do something before request is sent
   return config
 })
 
 http.interceptors.response.use(response => {
-  Object.assign(response, response.data) // e.g.
+  // Do something with response
   return response
+})
+```
+
+
+Real Project Usage
+---
+
+Assume the `my.domain` service always return data like this
+
+```js
+{
+  code: 0,
+  message: 'ok',
+  data: {
+    key: 'value'
+  }
+}
+```
+
+```js
+import http from 'min-fetch'
+
+http.init({
+  baseURL: 'https://my.domain'
+})
+
+http.interceptors.response.use(response => {
+  if (typeof response.data === 'object') {
+    // always spread the response data for directly usage
+    Object.assign(response, response.data)
+  }
+  return response
+})
+
+http.post('/user/1024', {
+  name: 'Tony'
+}).then(({data, code, message}) => {
+  if (code === 0) {
+    return data
+  } else {
+    console.error('error', message)
+  }
 })
 ```
 
