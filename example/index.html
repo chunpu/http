@@ -8,12 +8,15 @@
 </head>
 <body>
 <script>
+// 可加上各平台模拟测试
 $(() => {
   $.post('/jsontext', {a: 1}, {dataType: 'json'}).then((...args) => {
     console.log('jquery success', ...args)
   }, (...args) => {
     console.log('jquery error', ...args, args)
   })
+
+  console.log(8888, axios.defaults)
 
   axios.interceptors.request.use(config => {
     console.log('config', config)
@@ -29,6 +32,7 @@ $(() => {
     url: '/json',
     method: 'POST',
     data: {a: 1},
+    headers: {'content-type': 'text', 'a-b': 'b'},
     responseType: 'text'
   }).then((...args) => {
     console.log('axios success', ...args)

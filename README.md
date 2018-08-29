@@ -33,7 +33,7 @@ Usage
 import http from 'min-fetch'
 
 http.init({
-  baseUrl: 'https://my.domain'
+  baseURL: 'https://my.domain'
 })
 
 let {data} = await http.get('/data')
@@ -49,7 +49,7 @@ Platform Support
 import http from 'min-fetch'
 
 http.init({
-  baseUrl: 'https://my.domain',
+  baseURL: 'https://my.domain',
   wx: wx
 })
 
@@ -66,7 +66,7 @@ import http from 'min-fetch'
 import fetch from '@system.fetch'
 
 http.init({
-  baseUrl: 'https://my.domain',
+  baseURL: 'https://my.domain',
   quickapp: fetch
 })
 
@@ -82,7 +82,7 @@ const axios = require('axios')
 import http from 'min-fetch'
 
 http.init({
-  baseUrl: 'https://my.domain',
+  baseURL: 'https://my.domain',
   axios: axios
 })
 
@@ -95,7 +95,7 @@ let {data} = await http.get('/data')
 import http from 'min-fetch'
 
 http.init({
-  baseUrl: 'https://my.domain',
+  baseURL: 'https://my.domain',
   jQuery: $
 })
 
@@ -145,7 +145,7 @@ Interceptors / hook
 import http from 'min-fetch'
 
 http.init({
-  baseUrl: 'https://my.domain'
+  baseURL: 'https://my.domain'
 })
 
 http.interceptors.request.use(config => {
@@ -156,6 +156,20 @@ http.interceptors.response.use(response => {
   Object.assign(response, response.data) // e.g.
   return response
 })
+```
+
+
+### Other Api
+
+You can stringify query string by
+
+```
+import http from 'min-fetch'
+
+http.qs.stringify({
+  query: 'string'
+})
+// => 'query=string'
 ```
 
 License

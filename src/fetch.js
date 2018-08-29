@@ -4,14 +4,34 @@ var qs = require('min-qs')
 
 const JSON_TYPE = 'application/json'
 const URL_TYPE = 'application/x-www-form-urlencoded'
+const CONTENT_TYPE_KEY = 'Content-Type'
+const reContentType = new RegExp(CONTENT_TYPE_KEY, 'i')
+const simpleMethods = ['get', 'head', 'delete', 'options']
+const dataMethods = ['post', 'put', 'patch']
+const httpMethods = [...simpleMethods, ...dataMethods]
 
-function HttpClient () {
-  this.baseUrl = ''
-  this.timeout = null // default no timeout, TODO
+function HttpClient (opt) {
+  // has defaults, interceptors two key
+  this.defaults = {
+    baseURL: '',
+    timeout: 0,
+    headers: {
+      common: {}
+    }
+  }
+  _.each(httpMethods, method => {
+    var header = this.defaults.headers[method] = {}
+    if (_.includes(dataMethods, 'method')) {
+      header[method] = URL_TYPE
+    }
+  })
+
   this.interceptors = {
     request: new Queue(),
     response: new Queue()
   }
+
+  this.init(opt)
 }
 
 HttpClient.qs = qs
@@ -19,29 +39,31 @@ HttpClient.qs = qs
 var proto = HttpClient.prototype
 
 proto.init = function (opt) {
-  _.extend(this, opt)
+  // not exist in axios
+  _.extend(this.defaults, opt)
+}
+
+proto.create = function (opt) {
+  return new HttpClient(opt)
 }
 
 proto.request = function (arg1, arg2) {
   if (_.isString(arg1)) {
     return this.request(_.extend({url: arg1}, arg2))
   }
+  // TODO 使用 extend, 单独处理 extend
   var config = arg1 || {}
-  var url = config.url
-  if (this.baseUrl) {
-    url = this.baseUrl + url
-  }
+  config = _.extend({}, this.defaults, config)
+
+  var url = config.baseURL + config.url
   url = Url.appendQuery(url, config.params)
-  var method = _.toUpper(config.method) || 'GET'
-  var headers = config.headers || config.header || {}
-  headers = _.extend({}, headers)
+
+  var method = _.toLower(config.method) || 'get'
+  var defaultHeaders = this.defaults.headers
+  var headers = _.extend({}, defaultHeaders.common, defaultHeaders[method], config.headers)
+
   var contentType = getContentType(headers)
   var guessRequestType = contentType
-
-  var timeout = config.timeout
-  if (timeout == null) {
-    timeout = this.timeout
-  }
 
   // 序列化 data
   var data = config.data
@@ -61,9 +83,11 @@ proto.request = function (arg1, arg2) {
       guessRequestType = guessRequestType || JSON_TYPE
     }
     if (!contentType && guessRequestType) {
-      headers['content-type'] = guessRequestType
+      headers[CONTENT_TYPE_KEY] = guessRequestType
     }
   }
+
+  config.method = _.toUpper(method)
 
   // TODO withCredentials auth...
   config = {
@@ -71,10 +95,6 @@ proto.request = function (arg1, arg2) {
     data,
     headers,
     method
-  }
-
-  if (timeout != null) {
-    config.timeout = timeout
   }
 
   return Promise.resolve(config)
@@ -98,10 +118,11 @@ proto.request = function (arg1, arg2) {
 }
 
 proto.innerFetch = function (config) {
-  if (this.wx) {
+  var defaults = this.defaults
+  if (defaults.wx) {
     // https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html#wxrequestobject
     return new Promise((resolve, reject) => {
-      this.wx.request({
+      defaults.wx.request({
         url: config.url,
         data: config.data,
         header: config.headers,
@@ -120,13 +141,13 @@ proto.innerFetch = function (config) {
         }
       })
     })
-  } else if (this.axios) {
-    return this.axios.request(config).then(response => {
+  } else if (defaults.axios) {
+    return defaults.axios.request(config).then(response => {
       return _.extend(response, {config})
     })
-  } else if (this.jQuery) {
+  } else if (defaults.jQuery) {
     // TODO 优化 jquery 结果
-    return this.jQuery.ajax(config).then((data, textStatus, jqXHR) => {
+    return defaults.jQuery.ajax(config).then((data, textStatus, jqXHR) => {
       return {
         data,
         textStatus,
@@ -139,10 +160,10 @@ proto.innerFetch = function (config) {
         jqXHR
       }
     })
-  } else if (this.quickapp) {
+  } else if (defaults.quickapp) {
     // https://doc.quickapp.cn/features/system/fetch.html
     return new Promise((resolve, reject) => {
-      this.quickapp.fetch({
+      defaults.quickapp.fetch({
         url: config.url,
         data: config.data,
         header: config.headers,
@@ -181,7 +202,7 @@ proto.innerFetch = function (config) {
   }
 }
 
-_.each('get head delete options'.split(' '), method => {
+_.each(simpleMethods, method => {
   proto[method] = function (url, config) {
     return this.request(_.extend({
       method,
@@ -190,7 +211,7 @@ _.each('get head delete options'.split(' '), method => {
   }
 })
 
-_.each('post put patch'.split(' '), method => {
+_.each(dataMethods, method => {
   proto[method] = function (url, data, config) {
     return this.request(_.extend({
       url,
@@ -203,7 +224,7 @@ _.each('post put patch'.split(' '), method => {
 function getContentType(headers) {
   var headerKeys = _.keys(headers)
   var typeKey = _.find(headerKeys, key => {
-    return /content-type/i.test(key)
+    return reContentType.test(key)
   })
   return headers[typeKey]
 }
