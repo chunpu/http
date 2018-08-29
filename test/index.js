@@ -56,6 +56,7 @@ var jQuery = {
     var url = opt.url
     setTimeout(() => {
       if (_.includes(url, 'success')) {
+
         opt.success({
           code: 0,
           message: 'ok',
@@ -104,6 +105,10 @@ function test(opt) {
     baseURL: 'http://my.domain',
     timeout
   }, opt))
+  // var http = httpClient
+  // http.defaults.timeout = timeout
+  // http.defaults.baseURL = 'http://my.domain'
+  // _.extend(http.defaults, opt)
 
   http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 

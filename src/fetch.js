@@ -129,6 +129,7 @@ proto.request = function (arg1, arg2) {
 
 // axios adapter
 proto.adapter = function (config) {
+
   var defaults = this.defaults
   if (defaults.wx) {
     // https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html#wxrequestobject
@@ -268,7 +269,6 @@ function getContentType(headers) {
 module.exports = exports = HttpClient
 
 // Queue
-
 function Queue() {
   this.queue = []
 }
