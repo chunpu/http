@@ -10,7 +10,9 @@ app
   .use(bodyParser.json())
 
   .use('/json', (req, res) => {
-    res.send(req.body)
+    setTimeout(() => {
+      res.send(req.body)
+    }, 200)
   })
 
   .use('/text', (req, res) => {

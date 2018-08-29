@@ -11,14 +11,14 @@
 <script>
 // 可加上各平台模拟测试
 $(() => {
-  $.post('/jsontext', {a: 1}, {dataType: 'json'}).then((...args) => {
+  $.ajax('/json', {data: {a: 1}, dataType: 'json', timeout: 10}).then((...args) => {
     console.log('jquery success', ...args)
   }, (...args) => {
     console.log('jquery error', ...args, args)
   })
 
   console.log(8888, axios.defaults)
-
+  axios.defaults.timeout = 10
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
   axios.interceptors.request.use(config => {
@@ -39,8 +39,9 @@ $(() => {
     responseType: 'text'
   }).then((...args) => {
     console.log('axios success', ...args)
-  }).catch((...args) => {
-    console.log('axios error', ...args)
+  }).catch(err => {
+    console.log('axios error')
+    console.dir(err)
   })
 
   fetch('/badjson', {

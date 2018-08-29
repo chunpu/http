@@ -10,6 +10,7 @@ const simpleMethods = ['get', 'head', 'delete', 'options']
 const dataMethods = ['post', 'put', 'patch']
 const httpMethods = [...simpleMethods, ...dataMethods]
 
+// TODO recognize timeout error type
 function HttpClient (opt) {
   // has defaults, interceptors two key
   this.defaults = {
@@ -17,7 +18,8 @@ function HttpClient (opt) {
     timeout: 0,
     headers: {
       common: {}
-    }
+    },
+    withCredentials: false
   }
   _.each(httpMethods, method => {
     var header = this.defaults.headers[method] = {}
@@ -86,13 +88,19 @@ proto.request = function (arg1, arg2) {
     }
   }
 
-  // TODO withCredentials auth...
+  var timeout = config.timeout
+
+  // TODO auth...
   config = {
     url,
     data,
     headers,
     method: _.toUpper(method),
-    timeout: config.timeout
+    withCredentials: config.withCredentials
+  }
+
+  if (timeout) {
+    config.timeout = timeout
   }
 
   return Promise.resolve(config)
@@ -154,6 +162,7 @@ proto.innerFetch = function (config) {
         headers: config.headers,
         method: config.method,
         timeout: config.timeout,
+        withCredentials: config.withCredentials,
         success (data, textStatus, jqXHR) {
           resolve({
             data,
@@ -194,19 +203,29 @@ proto.innerFetch = function (config) {
       })
     })
   } else if (typeof XMLHttpRequest === 'function') {
-    // TODO timeout, reject
+    // default use XMLHttpRequest
     return new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest()
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          resolve({
-            status: xhr.status,
-            data: xhr.responseText,
-            headers: {} // not parse headers
-          })
-        }
+      xhr.onload = ev => {
+        resolve({
+          status: xhr.status,
+          data: xhr.responseText,
+          headers: {} // not parse headers
+        })
+      }
+      xhr.ontimeout = ev => {
+        reject(new Error('timeout'))
+      }
+      xhr.onerror = ev => {
+        reject(new Error('error'))
       }
       xhr.open(config.method, config.url, true)
+      if (config.timeout) {
+        xhr.timeout = config.timeout
+      }
+      if (config.withCredentials) {
+        xhr.withCredentials = config.withCredentials
+      }
       _.forIn(config.headers, (value, key) => {
         xhr.setRequestHeader(key, value)
       })
