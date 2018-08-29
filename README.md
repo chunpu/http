@@ -24,7 +24,7 @@ npm i min-fetch
 
 Inspired by [axios](https://github.com/axios/axios)
 
-Send Http Request just like axios in `微信小程序`, `快应用`, `jQuery`, or event `XMLHttpRequest`
+Send Http Request just like axios in `微信小程序`, `快应用`, `jQuery`, or `XMLHttpRequest` by default
 
 Let's have the Same Experience with Request Data😜
 
@@ -38,17 +38,21 @@ http.init({
   baseURL: 'https://my.domain'
 })
 
-let {data} = await http.get('/data')
+http.get('/data').then(({data}) => {
+  console.log(data)
+})
 ```
 
+### Create Custom Http Instance
+
+```js
+const anotherHttp = http.create({
+  baseURL: 'https://my.domain'
+})
+```
 
 Api
 ---
-
-### Basic Request
-
-- `.request(config)`
-- `.request(url, config)`
 
 ### Simple Request
 
@@ -57,11 +61,20 @@ Api
 - `.head(url, config)`
 - `.options(url, config)`
 
+> Careful! There is no such api like `.get(url, params)`
+
 ### Request with Data
 
 - `.post(url, data, config)`
 - `.put(url, data, config)`
 - `.patch(url, data, config)`
+
+### Basic Request
+
+- `.request(config)`
+- `.request(url, config)`
+
+All config is not required
 
 
 Platform Support
@@ -93,10 +106,6 @@ http.init({
   baseURL: 'https://my.domain',
   quickapp: fetch
 })
-
-http.get('/data').then(({data}) => {
-  console.log(data)
-})
 ```
 
 ### axios
@@ -109,8 +118,6 @@ http.init({
   baseURL: 'https://my.domain',
   axios: axios
 })
-
-let {data} = await http.get('/data')
 ```
 
 ### jQuery / Zepto
@@ -122,8 +129,6 @@ http.init({
   baseURL: 'https://my.domain',
   jQuery: $
 })
-
-let {data} = await http.get('/data')
 ```
 
 Request Config Params
@@ -203,7 +208,7 @@ http.interceptors.response.use(response => {
 ```
 
 
-Real Project Usage
+Usage With Real Project
 ---
 
 Assume the `my.domain` service always return data like this
@@ -244,21 +249,6 @@ http.post('/user/1024', {
 })
 ```
 
-
-### Other Api
-
-You can stringify query string by
-
-```js
-import http from 'min-fetch'
-
-http.qs.stringify({
-  query: 'string'
-})
-// => 'query=string'
-```
-
-
 ### Usage with Vue.js
 
 ```js
@@ -272,6 +262,19 @@ submit () {
     this.user = data
   })
 }
+```
+
+### Other Api
+
+You can stringify query string by
+
+```js
+import http from 'min-fetch'
+
+http.qs.stringify({
+  query: 'string'
+})
+// => 'query=string'
 ```
 
 License
