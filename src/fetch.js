@@ -1,7 +1,6 @@
 const _ = require('min-util')
 const Url = require('min-url')
 const qs = require('min-qs')
-const Queue = require('./queue')
 
 const JSON_TYPE = 'application/json'
 const URL_TYPE = 'application/x-www-form-urlencoded'
@@ -267,3 +266,22 @@ function getContentType(headers) {
 }
 
 module.exports = new HttpClient()
+
+// Queue
+
+function Queue() {
+  this.queue = []
+}
+
+_.extend(Queue.prototype, {
+  use (...middleware) {
+    this.queue.push(middleware)
+    return this
+  },
+  exec (value) {
+    return _.reduce(this.queue, (prev, middleware) => {
+      return prev.then(...middleware)
+    }, Promise.resolve(value))
+  }
+})
+
