@@ -1,6 +1,7 @@
-var _ = require('min-util')
-var Url = require('min-url')
-var qs = require('min-qs')
+const _ = require('min-util')
+const Url = require('min-url')
+const qs = require('min-qs')
+const Queue = require('./queue')
 
 const JSON_TYPE = 'application/json'
 const URL_TYPE = 'application/x-www-form-urlencoded'
@@ -42,6 +43,9 @@ var proto = HttpClient.prototype
 
 proto.init = function (opt) {
   // not exist in axios
+  opt = _.extend({}, opt)
+  this.defaults.headers.common = opt.headers || {}
+  delete opt.headers
   _.extend(this.defaults, opt)
 }
 
@@ -105,7 +109,7 @@ proto.request = function (arg1, arg2) {
 
   return Promise.resolve(config)
     .then(config => this.interceptors.request.exec(config)) // after get config
-    .then(config => this.innerFetch(config))
+    .then(config => this.adapter(config))
     .then(response => {
       // 尝试解析 response.data, 总是尝试解析成 json(就像 axios 一样), 因为后端通常写不对 mime
       if (_.isString(response.data)) {
@@ -124,7 +128,8 @@ proto.request = function (arg1, arg2) {
     .then(response => this.interceptors.response.exec(response)) // after parse data
 }
 
-proto.innerFetch = function (config) {
+// axios adapter
+proto.adapter = function (config) {
   var defaults = this.defaults
   if (defaults.wx) {
     // https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html#wxrequestobject
@@ -262,21 +267,3 @@ function getContentType(headers) {
 }
 
 module.exports = new HttpClient()
-
-// Queue ---------------------
-
-function Queue () {
-  this.queue = []
-}
-
-_.extend(Queue.prototype, {
-  use (middleware) {
-    this.queue.push(middleware)
-    return this
-  },
-  exec (value) {
-    return _.reduce(this.queue, (prev, middleware) => {
-      return prev.then(middleware)
-    }, Promise.resolve(value))
-  }
-})

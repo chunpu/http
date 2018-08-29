@@ -258,6 +258,22 @@ http.qs.stringify({
 // => 'query=string'
 ```
 
+
+### Usage with Vue.js
+
+```js
+import http from 'min-fetch'
+
+Vue.prototype.$http = http
+
+// in vue component file
+submit () {
+  this.$http.post('/user/1024', {name: 'Tony'}).then(({data}) => {
+    this.user = data
+  })
+}
+```
+
 License
 ---
 
