@@ -265,7 +265,7 @@ function getContentType(headers) {
   return headers[typeKey]
 }
 
-module.exports = new HttpClient()
+module.exports = exports = HttpClient
 
 // Queue
 
