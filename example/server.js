@@ -1,5 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var path = require('path')
 var app = express()
 
 var port = 9999
@@ -25,8 +26,8 @@ app
     res.send(JSON.stringify(req.body))
   })
 
-  .use('/', express.static(__dirname))
+  .use('/', express.static(path.resolve(__dirname, '..')))
 
   .listen(port, err => {
-    console.log(`listen on http://localhost:${port}`)
+    console.log(`listen on http://localhost:${port}/example`)
   })

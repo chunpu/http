@@ -51,8 +51,8 @@ proto.request = function (arg1, arg2) {
   if (_.isString(arg1)) {
     return this.request(_.extend({url: arg1}, arg2))
   }
-  // TODO 使用 extend, 单独处理 extend
   var config = arg1 || {}
+  config.headers = config.headers || {} // 必须有值
   config = _.extend({}, this.defaults, config)
 
   var url = config.baseURL + config.url
@@ -61,7 +61,6 @@ proto.request = function (arg1, arg2) {
   var method = _.toLower(config.method) || 'get'
   var defaultHeaders = this.defaults.headers
   var headers = _.extend({}, defaultHeaders.common, defaultHeaders[method], config.headers)
-
   var contentType = getContentType(headers)
   var guessRequestType = contentType
 
@@ -142,23 +141,35 @@ proto.innerFetch = function (config) {
       })
     })
   } else if (defaults.axios) {
+    // https://github.com/axios/axios
     return defaults.axios.request(config).then(response => {
-      return _.extend(response, {config})
+      return response
     })
   } else if (defaults.jQuery) {
+    // http://api.jquery.com/jquery.ajax/
     // TODO 优化 jquery 结果
-    return defaults.jQuery.ajax(config).then((data, textStatus, jqXHR) => {
-      return {
-        data,
-        textStatus,
-        jqXHR
-      }
-    }, (jqXHR, textStatus, errorThrown) => {
-      return {
-        errorThrown,
-        textStatus,
-        jqXHR
-      }
+    return new Promise((resolve, reject) => {
+      defaults.jQuery.ajax({
+        url: config.url,
+        data: config.data,
+        headers: config.headers,
+        method: config.method,
+        timeout: config.timeout,
+        success (data, textStatus, jqXHR) {
+          resolve({
+            data,
+            status: 200,
+            headers: {}
+          })
+        },
+        error (jqXHR, textStatus, errorThrown) {
+          reject({
+            errorThrown,
+            textStatus,
+            jqXHR
+          })
+        }
+      })
     })
   } else if (defaults.quickapp) {
     // https://doc.quickapp.cn/features/system/fetch.html
@@ -229,7 +240,7 @@ function getContentType(headers) {
   return headers[typeKey]
 }
 
-export default new HttpClient()
+module.exports = new HttpClient()
 
 // Queue ---------------------
 
