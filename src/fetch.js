@@ -22,7 +22,7 @@ function HttpClient (opt) {
   _.each(httpMethods, method => {
     var header = this.defaults.headers[method] = {}
     if (_.includes(dataMethods, 'method')) {
-      header[method] = URL_TYPE
+      header[method] = JSON_TYPE
     }
   })
 
@@ -86,14 +86,13 @@ proto.request = function (arg1, arg2) {
     }
   }
 
-  config.method = _.toUpper(method)
-
   // TODO withCredentials auth...
   config = {
     url,
     data,
     headers,
-    method
+    method: _.toUpper(method),
+    timeout: config.timeout
   }
 
   return Promise.resolve(config)
@@ -111,6 +110,7 @@ proto.request = function (arg1, arg2) {
           }
         }
       }
+      response.config = config
       return response
     })
     .then(response => this.interceptors.response.exec(response)) // after parse data
@@ -147,7 +147,6 @@ proto.innerFetch = function (config) {
     })
   } else if (defaults.jQuery) {
     // http://api.jquery.com/jquery.ajax/
-    // TODO 优化 jquery 结果
     return new Promise((resolve, reject) => {
       defaults.jQuery.ajax({
         url: config.url,
@@ -203,11 +202,14 @@ proto.innerFetch = function (config) {
           resolve({
             status: xhr.status,
             data: xhr.responseText,
-            headers: xhr.headers
+            headers: {} // not parse headers
           })
         }
       }
       xhr.open(config.method, config.url, true)
+      _.forIn(config.headers, (value, key) => {
+        xhr.setRequestHeader(key, value)
+      })
       xhr.send(config.data)
     })
   }

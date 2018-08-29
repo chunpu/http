@@ -99,14 +99,25 @@ var axios = {
 
 function test(opt) {
   var type = _.keys(opt)[0]
+  var timeout = 1000 * 20
   var http = httpClient.create(_.extend({
-    baseURL: 'http://my.domain'
+    baseURL: 'http://my.domain',
+    timeout
   }, opt))
+
+  http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
   http.interceptors.request.use(config => {
     console.log(type, 'config', config)
     assert.deepEqual(config.url, 'http://my.domain/success?query=string')
-    assert.deepEqual(config.data, '{"key":"value"}')
+    assert.deepEqual(config.timeout, timeout)
+    assert.deepEqual(config.method, 'POST')
+    var contentType = config.headers['Content-Type']
+    if (contentType === 'application/x-www-form-urlencoded') {
+      assert.deepEqual(config.data, 'key=value')
+    } else {
+      assert.deepEqual(config.data, '{"key":"value"}')
+    }
     return config
   })
 
@@ -119,6 +130,7 @@ function test(opt) {
       data: {}
     })
     assert(_.isObject(response.headers))
+    assert(_.isObject(response.config))
     return response
   })
 

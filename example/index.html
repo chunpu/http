@@ -19,6 +19,8 @@ $(() => {
 
   console.log(8888, axios.defaults)
 
+  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+
   axios.interceptors.request.use(config => {
     console.log('config', config)
     return config
@@ -33,7 +35,7 @@ $(() => {
     url: '/json',
     method: 'POST',
     data: {a: 1},
-    headers: {'content-type': 'text', 'a-b': 'b'},
+    headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
     responseType: 'text'
   }).then((...args) => {
     console.log('axios success', ...args)
@@ -59,6 +61,16 @@ $(() => {
     console.log(7777, data)
   }).catch((...args) => {
     console.log('fetch error', ...args)
+  })
+
+  http.post('/json', {
+    key: 'value'
+  }, {
+    params: {
+      query: 'string'
+    }
+  }).then(response => {
+    console.log('raw response', response)
   })
 
   // axios.post('/body', {
