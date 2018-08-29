@@ -24,7 +24,9 @@ npm i min-fetch
 
 Inspired by [axios](https://github.com/axios/axios)
 
-Send Http Request just like axios in `微信小程序`, `快应用`, `jQuery`
+Send Http Request just like axios in `微信小程序`, `快应用`, `jQuery`, or event `XMLHttpRequest`
+
+Let's have the Same Experience with Request Data😜
 
 Usage
 ---
