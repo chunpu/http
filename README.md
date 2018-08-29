@@ -13,7 +13,7 @@ min-fetch
 [david-url]: https://david-dm.org/chunpu/min-fetch
 
 
-request / fetch / http For Real Project For Real Project
+request / fetch / http For Real Project, Support multiple platforms
 
 Installation
 ---
