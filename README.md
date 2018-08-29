@@ -249,7 +249,7 @@ http.post('/user/1024', {
 
 You can stringify query string by
 
-```
+```js
 import http from 'min-fetch'
 
 http.qs.stringify({
