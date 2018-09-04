@@ -8,6 +8,11 @@ var port = 9999
 app
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json())
+  .use((req, res, next) => {
+    res.cookie('a', 'b')
+    res.cookie('c', 'd')
+    next()
+  })
 
   .use('/json', (req, res) => {
     setTimeout(() => {

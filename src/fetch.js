@@ -135,7 +135,6 @@ proto.request = function (arg1, arg2) {
 
 // axios adapter
 proto.adapter = function (config) {
-
   var defaults = this.defaults
   if (defaults.wx) {
     // https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html#wxrequestobject
@@ -178,7 +177,7 @@ proto.adapter = function (config) {
           resolve({
             data,
             status: 200,
-            headers: {}
+            headers: parseHeadersFromXhr(jqXHR)
           })
         },
         error (jqXHR, textStatus, errorThrown) {
@@ -221,7 +220,7 @@ proto.adapter = function (config) {
         resolve({
           status: xhr.status,
           data: xhr.responseText,
-          headers: {} // not parse headers
+          headers: parseHeadersFromXhr(xhr)
         })
       }
       xhr.ontimeout = ev => {
@@ -270,6 +269,24 @@ function getContentType(headers) {
     return reContentType.test(key)
   })
   return headers[typeKey]
+}
+
+function parseHeadersFromXhr(xhr) {
+  return _.chain(xhr.getAllResponseHeaders())
+    .trim()
+    .split('\n')
+    .reduce((ret, header) => {
+      var i = _.indexOf(header, ':')
+      var key = _.toLower(_.trim(_.slice(header, 0, i)))
+      var value = _.trim(_.slice(header, i + 1))
+      if (ret[key]) {
+        ret[key] = ',' + value // 多个 cookie 用 `,` 分隔, 无空格
+      } else {
+        ret[key] = value
+      }
+      return ret
+    }, {})
+    .value()
 }
 
 module.exports = exports = HttpClient

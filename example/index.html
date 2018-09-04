@@ -5,7 +5,7 @@
   <title>min-fetch</title>
   <script src="//lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
   <script src="//lib.baomitu.com/axios/0.18.0/axios.min.js"></script>
-  <!-- <script src="../dist/http.js"></script> -->
+  <script src="../dist/http.js"></script>
 </head>
 <body>
 <script>
@@ -63,15 +63,18 @@ $(() => {
     console.log('fetch error', ...args)
   })
 
-  // http.post('/json', {
-  //   key: 'value'
-  // }, {
-  //   params: {
-  //     query: 'string'
-  //   }
-  // }).then(response => {
-  //   console.log('raw response', response)
-  // })
+  http.init({
+    jQuery: jQuery
+  })
+  http.post('/json', {
+    key: 'value'
+  }, {
+    params: {
+      query: 'string'
+    }
+  }).then(response => {
+    console.log('raw response', response)
+  })
 
   // axios.post('/body', {
   //   key: 'value',
