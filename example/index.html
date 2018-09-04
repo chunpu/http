@@ -5,7 +5,7 @@
   <title>min-fetch</title>
   <script src="//lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
   <script src="//lib.baomitu.com/axios/0.18.0/axios.min.js"></script>
-  <script src="../dist/http.js"></script>
+  <!-- <script src="../dist/http.js"></script> -->
 </head>
 <body>
 <script>
@@ -17,8 +17,7 @@ $(() => {
     console.log('jquery error', ...args, args)
   })
 
-  console.log(8888, axios.defaults)
-  axios.defaults.timeout = 10
+  axios.defaults.timeout = 10 * 1000
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
   axios.interceptors.request.use(config => {
@@ -64,15 +63,15 @@ $(() => {
     console.log('fetch error', ...args)
   })
 
-  http.post('/json', {
-    key: 'value'
-  }, {
-    params: {
-      query: 'string'
-    }
-  }).then(response => {
-    console.log('raw response', response)
-  })
+  // http.post('/json', {
+  //   key: 'value'
+  // }, {
+  //   params: {
+  //     query: 'string'
+  //   }
+  // }).then(response => {
+  //   console.log('raw response', response)
+  // })
 
   // axios.post('/body', {
   //   key: 'value',

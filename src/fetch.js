@@ -1,6 +1,7 @@
 const _ = require('min-util')
 const Url = require('min-url')
 const qs = require('min-qs')
+const Queue = require('./queue')
 
 const JSON_TYPE = 'application/json'
 const URL_TYPE = 'application/x-www-form-urlencoded'
@@ -32,6 +33,8 @@ function HttpClient (opt) {
     request: new Queue(),
     response: new Queue()
   }
+
+  this.qs = qs
 
   this.init(opt)
 }
@@ -122,6 +125,9 @@ proto.request = function (arg1, arg2) {
         }
       }
       response.config = config
+      response.headers = _.mapKeys(response.headers, (value, key) => {
+        return _.toLower(key) // All header names are lower cased
+      })
       return response
     })
     .then(response => this.interceptors.response.exec(response)) // after parse data
@@ -267,21 +273,3 @@ function getContentType(headers) {
 }
 
 module.exports = exports = HttpClient
-
-// Queue
-function Queue() {
-  this.queue = []
-}
-
-_.extend(Queue.prototype, {
-  use (...middleware) {
-    this.queue.push(middleware)
-    return this
-  },
-  exec (value) {
-    return _.reduce(this.queue, (prev, middleware) => {
-      return prev.then(...middleware)
-    }, Promise.resolve(value))
-  }
-})
-

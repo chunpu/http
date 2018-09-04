@@ -105,6 +105,8 @@ function test(opt) {
     baseURL: 'http://my.domain',
     timeout
   }, opt))
+
+  assert.deepEqual(http.qs.stringify({query: 'string'}), 'query=string')
   // var http = httpClient
   // http.defaults.timeout = timeout
   // http.defaults.baseURL = 'http://my.domain'
