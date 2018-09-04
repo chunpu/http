@@ -11,8 +11,7 @@ var config = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    libraryTarget: 'umd',
-    library: '[name]'
+    libraryTarget: 'commonjs'
   },
   plugins: [
     new webpack.BannerPlugin(util.format('%s@%s by %s', pkg.name, pkg.version, pkg.author)),
