@@ -1,6 +1,6 @@
 {
   "name": "min-fetch",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "request / fetch / http For Real Project, Support multiple platforms",
   "main": "index.js",
   "scripts": {
@@ -29,9 +29,9 @@
     "ajax"
   ],
   "dependencies": {
-    "min-qs": "github:chunpu/min-qs",
-    "min-url": "github:chunpu/min-url",
-    "min-util": "github:chunpu/min-util"
+    "min-qs": "^1.4.0",
+    "min-url": "^1.5.0",
+    "min-util": "^3.3.1"
   },
   "devDependencies": {
     "body-parser": "^1.18.3",
