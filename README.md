@@ -99,6 +99,15 @@ http.get('/data').then(({data}) => {
 
 ### 快应用
 
+在 `manifest.json` 文件中加入权限
+
+```json
+"features": [
+  { "name": "system.network" },
+  { "name": "system.fetch" }
+]
+```
+
 ```js
 import http from 'min-fetch'
 import fetch from '@system.fetch'
@@ -132,13 +141,13 @@ http.init({
 })
 ```
 
-Request Config Params
+Request Object (Config)
 ---
 
-- `params` the url querystring object
-- `data` data for request body
-- `method` request http method, default `GET`
+- `data` data for request body, will auto handle `Plain Object`, also support FormData, Blob, String
 - `headers` request headers
+- `method` request http method, default `GET`
+- `params` the url querystring object
 - `timeout` request timeout
 - `withCredentials` whether use cors, default `false`
 
@@ -148,13 +157,13 @@ data will be stringify by the value of `headers['content-type']`
 - `application/x-www-form-urlencoded` will `qs.stringify` the data object
 
 
-Response Schema
+Response Object
 ---
 
 - `data` response data, will always try to `JSON.parse`, because most server not respect the response mime
-- `status` status code, number
 - `headers` `name: value` headers, all header names are lower cased
-- `config` the request config
+- `status` status code, number
+- `config` the request object
 
 Config Defaults / Init
 ---
