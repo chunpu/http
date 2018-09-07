@@ -99,15 +99,6 @@ http.get('/data').then(({data}) => {
 
 ### 快应用
 
-在 `manifest.json` 文件中加入权限
-
-```json
-"features": [
-  { "name": "system.network" },
-  { "name": "system.fetch" }
-]
-```
-
 ```js
 import http from 'min-fetch'
 import fetch from '@system.fetch'
@@ -116,6 +107,15 @@ http.init({
   baseURL: 'https://my.domain',
   quickapp: fetch
 })
+```
+
+记得在 `manifest.json` 文件中加入权限
+
+```json
+"features": [
+  { "name": "system.network" },
+  { "name": "system.fetch" }
+]
 ```
 
 ### axios
