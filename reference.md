@@ -41,3 +41,24 @@ post 发送 string 自动使用 application/x-www-form-urlencoded
 返回 response 对象
 
 fetch 无视 response content-type
+
+## ant-design-pro
+
+封装了一个 `request.js`, 主要特色是默认返回 `response.json()`, 需要自己传入 formdata
+
+## 特殊格式
+
+- URLSearchParams
+- FormData, file, blob
+
+## 参考文档
+
+- `$.ajax` <http://api.jquery.com/jquery.ajax/>
+- `axios` <https://github.com/axios/axios>
+- `request` <https://github.com/request/request>
+- `github.fetch` <https://github.com/github/fetch>
+- `fetch standard` <https://github.com/whatwg/fetch>
+- `ant-design-pro request.js` <https://pro.ant.design/docs/server-cn>
+- superagent <https://github.com/visionmedia/superagent>
+- 小程序 <https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html>
+- 快应用 <https://doc.quickapp.cn/features/system/fetch.html>

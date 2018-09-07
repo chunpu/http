@@ -11,7 +11,21 @@
 <script>
 // 可加上各平台模拟测试
 $(() => {
-  $.ajax('/json', {data: {a: 1}, dataType: 'json', timeout: 10}).then((...args) => {
+  var formData = new FormData()
+  formData.append('key', 'value')
+
+  fetch('/json', {
+    method: 'POST',
+    body: formData
+  }).then(response => {
+    return response.json()
+  }).then(x => {
+    console.log(x, 99999999)
+  }).catch(e => {
+    console.log(e, 99999999)
+  })
+
+  $.ajax('/json', {data: {}, timeout: 10 * 1000}).then((...args) => {
     console.log('jquery success', ...args)
   }, (...args) => {
     console.log('jquery error', ...args, args)
@@ -33,7 +47,7 @@ $(() => {
   axios.request({
     url: '/json',
     method: 'POST',
-    data: {a: 1},
+    data: formData,
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
     responseType: 'text'
   }).then((...args) => {
@@ -64,11 +78,9 @@ $(() => {
   })
 
   http.init({
-    jQuery: jQuery
+    // jQuery: jQuery
   })
-  http.post('/json', {
-    key: 'value'
-  }, {
+  http.post('/json', formData, {
     params: {
       query: 'string'
     }
@@ -84,6 +96,12 @@ $(() => {
   // }).then((...args) => {
   //   console.log(2222, args)
   // })
+
+  // test
+  // var xhr = new XMLHttpRequest()
+  // xhr.open('POST', '/json', false)
+  // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+  // xhr.send(formData)
 })
 </script>
 </body>

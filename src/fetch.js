@@ -2,11 +2,11 @@ const _ = require('min-util')
 const Url = require('min-url')
 const qs = require('min-qs')
 const Queue = require('./queue')
+const utils = require('./utils')
 
 const JSON_TYPE = 'application/json'
 const URL_TYPE = 'application/x-www-form-urlencoded'
-const CONTENT_TYPE_KEY = 'Content-Type'
-const reContentType = new RegExp(CONTENT_TYPE_KEY, 'i')
+const CONTENT_TYPE_KEY = utils.CONTENT_TYPE_KEY
 const simpleMethods = ['get', 'head', 'delete', 'options']
 const dataMethods = ['post', 'put', 'patch']
 const httpMethods = [...simpleMethods, ...dataMethods]
@@ -69,12 +69,13 @@ proto.request = function (arg1, arg2) {
   var method = _.toLower(config.method) || 'get'
   var defaultHeaders = this.defaults.headers
   var headers = _.extend({}, defaultHeaders.common, defaultHeaders[method], config.headers)
-  var contentType = getContentType(headers)
+  var contentType = utils.getContentType(headers)
   var guessRequestType = contentType
 
-  // 序列化 data
+  // 序列化 request data
   var data = config.data
-  if (data) {
+  if (_.isPlainObject(data)) {
+    // 只序列化 plain object, 其他直接发送, 比如字符串, FormData, Blob 之类的
     if (contentType === URL_TYPE) {
       data = qs.stringify(data)
     } else if (contentType === JSON_TYPE) {
@@ -91,6 +92,11 @@ proto.request = function (arg1, arg2) {
     }
     if (!contentType && guessRequestType) {
       headers[CONTENT_TYPE_KEY] = guessRequestType
+    }
+  } else {
+    if (utils.isFormData(data)) {
+      // Let the browser set it
+      delete headers[CONTENT_TYPE_KEY]
     }
   }
 
@@ -177,7 +183,7 @@ proto.adapter = function (config) {
           resolve({
             data,
             status: 200,
-            headers: parseHeadersFromXhr(jqXHR)
+            headers: utils.parseHeadersFromXhr(jqXHR)
           })
         },
         error (jqXHR, textStatus, errorThrown) {
@@ -220,7 +226,7 @@ proto.adapter = function (config) {
         resolve({
           status: xhr.status,
           data: xhr.responseText,
-          headers: parseHeadersFromXhr(xhr)
+          headers: utils.parseHeadersFromXhr(xhr)
         })
       }
       xhr.ontimeout = ev => {
@@ -262,31 +268,5 @@ _.each(dataMethods, method => {
     }, config))
   }
 })
-
-function getContentType(headers) {
-  var headerKeys = _.keys(headers)
-  var typeKey = _.find(headerKeys, key => {
-    return reContentType.test(key)
-  })
-  return headers[typeKey]
-}
-
-function parseHeadersFromXhr(xhr) {
-  return _.chain(xhr.getAllResponseHeaders())
-    .trim()
-    .split('\n')
-    .reduce((ret, header) => {
-      var i = _.indexOf(header, ':')
-      var key = _.toLower(_.trim(_.slice(header, 0, i)))
-      var value = _.trim(_.slice(header, i + 1))
-      if (ret[key]) {
-        ret[key] = ',' + value // 多个 cookie 用 `,` 分隔, 无空格
-      } else {
-        ret[key] = value
-      }
-      return ret
-    }, {})
-    .value()
-}
 
 module.exports = exports = HttpClient
