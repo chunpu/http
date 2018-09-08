@@ -32,7 +32,7 @@ Usage
 ---
 
 ```js
-import http from 'min-fetch'
+import http from '@chunpu/http'
 
 http.init({
   baseURL: 'https://my.domain'
@@ -113,7 +113,7 @@ Platform Support
 ### 微信小程序
 
 ```js
-import http from 'min-fetch'
+import http from '@chunpu/http'
 
 http.init({
   baseURL: 'https://my.domain',
@@ -130,7 +130,7 @@ http.get('/data').then(({data}) => {
 ### 快应用
 
 ```js
-import http from 'min-fetch'
+import http from '@chunpu/http'
 import fetch from '@system.fetch'
 
 http.init({
@@ -152,7 +152,7 @@ http.init({
 
 ```js
 const axios = require('axios')
-import http from 'min-fetch'
+import http from '@chunpu/http'
 
 http.init({
   baseURL: 'https://my.domain',
@@ -163,7 +163,7 @@ http.init({
 ### jQuery / Zepto
 
 ```js
-import http from 'min-fetch'
+import http from '@chunpu/http'
 
 http.init({
   baseURL: 'https://my.domain',
@@ -207,7 +207,7 @@ Interceptors / Hook
 ---
 
 ```js
-import http from 'min-fetch'
+import http from '@chunpu/http'
 
 http.init({
   baseURL: 'https://my.domain'
@@ -241,7 +241,7 @@ Assume the `my.domain` service always return data like this
 ```
 
 ```js
-import http from 'min-fetch'
+import http from '@chunpu/http'
 
 http.init({
   baseURL: 'https://my.domain'
@@ -269,7 +269,7 @@ http.post('/user/1024', {
 ### Usage with Vue.js
 
 ```js
-import http from 'min-fetch'
+import http from '@chunpu/http'
 
 Vue.prototype.$http = http
 
@@ -286,7 +286,7 @@ submit () {
 You can stringify query string by
 
 ```js
-import http from 'min-fetch'
+import http from '@chunpu/http'
 
 http.qs.stringify({
   query: 'string'
