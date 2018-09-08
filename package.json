@@ -1,7 +1,7 @@
 {
-  "name": "min-fetch",
-  "version": "2.4.0",
-  "description": "request / fetch / http For Real Project, Support multiple platforms",
+  "name": "@chunpu/http",
+  "version": "1.0.0",
+  "description": "Promise Based request / fetch / http For Real Project, Support multiple platforms",
   "main": "index.js",
   "scripts": {
     "test": "node test",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chunpu/min-fetch.git"
+    "url": "git+https://github.com/chunpu/http.git"
   },
   "author": "chunpu",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chunpu/min-fetch/issues"
+    "url": "https://github.com/chunpu/http/issues"
   },
-  "homepage": "https://github.com/chunpu/min-fetch#readme",
+  "homepage": "https://github.com/chunpu/http#readme",
   "keywords": [
     "$http",
     "http",
