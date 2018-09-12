@@ -12,10 +12,10 @@ module.exports = function(config) {
       })
     }
     xhr.ontimeout = ev => {
-      reject(new Error('timeout'))
+      reject(utils.createError('timeout'))
     }
     xhr.onerror = ev => {
-      reject(new Error('error'))
+      reject(utils.createError('error'))
     }
     xhr.open(config.method, config.url, true)
     if (config.timeout) {

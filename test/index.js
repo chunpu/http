@@ -2,7 +2,7 @@ const _ = require('min-util')
 const httpClient = require('..')
 const assert = require('assert')
 
-var mockTimeout = 1 * 1000
+var mockTimeout = 0.2 * 1000
 
 var wx = {
   request (opt) {

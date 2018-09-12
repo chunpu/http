@@ -20,11 +20,10 @@ module.exports = function(config) {
           })
         },
         error (jqXHR, textStatus, errorThrown) {
-          reject({
-            errorThrown,
-            textStatus,
-            jqXHR
-          })
+          reject(utils.createError(errorThrown, {
+            response: jqXHR,
+            textStatus: textStatus
+          }))
         }
       })
     })

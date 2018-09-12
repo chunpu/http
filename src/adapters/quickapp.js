@@ -27,7 +27,7 @@ module.exports = function(config) {
 
       if (config.timeout) {
         timer = setTimeout(() => {
-          reject(new Error('timeout'))
+          reject(utils.createError('timeout'))
         }, config.timeout)
       }
     })

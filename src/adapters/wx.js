@@ -31,7 +31,7 @@ module.exports = function(config) {
           if (task && task.abort) {
             task.abort
           }
-          reject(new Error('timeout'))
+          reject(utils.createError('timeout'))
         }, config.timeout)
       }
     })

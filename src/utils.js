@@ -49,9 +49,16 @@ function clearTimer(timer) {
   }
 }
 
+function createError(message, obj) {
+  var err = new Error(message)
+  _.extend(err, obj)
+  return err
+}
+
 exports.CONTENT_TYPE_KEY = CONTENT_TYPE_KEY
 exports.getContentType = getContentType
 exports.parseHeadersFromXhr = parseHeadersFromXhr
 exports.isFormData = isFormData
 exports.timeout = timeout
 exports.clearTimer = clearTimer
+exports.createError = createError

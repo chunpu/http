@@ -85,7 +85,7 @@ Request Object
 - `headers` request headers
 - `method` request http method, default `GET`
 - `params` the url querystring object
-- `timeout` request timeout
+- `timeout` request timeout, 支持快应用和微信小程序
 - `withCredentials` whether use cors, default `false`
 
 ### Auto Handle Request Data
@@ -125,6 +125,8 @@ http.get('/data').then(({data}) => {
 })
 ```
 
+支持单个请求超时设置
+
 > 请通过 npm 安装, 参见 [npm 支持](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)
 
 ### 快应用
@@ -138,6 +140,8 @@ http.init({
   quickapp: fetch
 })
 ```
+
+支持单个请求超时设置
 
 记得在 `manifest.json` 文件中加入权限
 
@@ -279,6 +283,18 @@ submit () {
     this.user = data
   })
 }
+```
+
+### Handling Errors
+
+All Platform support timeout error for one request
+
+```js
+http.get('/very/slow/api').catch(err => {
+  if (/timeout/i.test(err.message)) {
+    // this is timeout error
+  }
+})
 ```
 
 ### Other Api
