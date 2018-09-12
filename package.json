@@ -1,6 +1,6 @@
 {
   "name": "@chunpu/http",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Promise Based request / fetch / http For Real Project, Support multiple platforms",
   "main": "index.js",
   "scripts": {

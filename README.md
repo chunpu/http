@@ -272,7 +272,8 @@ http.post('/user/1024', {
 })
 ```
 
-### Usage with Vue.js
+Usage with Vue.js
+---
 
 ```js
 import http from '@chunpu/http'
@@ -287,7 +288,8 @@ submit () {
 }
 ```
 
-### Handling Errors
+Handling Errors
+---
 
 All Platform support timeout error for one request
 
@@ -299,7 +301,8 @@ http.get('/very/slow/api').catch(err => {
 })
 ```
 
-### Other Api
+Other Api
+---
 
 You can stringify query string by
 
