@@ -1,5 +1,5 @@
 const _ = require('min-util')
-const HttpClient = require('./fetch')
+const HttpClient = require('./http')
 
 const instance = new HttpClient()
 
