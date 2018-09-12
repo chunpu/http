@@ -3,6 +3,7 @@ const Url = require('min-url')
 const qs = require('min-qs')
 const Queue = require('./queue')
 const utils = require('./utils')
+const adapters = require('./adapters')
 
 const JSON_TYPE = 'application/json'
 const URL_TYPE = 'application/x-www-form-urlencoded'
@@ -117,7 +118,7 @@ proto.request = function (arg1, arg2) {
 
   return Promise.resolve(config)
     .then(config => this.interceptors.request.exec(config)) // after get config
-    .then(config => this.adapter(config))
+    .then(config => this.adapter.call(this, config))
     .then(response => {
       // 尝试解析 response.data, 总是尝试解析成 json(就像 axios 一样), 因为后端通常写不对 mime
       if (_.isString(response.data)) {
@@ -143,110 +144,15 @@ proto.request = function (arg1, arg2) {
 proto.adapter = function (config) {
   var defaults = this.defaults
   if (defaults.wx) {
-    // https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html#wxrequestobject
-    return new Promise((resolve, reject) => {
-      defaults.wx.request({
-        url: config.url,
-        data: config.data,
-        header: config.headers,
-        method: config.method,
-        timeout: config.timeout,
-        success (response) {
-          var {data, statusCode, header} = response
-          resolve({
-            data,
-            status: statusCode,
-            headers: header
-          })
-        },
-        fail (err) {
-          reject(err)
-        }
-      })
-    })
+    return adapters.wx.call(this, config)
   } else if (defaults.axios) {
-    // https://github.com/axios/axios
-    return defaults.axios.request(config).then(response => {
-      return response
-    })
+    return adapters.axios.call(this, config)
   } else if (defaults.jQuery) {
-    // http://api.jquery.com/jquery.ajax/
-    return new Promise((resolve, reject) => {
-      defaults.jQuery.ajax({
-        url: config.url,
-        data: config.data,
-        headers: config.headers,
-        method: config.method,
-        timeout: config.timeout,
-        withCredentials: config.withCredentials,
-        success (data, textStatus, jqXHR) {
-          resolve({
-            data,
-            status: 200,
-            headers: utils.parseHeadersFromXhr(jqXHR)
-          })
-        },
-        error (jqXHR, textStatus, errorThrown) {
-          reject({
-            errorThrown,
-            textStatus,
-            jqXHR
-          })
-        }
-      })
-    })
+    return adapters.jquery.call(this, config)
   } else if (defaults.quickapp) {
-    // https://doc.quickapp.cn/features/system/fetch.html
-    return new Promise((resolve, reject) => {
-      defaults.quickapp.fetch({
-        url: config.url,
-        data: config.data,
-        header: config.headers,
-        method: config.method,
-        timeout: config.timeout,
-        success (response) {
-          // {data, code, headers}
-          var {data, code, headers} = response
-          resolve({
-            data,
-            status: code,
-            headers
-          })
-        },
-        fail (data, code) {
-          reject({data, code})
-        }
-      })
-    })
+    return adapters.quickapp.call(this, config)
   } else if (typeof XMLHttpRequest === 'function') {
-    // default use XMLHttpRequest
-    return new Promise((resolve, reject) => {
-      var xhr = new XMLHttpRequest()
-      xhr.onload = ev => {
-        resolve({
-          status: xhr.status,
-          data: xhr.responseText,
-          headers: utils.parseHeadersFromXhr(xhr)
-        })
-      }
-      xhr.ontimeout = ev => {
-        reject(new Error('timeout'))
-      }
-      xhr.onerror = ev => {
-        reject(new Error('error'))
-      }
-      xhr.open(config.method, config.url, true)
-      if (config.timeout) {
-        xhr.timeout = config.timeout
-      }
-      if (config.withCredentials) {
-        xhr.withCredentials = config.withCredentials
-      }
-      _.forIn(config.headers, (value, key) => {
-        xhr.setRequestHeader(key, value)
-      })
-      xhr.send(config.data)
-    })
+    return adapters.xhr.call(this, config)
   }
 }
 
