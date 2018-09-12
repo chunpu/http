@@ -1,3 +1,5 @@
+const utils = require('../utils')
+
 module.exports = function(config) {
   var defaults = this.defaults
   if (defaults && defaults.quickapp) {
@@ -8,9 +10,8 @@ module.exports = function(config) {
         data: config.data,
         header: config.headers,
         method: config.method,
-        timeout: config.timeout,
         success (response) {
-          // {data, code, headers}
+          utils.clearTimer(timer)
           var {data, code, headers} = response
           resolve({
             data,
@@ -19,9 +20,16 @@ module.exports = function(config) {
           })
         },
         fail (data, code) {
+          utils.clearTimer(timer)
           reject({data, code})
         }
       })
+
+      if (config.timeout) {
+        timer = setTimeout(() => {
+          reject(new Error('timeout'))
+        }, config.timeout)
+      }
     })
   }
 }

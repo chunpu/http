@@ -25,7 +25,7 @@ $(() => {
     console.log(e, 99999999)
   })
 
-  $.ajax('/json', {data: {}, timeout: 10 * 1000}).then((...args) => {
+  $.ajax('/json', {data: {}, timeout: 1}).then((...args) => {
     console.log('jquery success', ...args)
   }, (...args) => {
     console.log('jquery error', ...args, args)
@@ -48,12 +48,13 @@ $(() => {
     url: '/json',
     method: 'POST',
     data: formData,
+    timeout: 1,
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
     responseType: 'text'
   }).then((...args) => {
     console.log('axios success', ...args)
   }).catch(err => {
-    console.log('axios error')
+    console.log('axios error', err.message)
     console.dir(err)
   })
 

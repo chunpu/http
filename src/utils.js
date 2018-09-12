@@ -33,7 +33,25 @@ function isFormData(val) {
   return (typeof FormData !== 'undefined') && (val instanceof FormData)
 }
 
+function timeout(time) {
+  return new Promise((resolve, reject) => {
+    if (timeout) {
+      setTimeout(() => {
+        reject(new Error('timeout'))
+      }, time)
+    }
+  })
+}
+
+function clearTimer(timer) {
+  if (timer) {
+    clearTimeout(timer)
+  }
+}
+
 exports.CONTENT_TYPE_KEY = CONTENT_TYPE_KEY
 exports.getContentType = getContentType
 exports.parseHeadersFromXhr = parseHeadersFromXhr
 exports.isFormData = isFormData
+exports.timeout = timeout
+exports.clearTimer = clearTimer

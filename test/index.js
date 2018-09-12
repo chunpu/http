@@ -2,6 +2,8 @@ const _ = require('min-util')
 const httpClient = require('..')
 const assert = require('assert')
 
+var mockTimeout = 1 * 1000
+
 var wx = {
   request (opt) {
     var url = opt.url
@@ -23,7 +25,7 @@ var wx = {
       } else {
         opt.fail()
       }
-    })
+    }, mockTimeout)
   }
 }
 
@@ -47,7 +49,7 @@ var quickapp = {
       } else {
         opt.fail({}, 503)
       }
-    })
+    }, mockTimeout)
   }
 }
 
@@ -78,7 +80,7 @@ content-type: application/json; charset=utf-8
       } else {
         opt.error({}, 503)
       }
-    })
+    }, mockTimeout)
   }
 }
 
@@ -107,9 +109,29 @@ var axios = {
   }
 }
 
+function testTimeout() {
+  var wxHttp = httpClient.create({wx})
+  wxHttp.post('/success', null, {
+    timeout: 10
+  }).then(() => {
+    assert(false, '应该超时')
+  }).catch(err => {
+    assert(/timeout/.test(err.message), '应该包含 timeout')
+  })
+
+  var quickappHttp = httpClient.create({quickapp})
+  quickappHttp.post('/success', null, {
+    timeout: 10
+  }).then(() => {
+    assert(false, '应该超时')
+  }).catch(err => {
+    assert(/timeout/.test(err.message), '应该包含 timeout')
+  })
+}
+
 function test(opt) {
   var type = _.keys(opt)[0]
-  var timeout = 1000 * 20
+  var timeout = mockTimeout * 2
   var http = httpClient.create(_.extend({
     baseURL: 'http://my.domain',
     timeout
@@ -192,3 +214,4 @@ test({jQuery})
 test({wx})
 test({quickapp})
 test({axios})
+testTimeout()
