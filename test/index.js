@@ -137,6 +137,31 @@ function testTimeout() {
   })
 }
 
+function testMultiInterceptors() {
+  var http = httpClient.create({wx})
+  http.interceptors.response.use(response => {
+    response.x = 1
+    return response
+  })
+  http.interceptors.response.use(response => {
+    assert.deepEqual(response.x, 1)
+    response.x++
+    return response
+  })
+  http.interceptors.response.use(response => {
+    assert.deepEqual(response.x, 2)
+    response.x++
+    return response
+  })
+  http.post('/success', null, {
+    timeout: 10000
+  }).then(response => {
+    assert.deepEqual(response.x, 3)
+  }).catch(() => {
+    assert(false)
+  })
+}
+
 function test(opt) {
   var type = _.keys(opt)[0]
   var timeout = mockTimeout * 2
@@ -223,3 +248,4 @@ test({wx})
 test({quickapp})
 test({axios})
 testTimeout()
+testMultiInterceptors()
