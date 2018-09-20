@@ -11,7 +11,6 @@ var config = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    // libraryTarget: 'commonjs',
     libraryTarget: 'umd',
     library: '[name]'
   },
@@ -19,18 +18,9 @@ var config = {
     new webpack.BannerPlugin(util.format('%s@%s by %s', pkg.name, pkg.version, pkg.author)),
     new webpack.DefinePlugin({
       VERSION: JSON.stringify(pkg.version)
-    })
+    }),
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
   ]
 }
-
-// if (DEBUG) {
-//   config.devtool = 'source-map'
-// }
-
-// if (PRODUCTION) {
-//   config.plugins.push(
-//     new webpack.optimize.UglifyJsPlugin({minimize: true})
-//   )
-// }
 
 module.exports = config

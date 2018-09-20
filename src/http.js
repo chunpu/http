@@ -12,9 +12,7 @@ const simpleMethods = ['get', 'head', 'delete', 'options']
 const dataMethods = ['post', 'put', 'patch']
 const httpMethods = [...simpleMethods, ...dataMethods]
 
-// TODO recognize timeout error type
 function HttpClient (opt) {
-  // has defaults, interceptors two key
   this.defaults = {
     baseURL: '',
     timeout: 0,
@@ -116,8 +114,8 @@ proto.request = function (arg1, arg2) {
     config.timeout = timeout
   }
 
-  return Promise.resolve(config)
-    .then(config => this.interceptors.request.exec(config)) // after get config
+  var ret = Promise.resolve(config)
+  ret = this.interceptors.request.intercept(ret) // after get config
     .then(config => this.adapter.call(this, config))
     .then(response => {
       // 尝试解析 response.data, 总是尝试解析成 json(就像 axios 一样), 因为后端通常写不对 mime
@@ -137,7 +135,8 @@ proto.request = function (arg1, arg2) {
       })
       return response
     })
-    .then(response => this.interceptors.response.exec(response)) // after parse data
+  ret = this.interceptors.response.intercept(ret) // after parse data
+  return ret
 }
 
 // axios adapter

@@ -111,12 +111,20 @@ var axios = {
 
 function testTimeout() {
   var wxHttp = httpClient.create({wx})
+
+  wxHttp.interceptors.response.use(response => {
+    return response
+  }, err => {
+    assert(/timeout/.test(err.message), '应该包含 timeout')
+    err.message = 'Server Timeout!'
+    return Promise.reject(err)
+  })
   wxHttp.post('/success', null, {
     timeout: 10
   }).then(() => {
     assert(false, '应该超时')
   }).catch(err => {
-    assert(/timeout/.test(err.message), '应该包含 timeout')
+    assert.deepEqual(err.message, 'Server Timeout!')
   })
 
   var quickappHttp = httpClient.create({quickapp})

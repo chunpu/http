@@ -11,9 +11,9 @@ _.extend(Queue.prototype, {
     this.queue.push(middleware)
     return this
   },
-  exec (value) {
+  intercept (promise) {
     return _.reduce(this.queue, (prev, middleware) => {
       return prev.then(...middleware)
-    }, Promise.resolve(value))
+    }, promise)
   }
 })

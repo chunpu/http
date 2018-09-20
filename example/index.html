@@ -21,8 +21,8 @@ $(() => {
     return response.json()
   }).then(x => {
     console.log(x, 99999999)
-  }).catch(e => {
-    console.log(e, 99999999)
+  }).catch(err => {
+    console.log(err, 99999999)
   })
 
   $.ajax('/json', {data: {}, timeout: 1}).then((...args) => {
@@ -31,7 +31,7 @@ $(() => {
     console.log('jquery error', ...args, args)
   })
 
-  axios.defaults.timeout = 10 * 1000
+  axios.defaults.timeout = 0.001 * 1000
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
   axios.interceptors.request.use(config => {
@@ -42,13 +42,12 @@ $(() => {
   axios.interceptors.response.use(response => {
     console.log('response', response)
     return response
+  }, err => {
+    console.log('axios err', err)
   })
 
-  axios.request({
-    url: '/json',
-    method: 'POST',
-    data: formData,
-    timeout: 1,
+  axios.post('/json', 0, {
+    // timeout: 1,
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
     responseType: 'text'
   }).then((...args) => {
@@ -76,6 +75,15 @@ $(() => {
     console.log(7777, data)
   }).catch((...args) => {
     console.log('fetch error', ...args)
+  })
+
+  http.defaults.timeout = 0.001 * 1000
+
+  http.interceptors.response.use(response => {
+    console.log('http response', response)
+    return response
+  }, err => {
+    console.log('http err', err)
   })
 
   http.init({
