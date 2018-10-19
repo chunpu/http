@@ -20,6 +20,12 @@ app
     }, 200)
   })
 
+  .use('/timeout', (req, res) => {
+    setTimeout(() => {
+      res.send(req.body)
+    }, 2000)
+  })
+
   .use('/text', (req, res) => {
     res.send('xxxxx')
   })

@@ -75,6 +75,14 @@ http.put('/path', data)
 }
 ```
 
+### 取消请求
+
+axios 使用了一个被撤销的 [cancelable promises proposal](https://github.com/tc39/proposal-cancelable-promises) 提案, 取消请求写法依赖 cancelToken
+
+[axios cancellation](https://github.com/axios/axios#cancellation)
+
+axios cancel 之后会在 response 的 interceptors 中触发 error, 但 promise 返回的是 resolved 状态
+
 ## jQuery
 
 jQuery 的 ajax 在之前的时代非常好用, jQuery 也提供了直接通过方法发送请求的接口
@@ -90,6 +98,14 @@ jQuery 混淆了 url query params 和 request body 的概念
 
 jQuery 并不是真正的 promise, then 中会返回三个参数, 对于封装 promise 会有很多困惑
 
+jQuery 取消请求会触发 `error`
+
+```js
+var xhr = $.ajax('/api')
+xhr.then((...args) => console.log('success', ...args), (...args) => console.log('fail', ...args))
+xhr.abort()
+```
+
 ## fetch
 
 fetch 最大的特色是默认提供 promise 的使用方法, 但这并不是说 fetch 就是一个完善的数据请求方法
@@ -99,6 +115,9 @@ fetch 并不支持 timeout
 fetch 始终需要自己的 `response.json()`, 而且这依然是一个 promise
 
 事实上, 几乎所有的 http api 接口都是按照 json 的格式来提供数据的, 我们就应该默认解析 json
+
+[github/fetch](https://github.com/github/fetch) 的 [Aborting requests](https://github.com/github/fetch#aborting-requests) 非常复杂, 而且用了 Dom Api
+
 
 ## 小程序和快应用
 

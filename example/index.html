@@ -31,7 +31,9 @@ $(() => {
     console.log('jquery error', ...args, args)
   })
 
-  axios.defaults.timeout = 0.001 * 1000
+  const CancelToken = axios.CancelToken
+  const source = CancelToken.source()
+  // axios.defaults.timeout = 0.001 * 1000
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
   axios.interceptors.request.use(config => {
@@ -46,16 +48,21 @@ $(() => {
     console.log('axios err', err)
   })
 
-  axios.post('/json', 0, {
+  axios.post('/timeout', 0, {
     // timeout: 1,
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
-    responseType: 'text'
+    responseType: 'text',
+    cancelToken: source.token
   }).then((...args) => {
     console.log('axios success', ...args)
   }).catch(err => {
     console.log('axios error', err.message)
     console.dir(err)
   })
+  setTimeout(() => {
+    source.cancel()
+  }, 500)
+
 
   fetch('/badjson', {
     body: JSON.stringify({
