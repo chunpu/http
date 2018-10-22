@@ -30,6 +30,13 @@ module.exports = function(config) {
           reject(utils.createError('timeout'))
         }, config.timeout)
       }
+
+      if (config.cancelToken) {
+        // not real cancel, wait for api
+        config.cancelToken.promise.then(function onCancel(reason) {
+          reject(reason)
+        })
+      }
     })
   }
 }

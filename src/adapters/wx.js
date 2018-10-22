@@ -31,8 +31,19 @@ module.exports = function(config) {
           if (task && task.abort) {
             task.abort
           }
+          task = null
           reject(utils.createError('timeout'))
         }, config.timeout)
+      }
+
+      if (config.cancelToken) {
+        config.cancelToken.promise.then(function onCancel(reason) {
+          if (task && task.abort) {
+            task.abort()
+            reject(reason)
+            task = null
+          }
+        })
       }
     })
   }

@@ -4,7 +4,7 @@
   "description": "Promise Based request / fetch / http For Real Project, Support multiple platforms",
   "main": "index.js",
   "scripts": {
-    "test": "node test",
+    "test": "node test && node test/testaxios",
     "build": "webpack"
   },
   "repository": {
@@ -34,6 +34,7 @@
     "min-util": "^3.3.1"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "webpack": "^4.17.2",

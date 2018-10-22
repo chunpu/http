@@ -5,7 +5,7 @@ module.exports = function(config) {
   if (defaults && defaults.jQuery) {
     // http://api.jquery.com/jquery.ajax/
     return new Promise((resolve, reject) => {
-      defaults.jQuery.ajax({
+      var xhr = defaults.jQuery.ajax({
         url: config.url,
         data: config.data,
         headers: config.headers,
@@ -26,6 +26,16 @@ module.exports = function(config) {
           }))
         }
       })
+
+      if (config.cancelToken) {
+        config.cancelToken.promise.then(function onCancel(reason) {
+          if (xhr) {
+            xhr.abort()
+            reject(reason)
+            xhr = null
+          }
+        })
+      }
     })
   }
 }
