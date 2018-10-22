@@ -1,4 +1,5 @@
 const utils = require('../utils')
+const _ = require('min-util')
 
 module.exports = function(config) {
   // default use XMLHttpRequest
@@ -27,6 +28,17 @@ module.exports = function(config) {
     _.forIn(config.headers, (value, key) => {
       xhr.setRequestHeader(key, value)
     })
+
+    if (config.cancelToken) {
+      config.cancelToken.promise.then(function onCancel(reason) {
+        if (xhr) {
+          xhr.abort()
+          reject(reason)
+          xhr = null
+        }
+      })
+    }
+
     xhr.send(config.data)
   })
 }

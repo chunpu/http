@@ -4,6 +4,7 @@ const qs = require('min-qs')
 const Queue = require('./queue')
 const utils = require('./utils')
 const adapters = require('./adapters')
+const CancelToken = require('./canceltoken')
 
 const JSON_TYPE = 'application/json'
 const URL_TYPE = 'application/x-www-form-urlencoded'
@@ -34,7 +35,7 @@ function HttpClient (opt) {
   }
 
   this.qs = qs
-
+  this.CancelToken = CancelToken
   this.init(opt)
 }
 
@@ -107,6 +108,7 @@ proto.request = function (arg1, arg2) {
     data,
     headers,
     method: _.toUpper(method),
+    cancelToken: config.cancelToken,
     withCredentials: config.withCredentials
   }
 
@@ -154,6 +156,8 @@ proto.adapter = function (config) {
     return adapters.xhr.call(this, config)
   }
 }
+
+// TODO add http.all http.spread like axios
 
 _.each(simpleMethods, method => {
   proto[method] = function (url, config) {

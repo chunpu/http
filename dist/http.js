@@ -1,2 +1,401 @@
-/*! @chunpu/http@1.0.1 by chunpu */
-!function(n,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.http=t():n.http=t()}(window,function(){return function(n){var t={};function e(r){if(t[r])return t[r].exports;var i=t[r]={i:r,l:!1,exports:{}};return n[r].call(i.exports,i,i.exports,e),i.l=!0,i.exports}return e.m=n,e.c=t,e.d=function(n,t,r){e.o(n,t)||Object.defineProperty(n,t,{enumerable:!0,get:r})},e.r=function(n){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(n,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(n,"__esModule",{value:!0})},e.t=function(n,t){if(1&t&&(n=e(n)),8&t)return n;if(4&t&&"object"==typeof n&&n&&n.__esModule)return n;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:n}),2&t&&"string"!=typeof n)for(var i in n)e.d(r,i,function(t){return n[t]}.bind(null,i));return r},e.n=function(n){var t=n&&n.__esModule?function(){return n.default}:function(){return n};return e.d(t,"a",t),t},e.o=function(n,t){return Object.prototype.hasOwnProperty.call(n,t)},e.p="",e(e.s=3)}([function(n,t,e){n.exports=e(5)},function(n,t,e){var r=e(6),i=[].slice,u=t;u.is=r,u.extend=u.assign=function(n){if(n){var t=i.call(arguments,1);c(t,function(t){h(t,function(t,e){r.undef(t)||(n[e]=t)})})}return n},u.each=c,u.map=function(n,t){var e=[];return c(n,function(n,r,i){e[r]=t(n,r,i)}),e},u.filter=function(n,t){var e=[];return c(n,function(n,r,i){t(n,r,i)&&e.push(n)}),e},u.some=function(n,t){return-1!=f(n,t)},u.every=function(n,t){return-1==f(n,l(t))},u.reduce=function(n,t,e){return c(n,function(r,i){e=t(e,r,i,n)}),e},u.findIndex=f,u.find=function(n,t){var e=u.findIndex(n,t);if(-1!=e)return n[e]},u.indexOf=p,u.includes=function(n,t){return-1!=p(n,t)},u.toArray=s,u.slice=function(n,t,e){var i=[],u=a(n);return u>=0&&(t=t||0,0!==e&&(e=e||u),r.fn(n.slice)||(n=s(n)),i=n.slice(t,e)),i},u.negate=l,u.forIn=h,u.keys=function(n){var t=[];return h(n,function(n,e){t.push(e)}),t};var o=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;function a(n){if(null!=n)return n.length}function c(n,t){var e=a(n);if(e&&r.fn(t))for(var i=0;i<e&&!1!==t(n[i],i,n);i++);return n}function f(n,t){var e=-1;return c(n,function(n,r,i){if(t(n,r,i))return e=r,!1}),e}function s(n){var t=[];return c(n,function(n){t.push(n)}),t}function l(n){return function(){return!n.apply(this,arguments)}}function p(n,t){return r.string(n)?n.indexOf(t):f(n,function(n){return t===n})}function h(n,t){if(n)for(var e in n)if(r.owns(n,e)&&!1===t(n[e],e,n))break;return n}u.trim=function(n){return null==n?"":(""+n).replace(o,"")},u.noop=function(){},u.len=a},function(n,t,e){var r=e(0),i=r.is,u={sep:"&",eq:"=",encode:encodeURIComponent,decode:decodeURIComponent,keepRaw:!1,sort:null,ignoreValues:[void 0]};function o(n,t,e){return e=r.find(arguments,function(n){return i.object(n)}),n=i.nos(n)?n:void 0,t=i.nos(t)?t:void 0,e=r.extend({},u,e,{sep:n,eq:t})}t.parse=function(n,t,e,i){n+="";var u=(i=o(t,e,i)).decode;return n=n.split(i.sep),r.reduce(n,function(n,t){if(2==(t=t.split(i.eq)).length){var e=t[0],r=t[1];if(!i.keepRaw)try{e=u(e),r=u(r)}catch(n){}n[e]=r}return n},{})},t.stringify=function(n,t,e,u){u=o(t,e,u);var a=r.keys(n),c=u.sort;c&&(i.fn(c)?a.sort(c):a.sort());var f=u.encode,s=[];return r.each(a,function(t){var e=n[t];r.includes(u.ignoreValues,e)||((i.nan(e)||null==e)&&(e=""),u.keepRaw||(t=f(t),e=f(e)),s.push(t+u.eq+e))}),s.join(u.sep)}},function(n,t,e){n.exports=e(4)},function(n,t,e){const r=e(0),i=new(e(16));function u(...n){return i.request(...n)}for(var o in n.exports=u,i){var a=i[o];r.isFunction(a)&&(a=r.bind(a,i)),u[o]=a}},function(n,t,e){var r=e(1);function i(n){if(!(this instanceof i))return new i(n);this.__value=n,this.__chain=!1}n.exports=r.extend(i,r),e(8)(i),e(9)(i),e(10)(i),e(11)(i),e(12)(i),e(14)(i),e(15)(i),i.mixin(i,i)},function(n,t,e){(function(n){var e=t,r=Object.prototype,i=(n=n||{}).navigator;function u(n){var t=r.toString.call(n);return t.substring(8,t.length-1).toLowerCase()}function o(n){return typeof n}function a(n,t){return r.hasOwnProperty.call(n,t)}e.browser=function(){return!(e.wechatApp()||!i||n.window!=n)},e.h5=function(){return!(!e.browser()||!i.geolocation)},e.mobile=function(){return!(!e.browser()||!/mobile/i.test(i.userAgent))},e.wechatApp=function(){return!("object"!=typeof wx||!wx||!e.fn(wx.createVideoContext))},e._class=u,e._type=o,e.owns=a,e.nan=function(n){return n!=n},e.bool=function(n){return"boolean"==u(n)},e.infinite=function(n){return n==1/0||n==-1/0},e.number=function(n){return!isNaN(n)&&"number"==u(n)},e.iod=function(n){return!(!e.number(n)||e.infinite(n))},e.decimal=function(n){return!!e.iod(n)&&0!=n%1},e.integer=function(n){return!!e.iod(n)&&0==n%1},e.oof=function(n){if(n){var t=o(n);return"object"==t||"function"==t}return!1},e.object=function(n){return e.oof(n)&&"function"!=u(n)},e.hash=e.plainObject=function(n){return!(!n||"object"!=u(n))&&(!n.nodeType&&!n.setInterval)},e.undef=function(n){return"undefined"==o(n)},e.fn=function(n){return"function"==u(n)},e.string=function(n){return"string"==u(n)},e.nos=function(n){return e.iod(n)||e.string(n)},e.array=function(n){return"array"==u(n)},e.arraylike=function(n){if(!e.window(n)&&e.object(n)){var t=n.length;if(e.integer(t)&&t>=0)return!0}return!1},e.window=function(n){return!(!n||n.window!=n)},e.empty=function(n){if(e.string(n)||e.arraylike(n))return 0===n.length;if(e.hash(n))for(var t in n)if(a(n,t))return!1;return!0},e.element=function(n){return!(!n||1!==n.nodeType)},e.regexp=function(n){return"regexp"==u(n)}}).call(this,e(7))},function(n,t){var e;e=function(){return this}();try{e=e||Function("return this")()||(0,eval)("this")}catch(n){"object"==typeof window&&(e=window)}n.exports=e},function(n,t){n.exports=function(n){var t=n.is;n.isString=t.string,n.isArray=t.array,n.isArrayLike=t.arraylike,n.isBoolean=t.bool,n.isElement=t.element,n.isEmpty=t.empty,n.isFunction=t.fn,n.isInteger=t.integer,n.isNaN=t.nan,n.isNumber=t.number,n.isObject=t.object,n.isPlainObject=t.plainObject,n.isRegExp=t.regexp,n.isString=t.string,n.isUndefined=t.undef}},function(n,t){n.exports=function(n){var t=n.is;n.now=function(){return+new Date},n.constant=function(n){return function(){return n}},n.identity=function(n){return n},n.random=function(n,t){return n+Math.floor(Math.random()*(t-n+1))},n.mixin=function(e,r,i){var u=n.functions(r);if(e)if(t.fn(e)){(i=i||{}).chain;var o=e.prototype;n.each(u,function(n){var t=r[n];o[n]=function(){var n=this,e=[n.__value];e.push.apply(e,arguments);var r=t.apply(n,e);return n.__chain?(n.__value=r,n):r}})}else n.each(u,function(n){e[n]=r[n]});return e},n.chain=function(t){var e=n(t);return e.__chain=!0,e},n.value=function(){return this.__chain=!1,this.__value}}},function(n,t){n.exports=function(n){var t=n.forEach=n.each,e=n.includes,r=n.is,i=Array.prototype;function u(t,e){var r=n.size(e);return t<0&&(t+=r),t<0&&(t=0),t>r&&(t=r),t||0}function o(t,e){var r=[],u=n.len(e);if(u)for(e=e.sort(function(n,t){return n-t});u--;){var o=e[u];r.push(i.splice.call(t,o,1)[0])}return r.reverse(),r}n.reject=function(t,e){return n.filter(t,function(n,t,r){return!e(n,t,r)})},n.without=function(t){var e=n.slice(arguments,1);return n.difference(t,e)},n.difference=function(t,r){var i=[];return n.each(t,function(n){e(r,n)||i.push(n)}),i},n.pluck=function(t,e){return n.map(t,function(n){if(n)return n[e]})},n.nth=function(t,e){return e=(e=u(e,t))||0,n.isString(t)?t.charAt(e):t[e]},n.first=function(t){if(t)return n.nth(t,0)},n.last=function(t){var e=n.len(t);if(e)return n.nth(t,e-1)},n.asyncMap=function(n,e,r){var i,u,o=[],a=0;t(n,function(t,c){u=!0,e(t,function(t,e){if(!i){if(a++,t)return i=!0,r(t);o[c]=e,a==n.length&&(i=!0,r(null,o))}})}),u||r(null)},n.uniq=function(t){return n.uniqBy(t)},n.uniqBy=function(n,i){var u=[],o=[];return r.fn(i)||(i=null),t(n,function(n){var t=n;i&&(t=i(n)),e(o,t)||(o.push(t),u.push(n))}),u},n.flatten=function(n){var e=[];return t(n,function(n){r.arraylike(n)?t(n,function(n){e.push(n)}):e.push(n)}),e},n.union=function(){return n.uniq(n.flatten(arguments))},n.sample=function(t,e){for(var r=n.toArray(t),i=r.length,u=Math.min(e||1,i),o=0;o<i;o++){var a=n.random(o,i-1),c=r[a];r[a]=r[o],r[o]=c}return r.length=u,null==e?r[0]:r},n.shuffle=function(t){return n.sample(t,1/0)},n.compact=function(t){return n.filter(t,n.identity)},n.rest=function(t){return n.slice(t,1)},n.invoke=function(){var t=arguments,e=t[0],i=t[1],u=r.fn(i);return t=n.slice(t,2),n.map(e,function(n){if(u)return i.apply(n,t);if(null!=n){var e=n[i];if(r.fn(e))return e.apply(n,t)}})},n.partition=function(t,e){var r=n.groupBy(t,function(n,t,r){return e(n,t,r)?1:2});return[r[1]||[],r[2]||[]]},n.groupBy=function(t,e){var r={};return n.each(t,function(n,t,i){var u=e(n,t,i);r[u]=r[u]||[],r[u].push(n)}),r},n.range=function(){var t=arguments;if(t.length<2)return n.range(t[1],t[0]);var e=t[0]||0,i=t[1]||0,u=t[2];r.number(u)||(u=1);var o=i-e;0!=u&&(o/=u);for(var a=[],c=e,f=0;f<o;f++)a.push(c),c+=u;return a},n.pullAt=function(t){return o(t,n.slice(arguments,1))},n.remove=function(t,e){for(var r=n.len(t)||0,i=[];r--;)e(t[r],r,t)&&i.push(r);return o(t,i)},n.fill=function(t,e,r,i){var o=n.size(t);r=u(r,t)||0,i=u(i,t)||o;for(var a=r;a<i;a++)t[a]=e;return t},n.size=function(t){var e=0;if(t){var r=t.length;n.isInteger(r)&&r>=0?e=r:n.isObject(t)&&(e=n.keys(t).length)}return e}}},function(n,t){n.exports=function(n){var t=n.is,e=(n.each,n.forIn);n.only=function(e,r){return e=e||{},t.string(r)&&(r=r.split(/ +/)),n.reduce(r,function(n,t){return null!=e[t]&&(n[t]=e[t]),n},{})},n.values=function(t){return n.map(n.keys(t),function(n){return t[n]})},n.pick=function(r,i){if(!t.fn(i))return n.pick(r,function(n,t){return t==i});var u={};return e(r,function(n,t,e){i(n,t,e)&&(u[t]=n)}),u},n.functions=function(e){return n.keys(n.pick(e,function(n){return t.fn(n)}))},n.mapKeys=function(n,t){var r={};return e(n,function(n,e,i){var u=t(n,e,i);r[u]=n}),r},n.mapObject=n.mapValues=function(n,t){var r={};return e(n,function(n,e,i){r[e]=t(n,e,i)}),r},n.get=function(t,e){if((e=u(e)).length&&n.every(e,function(n){if(null!=t)return t=t[n],!0}))return t},n.has=function(e,r){if((r=u(r)).length&&n.every(r,function(n){if(null!=e&&t.owns(e,n))return e=e[n],!0}))return!0;return!1},n.set=function(e,r,i){r=u(r);var o=e;return n.every(r,function(n,e){if(t.oof(o)){if(e+1!=r.length){if(null==(u=o[n])){var u={};~~n==n&&(u=[])}return o=o[n]=u,!0}o[n]=i}}),e},n.create=function(){function t(){}return function(e,r){return"object"!=typeof e&&(e=null),t.prototype=e,n.extend(new t,r)}}(),n.defaults=function(){var e=arguments,r=e[0],i=n.slice(e,1);return r&&n.each(i,function(e){n.mapObject(e,function(n,e){t.undef(r[e])&&(r[e]=n)})}),r},n.isMatch=function(n,t){var r=!0;return n=n||{},e(t,function(t,e){if(t!==n[e])return r=!1,!1}),r},n.toPlainObject=function(n){var t={};return e(n,function(n,e){t[e]=n}),t},n.invert=function(n){var t={};return e(n,function(n,e){t[n]=e}),t};var r=/[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g,i=/\\(\\)?/g;function u(e){if(t.array(e))return e;var u=[];return n.toString(e).replace(r,function(n,t,e,r){var o=t||n;e&&(o=r.replace(i,"$1")),u.push(o)}),u}}},function(n,t,e){n.exports=function(n){var t=n.is,r=n.slice;function i(n){var t=new i.Cache;function e(){var e=arguments,r=e[0];if(!t.has(r)){var i=n.apply(this,e);t.set(r,i)}return t.get(r)}return e.cache=t,e}n.bind=function(e,i){if(t.string(i)){var u=e;e=u[i],i=u}if(!t.fn(e))return e;var o=r(arguments,2);return i=i||this,function(){return e.apply(i,n.flatten([o,arguments]))}},n.inherits=function(t,e){t.super_=e,t.prototype=n.create(e.prototype,{constructor:t})},n.delay=function(t,e){var r=n.slice(arguments,2);return setTimeout(function(){t.apply(this,r)},e)},n.before=function(n,t){return function(){if(n>1)return n--,t.apply(this,arguments)}},n.once=function(t){return n.before(2,t)},n.after=function(n,t){return function(){if(!(n>1))return t.apply(this,arguments);n--}},n.throttle=function(t,e,r){return e=e||0,r=n.extend({leading:!0,trailing:!0,maxWait:e},r),n.debounce(t,e,r)},n.debounce=function(t,e,r){e=e||0;var i,u=(r=n.extend({leading:!1,trailing:!0},r)).maxWait,o=0,a=0,c=n.now();function f(t,e,r){return o=n.now(),t.apply(e,r)}function s(){i&&(clearTimeout(i),i=null)}function l(){var l=!((c=n.now())-o>e||u&&c-a>u);a=c;var p=this,h=arguments;s(),l?r.trailing&&(i=n.delay(function(){f(t,p,h)},e)):f(t,p,h)}return r.leading||(o=c),l.cancel=s,l},i.Cache=e(13),n.memoize=i,n.wrap=function(n,t){return function(){var e=[n];return e.push.apply(e,arguments),t.apply(this,e)}},n.curry=function(t){var e=t.length;return function r(i){return function(){var u=i.concat(n.slice(arguments));return u.length>=e?(u.length=e,t.apply(this,u)):r(u)}}([])}}},function(n,t,e){var r=e(1).is;function i(){this.data={}}n.exports=i;var u=i.prototype;u.has=function(n){return r.owns(this.data,n)},u.get=function(n){return this.data[n]},u.set=function(n,t){this.data[n]=t},u.delete=function(n){delete this.data[n]}},function(n,t){n.exports=function(n){n.tostr=n.toString=i;var t=n.indexOf;n.split=function(n,t,e){return(n=i(n)).split(t,e)},n.capitalize=function(n){return(n=i(n)).charAt(0).toUpperCase()+n.substr(1)},n.decapitalize=function(n){return(n=i(n)).charAt(0).toLowerCase()+n.substr(1)},n.camelCase=function(t){var e=(t=i(t)).split(/[^\w]|_+/);return e=n.map(e,function(t){return n.capitalize(t)}),n.decapitalize(e.join(""))},n.startsWith=function(n,e){return 0==t(n,e)},n.endsWith=function(t,e){return(e+="")==n.slice(t,n.len(t)-n.len(e))},n.toLower=n.lower=function(n){return i(n).toLowerCase()},n.toUpper=n.upper=function(n){return i(n).toUpperCase()},n.repeat=function(t,e){return n.map(n.range(e),function(){return t}).join("")},n.padStart=function(n,t,e){return n=i(n),r(e,(t=t||0)-n.length)+n},n.padEnd=function(n,t,e){return(n=i(n))+r(e,(t=t||0)-n.length)};var e={"&":"&amp","<":"&lt",">":"&gt",'"':"&quot","'":"&#39"};function r(t,e){t=i(t)||" ";var r=Math.floor(e/t.length)+1;return n.repeat(t,r).slice(0,e)}function i(n){return n||0==n?n+"":""}n.escape=function(n){return i(n).replace(/[&<>"']/g,function(n){return e[n]||n})},n.template=function(t){var e=['with(data) {var ret = ""'];n.each(n.split(t,"<%"),function(t,r){var i=t.split("%>");if(i[1])return function(t){var r=n.first(t);if("="===r||"-"===r){var i=n.slice(t,1);"-"===r&&(i="_.escape("+i+")"),e.push("ret += "+i)}else e.push(t)}(n.trim(i[0])),u(i[1]);u(i[0])}),e.push("return ret}");var r=new Function("data",e.join("\n")),i={_:n};return function(t){return r(n.extend({},i,t))};function u(n){e.push('ret += "'+n.replace(/('|"|\\)/g,"\\$1").replace(/\r/g,"\\r").replace(/\n/g,"\\n")+'"')}}}},function(n,t){n.exports=function(n){n.sum=function(t){return n.reduce(t,function(n,t){return n+t},0)},n.max=function(t,e){var r=-1,i=-1/0;return e=e||n.identity,n.each(t,function(n,t){(n=e(n))>i&&(i=n,r=t)}),r>-1?t[r]:i},n.min=function(t,e){var r=-1,i=1/0;return e=e||n.identity,n.each(t,function(n,t){(n=e(n))<i&&(i=n,r=t)}),r>-1?t[r]:i}}},function(n,t,e){const r=e(0),i=e(17),u=e(2),o=e(18),a=e(19),c="application/json",f="application/x-www-form-urlencoded",s=a.CONTENT_TYPE_KEY,l=["get","head","delete","options"],p=["post","put","patch"],h=[...l,...p];function d(n){this.defaults={baseURL:"",timeout:0,headers:{common:{}},withCredentials:!1},r.each(h,n=>{var t=this.defaults.headers[n]={};r.includes(p,"method")&&(t[n]=c)}),this.interceptors={request:new o,response:new o},this.qs=u,this.init(n)}d.qs=u;var v=d.prototype;v.init=function(n){n=r.extend({},n),this.defaults.headers.common=n.headers||{},delete n.headers,r.extend(this.defaults,n)},v.create=function(n){return new d(n)},v.request=function(n,t){if(r.isString(n))return this.request(r.extend({url:n},t));var e=n||{};e.headers=e.headers||{};var o=(e=r.extend({},this.defaults,e)).baseURL+e.url;o=i.appendQuery(o,e.params);var l=r.toLower(e.method)||"get",p=this.defaults.headers,h=r.extend({},p.common,p[l],e.headers),d=a.getContentType(h),v=d,m=e.data;r.isPlainObject(m)?(d===f?m=u.stringify(m):d===c&&(m=JSON.stringify(m)),v||r.isString(m)&&(v=f),r.isString(m)||(m=JSON.stringify(m),v=v||c),!d&&v&&(h[s]=v)):a.isFormData(m)&&delete h[s];var y=e.timeout;return e={url:o,data:m,headers:h,method:r.toUpper(l),withCredentials:e.withCredentials},y&&(e.timeout=y),Promise.resolve(e).then(n=>this.interceptors.request.exec(n)).then(n=>this.adapter(n)).then(n=>{if(r.isString(n.data)&&!this.axios){var t=n.data;try{n.data=JSON.parse(n.data)}catch(e){n.data=t}}return n.config=e,n.headers=r.mapKeys(n.headers,(n,t)=>r.toLower(t)),n}).then(n=>this.interceptors.response.exec(n))},v.adapter=function(n){var t=this.defaults;return t.wx?new Promise((e,r)=>{t.wx.request({url:n.url,data:n.data,header:n.headers,method:n.method,timeout:n.timeout,success(n){var{data:t,statusCode:r,header:i}=n;e({data:t,status:r,headers:i})},fail(n){r(n)}})}):t.axios?t.axios.request(n).then(n=>n):t.jQuery?new Promise((e,r)=>{t.jQuery.ajax({url:n.url,data:n.data,headers:n.headers,method:n.method,timeout:n.timeout,withCredentials:n.withCredentials,success(n,t,r){e({data:n,status:200,headers:a.parseHeadersFromXhr(r)})},error(n,t,e){r({errorThrown:e,textStatus:t,jqXHR:n})}})}):t.quickapp?new Promise((e,r)=>{t.quickapp.fetch({url:n.url,data:n.data,header:n.headers,method:n.method,timeout:n.timeout,success(n){var{data:t,code:r,headers:i}=n;e({data:t,status:r,headers:i})},fail(n,t){r({data:n,code:t})}})}):"function"==typeof XMLHttpRequest?new Promise((t,e)=>{var i=new XMLHttpRequest;i.onload=(n=>{t({status:i.status,data:i.responseText,headers:a.parseHeadersFromXhr(i)})}),i.ontimeout=(n=>{e(new Error("timeout"))}),i.onerror=(n=>{e(new Error("error"))}),i.open(n.method,n.url,!0),n.timeout&&(i.timeout=n.timeout),n.withCredentials&&(i.withCredentials=n.withCredentials),r.forIn(n.headers,(n,t)=>{i.setRequestHeader(t,n)}),i.send(n.data)}):void 0},r.each(l,n=>{v[n]=function(t,e){return this.request(r.extend({method:n,url:t},e))}}),r.each(p,n=>{v[n]=function(t,e,i){return this.request(r.extend({url:t,method:n,data:e},i))}}),n.exports=d},function(n,t,e){var r=e(2),i=e(0);t.parse=function(n,t){if("string"!=typeof n)return n;var e,u,a={};a.href=n,u=(e=o(n,"#"))[0],e[1]&&(a.hash="#"+e[1]),u=(e=function(n,t){var e="";return n=n.replace(t,function(n){return e=n,""}),[e,n]}(u,/^[a-zA-Z][a-zA-Z0-9+-.]*:/))[1],a.protocol=e[0].toLowerCase(),u=(e=o(u,"?"))[0];var c=e[1];if(t&&(c=r.parse(c)),a.query=c,"/"!=u.charAt(0)&&a.schema)return a.opaque=u,a;i.startsWith(u,"//")&&(e=o(u=u.slice(2),"/"),a.pathname="/"+unescape(e[1]||""),e=function(n){var t=o(n,"@"),e=t[0],r=t[1];r||(r=t[0],e=null);return[e,r]}(e[0]),a.auth=e[0],e=o(e[1],":"),a.hostname=e[0],a.port=~~e[1]);return a};var u="http https ftp gopher file".split(" ");function o(n,t){var e=[],r=i.indexOf(n,t);return-1==r?e[0]=n:(e[0]=n.slice(0,r),e[1]=n.slice(r+t.length)),e}t.format=function(n){if(!n||"object"!=typeof n)return n;var t=n.protocol,e=[t];t&&!i.includes(u,t.slice(0,t.length-1))||e.push("//"),n.auth&&e.push(n.auth,"@"),e.push(n.hostname),n.port&&e.push(":",n.port),e.push(n.pathname);var o=n.query;o&&("string"!=typeof o&&(o=r.stringify(o)),o&&e.push("?",o)),e.push(n.hash);for(var a=[],c=0;c<e.length;c++)e[c]&&a.push(e[c]);return a.join("")},t.appendQuery=function(n,t){var e=o(n,"#");n=e[0];var u=e[1];return i.isObject(t)&&(t=r.stringify(t)),i.includes(n,"?")?i.endsWith(n,"&")||i.endsWith(n,"?")||t&&(t="&"+t):t&&(t="?"+t),t&&(n+=t),u&&(n+="#"+u),n}},function(n,t,e){const r=e(0);function i(){this.queue=[]}n.exports=i,r.extend(i.prototype,{use(...n){return this.queue.push(n),this},exec(n){return r.reduce(this.queue,(n,t)=>n.then(...t),Promise.resolve(n))}})},function(n,t,e){const r=e(0),i=new RegExp("Content-Type","i");t.CONTENT_TYPE_KEY="Content-Type",t.getContentType=function(n){var t=r.keys(n);return n[r.find(t,n=>i.test(n))]},t.parseHeadersFromXhr=function(n){return r.chain(n.getAllResponseHeaders()).trim().split("\n").reduce((n,t)=>{var e=r.indexOf(t,":"),i=r.toLower(r.trim(r.slice(t,0,e))),u=r.trim(r.slice(t,e+1));return n[i]?n[i]=","+u:n[i]=u,n},{}).value()},t.isFormData=function(n){return"undefined"!=typeof FormData&&n instanceof FormData}}])});
+/*!
+ * @chunpu/http@1.2.0 by chunpu
+ * 2018-10-22T07:07:55.027Z
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["http"] = factory();
+	else
+		root["http"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./index.js":
+/*!******************!*\
+  !*** ./index.js ***!
+  \******************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__(/*! ./src/index.js */ \"./src/index.js\")\n\n\n//# sourceURL=webpack://%5Bname%5D/./index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_cou@1.4.0@cou/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/_cou@1.4.0@cou/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("var is = __webpack_require__(/*! min-is */ \"./node_modules/_min-is@2.2.1@min-is/index.js\")\n\nvar slice = [].slice\n\nvar _ = exports\n\n_.is = is\n\n_.extend = _.assign = extend\n\n_.each = each\n\n_.map = function(arr, fn) {\n\tvar ret = []\n\teach(arr, function(item, i, arr) {\n\t\tret[i] = fn(item, i, arr)\n\t})\n\treturn ret\n}\n\n_.filter = function(arr, fn) {\n\tvar ret = []\n\teach(arr, function(item, i, arr) {\n\t\tvar val = fn(item, i, arr)\n\t\tif (val) ret.push(item)\n\t})\n\treturn ret\n}\n\n_.some = function(arr, fn) {\n\treturn -1 != findIndex(arr, fn)\n}\n\n_.every = function(arr, fn) {\n\treturn -1 == findIndex(arr, negate(fn))\n}\n\n_.reduce = reduce\n\n_.findIndex = findIndex\n\n_.find = function(arr, fn) {\n\tvar index = _.findIndex(arr, fn)\n\tif (-1 != index) {\n\t\treturn arr[index]\n\t}\n}\n\n_.indexOf = indexOf\n\n_.includes = function(val, sub) {\n\treturn -1 != indexOf(val, sub)\n}\n\n_.toArray = toArray\n\n_.slice = function(arr, start, end) {\n\t// support array and string\n\tvar ret = [] // default return array\n\tvar len = getLength(arr)\n\tif (len >= 0) {\n\t\tstart = start || 0\n\t\tif (0 !== end) {\n\t\t\tend = end || len\n\t\t}\n\t\t// raw array and string use self slice\n\t\tif (!is.fn(arr.slice)) {\n\t\t\tarr = toArray(arr)\n\t\t}\n\t\tret = arr.slice(start, end)\n\t}\n\treturn ret\n}\n\n_.negate = negate\n\n_.forIn = forIn\n\n_.keys = keys\n\nvar rtrim = /^[\\s\\uFEFF\\xA0]+|[\\s\\uFEFF\\xA0]+$/g\n\n_.trim = function(str) {\n\tif (null == str) return ''\n\treturn ('' + str).replace(rtrim, '')\n}\n\n_.noop = function() {}\n\n_.len = getLength\n\nfunction getLength(arr) {\n\tif (null != arr) return arr.length\n}\n\nfunction each(arr, fn) {\n\tvar len = getLength(arr)\n\tif (len && is.fn(fn)) {\n\t\tfor (var i = 0; i < len; i++) {\n\t\t\tif (false === fn(arr[i], i, arr)) break\n\t\t}\n\t}\n\treturn arr\n}\n\nfunction findIndex(arr, fn) {\n\tvar ret = -1\n\teach(arr, function(item, i, arr) {\n\t\tif (fn(item, i, arr)) {\n\t\t\tret = i\n\t\t\treturn false\n\t\t}\n\t})\n\treturn ret\n}\n\nfunction toArray(arr) {\n\tvar ret = []\n\teach(arr, function(item) {\n\t\tret.push(item)\n\t})\n\treturn ret\n}\n\n\nfunction extend(target) {\n\tif (target) {\n\t\tvar sources = slice.call(arguments, 1)\n\t\teach(sources, function(src) {\n\t\t\tforIn(src, function(val, key) {\n\t\t\t\tif (!is.undef(val)) {\n\t\t\t\t\ttarget[key] = val\n\t\t\t\t}\n\t\t\t})\n\t\t})\n\t}\n\treturn target\n}\n\nfunction negate(fn) {\n\treturn function() {\n\t\treturn !fn.apply(this, arguments)\n\t}\n}\n\nfunction indexOf(val, sub) {\n\tif (is.string(val)) return val.indexOf(sub)\n\n\treturn findIndex(val, function(item) {\n\t\t// important!\n\t\treturn sub === item\n\t})\n}\n\nfunction reduce(arr, fn, prev) {\n\teach(arr, function(item, i) {\n\t\tprev = fn(prev, item, i, arr)\n\t})\n\treturn prev\n}\n\nfunction forIn(hash, fn) {\n\tif (hash) {\n\t\tfor (var key in hash) {\n\t\t\tif (is.owns(hash, key)) {\n\t\t\t\tif (false === fn(hash[key], key, hash)) break\n\t\t\t}\n\t\t}\n\t}\n\treturn hash\n}\n\nfunction keys(hash) {\n\tvar ret = []\n\tforIn(hash, function(val, key) {\n\t\tret.push(key)\n\t})\n\treturn ret\n}\n\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_cou@1.4.0@cou/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-is@2.2.1@min-is/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/_min-is@2.2.1@min-is/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("/* WEBPACK VAR INJECTION */(function(global) {var is = exports\n\nvar obj = Object.prototype\n\nglobal = global || {}\n\nvar navigator = global.navigator\n\n// reserved words in es3: instanceof null undefined arguments boolean false true function int\n// only have is.string and is.object, not is.str and is.obj\n// instanceof null undefined arguments boolean false true function int\n\nis.browser = function() {\n\tif (!is.wechatApp()) {\n\t\tif (navigator && global.window == global) {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}\n\n// simple modern browser detect\nis.h5 = function() {\n\tif (is.browser() && navigator.geolocation) {\n\t\treturn true\n\t}\n\treturn false\n}\n\nis.mobile = function() {\n\tif (is.browser() && /mobile/i.test(navigator.userAgent)) {\n\t\treturn true\n\t}\n\treturn false\n}\n\nis.wechatApp = function() {\n\tif ('object' == typeof wx) {\n\t\tif (wx && is.fn(wx.createVideoContext)) {\n\t\t\t// wechat js sdk has no createVideoContext\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}\n\nfunction _class(val) {\n\tvar name = obj.toString.call(val)\n\t// [object Class]\n\treturn name.substring(8, name.length - 1).toLowerCase()\n}\n\nfunction _type(val) {\n\t// undefined object boolean number string symbol function\n\treturn typeof val\n}\n\nfunction owns(owner, key) {\n\treturn obj.hasOwnProperty.call(owner, key)\n}\n\nis._class = _class\n\nis._type = _type\n\nis.owns = owns\n\n// not a number\nis.nan = function(val) {\n\treturn val !== val\n}\n\nis.bool = function(val) {\n\treturn 'boolean' == _class(val)\n}\n\nis.infinite = function(val) {\n\treturn val == Infinity || val == -Infinity\n}\n\nis.number = function(num) {\n\treturn !isNaN(num) && 'number' == _class(num)\n}\n\n// integer or decimal\nis.iod = function(val) {\n\tif (is.number(val) && !is.infinite(val)) {\n\t\treturn true\n\t}\n\treturn false\n}\n\nis.decimal = function(val) {\n\tif (is.iod(val)) {\n\t\treturn 0 != val % 1\n\t}\n\treturn false\n}\n\nis.integer = function(val) {\n\tif (is.iod(val)) {\n\t\treturn 0 == val % 1\n\t}\n\treturn false\n}\n\n// object or function\nis.oof = function(val) {\n\tif (val) {\n\t\tvar tp = _type(val)\n\t\treturn 'object' == tp || 'function' == tp\n\t}\n\treturn false\n}\n\n// regexp should return object\nis.object = function(obj) {\n\treturn is.oof(obj) && 'function' != _class(obj)\n}\n\nis.hash = is.plainObject = function(hash) {\n\tif (hash) {\n\t\tif ('object' == _class(hash)) {\n\t\t\t// old window is object\n\t\t\tif (hash.nodeType || hash.setInterval) {\n\t\t\t\treturn false\n\t\t\t}\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}\n\nis.undef = function(val) {\n\treturn 'undefined' == _type(val)\n}\n\n// host function should return function, e.g. alert\nis.fn = function(fn) {\n\treturn 'function' == _class(fn)\n}\n\nis.string = function(str) {\n\treturn 'string' == _class(str)\n}\n\n// number or string\nis.nos = function(val) {\n\treturn is.iod(val) || is.string(val)\n}\n\nis.array = function(arr) {\n\treturn 'array' == _class(arr)\n}\n\nis.arraylike = function(arr) {\n\t// window has length for iframe too, but it is not arraylike\n\tif (!is.window(arr) && is.object(arr)) {\n\t\tvar len = arr.length\n\t\tif (is.integer(len) && len >= 0) {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}\n\nis.window = function(val) {\n\tif (val && val.window == val) {\n\t\treturn true\n\t}\n\treturn false\n}\n\nis.empty = function(val) {\n\tif (is.string(val) || is.arraylike(val)) {\n\t\treturn 0 === val.length\n\t}\n\tif (is.hash(val)) {\n\t\tfor (var key in val) {\n\t\t\tif (owns(val, key)) {\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t}\n\treturn true\n}\n\nis.element = function(elem) {\n\tif (elem && 1 === elem.nodeType) {\n\t\treturn true\n\t}\n\treturn false\n}\n\nis.regexp = function(val) {\n\treturn 'regexp' == _class(val)\n}\n\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../_webpack@4.18.0@webpack/buildin/global.js */ \"./node_modules/_webpack@4.18.0@webpack/buildin/global.js\")))\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-is@2.2.1@min-is/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-qs@1.4.0@min-qs/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/_min-qs@1.4.0@min-qs/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("var _ = __webpack_require__(/*! min-util */ \"./node_modules/_min-util@3.3.1@min-util/index.js\")\nvar is = _.is\n\nvar defaultOption = {\n\tsep: '&',\n\teq: '=',\n\tencode: encodeURIComponent,\n\tdecode: decodeURIComponent,\n\tkeepRaw: false,\n\tsort: null,\n\tignoreValues: [undefined]\n}\n\nexports.parse = function(qs, sep, eq, opt) {\n\tqs += ''\n\topt = getOpt(sep, eq, opt)\n\tvar decode = opt.decode\n\t// var ret = {}\n\tqs = qs.split(opt.sep)\n\n\treturn _.reduce(qs, function(ret, arr) {\n\t\tarr = arr.split(opt.eq)\n\t\tif (2 == arr.length) {\n\t\t\tvar k = arr[0]\n\t\t\tvar v = arr[1]\n\t\t\tif (!opt.keepRaw) {\n\t\t\t\ttry {\n\t\t\t\t\tk = decode(k)\n\t\t\t\t\tv = decode(v)\n\t\t\t\t} catch (ignore) {}\n\t\t\t}\n\t\t\tret[k] = v\n\t\t}\n\t\treturn ret\n\t}, {})\n}\n\nexports.stringify = function(obj, sep, eq, opt) {\n\topt = getOpt(sep, eq, opt)\n\n\tvar keys = _.keys(obj)\n\n\tvar sort = opt.sort\n\tif (sort) {\n\t\tif (is.fn(sort)) {\n\t\t\tkeys.sort(sort)\n\t\t} else {\n\t\t\tkeys.sort()\n\t\t}\n\t}\n\n\tvar encode = opt.encode\n\n\tvar arr = []\n\t_.each(keys, function(key) {\n\t\tvar val = obj[key]\n\t\tif (!_.includes(opt.ignoreValues, val)) {\n\t\t\tif (is.nan(val) || null == val) {\n\t\t\t\tval = ''\n\t\t\t}\n\t\t\tif (!opt.keepRaw) {\n\t\t\t\tkey = encode(key)\n\t\t\t\tval = encode(val)\n\t\t\t}\n\t\t\tarr.push(key + opt.eq + val)\n\t\t}\n\t})\n\treturn arr.join(opt.sep)\n}\n\nfunction getOpt(sep, eq, opt) {\n\t// can be\n\t// _\n\t// opt\n\t// sep, opt\n\t// sep, eq, opt\n\topt = _.find(arguments, function(val) {\n\t\treturn is.object(val)\n\t})\n\tsep = is.nos(sep) ? sep : undefined\n\teq = is.nos(eq) ? eq : undefined\n\topt = _.extend({}, defaultOption, opt, {sep: sep, eq: eq})\n\treturn opt\n}\n\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-qs@1.4.0@min-qs/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-url@1.5.0@min-url/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/_min-url@1.5.0@min-url/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// wiki: http://en.wikipedia.org/wiki/URI_scheme\n// spec: https://url.spec.whatwg.org/\n// e.g. http://user:pass@host.com:8080/p/a/t/h?query=string#hash\n\nvar qs = __webpack_require__(/*! min-qs */ \"./node_modules/_min-qs@1.4.0@min-qs/index.js\")\nvar _ = __webpack_require__(/*! min-util */ \"./node_modules/_min-util@3.3.1@min-util/index.js\")\n\nexports.parse = function(url, parseQuery) {\n  if ('string' != typeof url) {\n    return url\n  }\n\n  var ret = {}, arr, rest\n\n  ret.href = url\n\n  // hash\n  arr = split(url, '#')\n  rest = arr[0]\n  if (arr[1]) {\n    ret.hash = '#' + arr[1]\n  }\n\n  // get scheme\n  arr = splicePattern(rest, /^[a-zA-Z][a-zA-Z0-9+-.]*:/)\n  rest = arr[1]\n  ret.protocol = arr[0].toLowerCase()\n\n  // query\n  arr = split(rest, '?')\n  rest = arr[0]\n  var query = arr[1]\n  if (parseQuery) {\n    query = qs.parse(query)\n  }\n  ret.query = query\n\n  // rest: `//user:pass@host.com:8080/p/a/t/h`\n\n  // not normal like http url\n  if ('/' != rest.charAt(0)) {\n    if (ret.schema) {\n      // rootless paths per RFC 3986 as opaque\n      // like mailto:xxx.com/path\n      ret.opaque = rest\n      return ret\n    }\n  }\n\n  // normal\n  if (_.startsWith(rest, '//')) {\n    rest = rest.slice(2)\n    arr = split(rest, '/')\n\n    ret.pathname = '/' + unescape(arr[1] || '')\n\n    arr = parseAuthority(arr[0])\n    ret.auth = arr[0]\n\n    // hostname, port\n    var host = arr[1]\n    arr = split(host, ':')\n    ret.hostname = arr[0]\n    ret.port = ~~arr[1]\n  }\n\n  return ret\n}\n\nvar slashProtocols = 'http https ftp gopher file'.split(' ')\n\nexports.format = function(obj) {\n  if (!obj || 'object' != typeof obj) return obj\n  var protocol = obj.protocol\n  var arr = [protocol]\n\n  if (!protocol || _.includes(slashProtocols, protocol.slice(0, protocol.length - 1))) {\n    arr.push('//')\n  }\n\n  if (obj.auth) {\n    arr.push(obj.auth, '@')\n  }\n\n  arr.push(obj.hostname)\n\n  if (obj.port) {\n    arr.push(':', obj.port)\n  }\n\n  arr.push(obj.pathname)\n\n  var query = obj.query\n  if (query) {\n    if ('string' != typeof query) {\n      query = qs.stringify(query)\n    }\n    if (query) {\n      arr.push('?', query)\n    }\n  }\n\n  arr.push(obj.hash)\n\n  var ret = []\n  for (var i = 0; i < arr.length; i++) {\n    if (arr[i]) ret.push(arr[i])\n  }\n\n  return ret.join('')\n}\n\nexports.appendQuery = function(url, query) {\n    var arr = split(url, '#')\n    url = arr[0]\n    var fragment = arr[1]\n\n    if (_.isObject(query)) {\n      query = qs.stringify(query)\n    }\n\n    if (_.includes(url, '?')) {\n      // has query\n      if (!_.endsWith(url, '&') && !_.endsWith(url, '?')) {\n        if (query) {\n          query = '&' + query\n        }\n      }\n\n    } else {\n      // no query\n      if (query) {\n        query = '?' + query\n      }\n    }\n\n    if (query) {\n      url += query\n    }\n\n    if (fragment) {\n      url += '#' + fragment\n    }\n\n    return url\n}\n\nfunction splicePattern(str, reg) {\n  var ret = ''\n  str = str.replace(reg, function(matched) {\n    ret = matched\n    return ''\n  })\n  return [ret, str]\n}\n\nfunction split(str, sep) {\n  var arr = []\n  var index = _.indexOf(str, sep)\n  if (-1 == index) {\n    arr[0] = str\n  } else {\n    arr[0] = str.slice(0, index)\n    arr[1] = str.slice(index + sep.length)\n  }\n  return arr\n}\n\nfunction parseAuthority(authAndHost) {\n  var arr = split(authAndHost, '@')\n  var auth = arr[0]\n  var host = arr[1]\n  if (!host) {\n    host = arr[0]\n    auth = null\n  }\n  return [auth, host]\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-url@1.5.0@min-url/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/index.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__(/*! ./src */ \"./node_modules/_min-util@3.3.1@min-util/src/index.js\")\n\n/* webpack only\nif (DEBUG && global.console) {\n\tconsole.debug('debug mode')\n}\n*/\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/array.js":
+/*!************************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/array.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(_) {\n\nvar each = _.forEach = _.each\nvar includes = _.includes\nvar is = _.is\nvar proto = Array.prototype\n\n_.reject = function(arr, fn) {\n\treturn _.filter(arr, function(val, i, arr) {\n\t\treturn !fn(val, i, arr)\n\t})\n}\n\n_.without = function(arr) {\n\tvar other = _.slice(arguments, 1)\n\treturn _.difference(arr, other)\n}\n\n_.difference = function(arr, other) {\n\tvar ret = []\n\t_.each(arr, function(val) {\n\t\tif (!includes(other, val)) {\n\t\t\tret.push(val)\n\t\t}\n\t})\n\treturn ret\n}\n\n_.pluck = function(arr, key) {\n\treturn _.map(arr, function(item) {\n\t\tif (item) return item[key]\n\t})\n}\n\n_.nth = function(arr, n) {\n\tn = getRealIndex(n, arr)\n\tn = n || 0\n\tvar ret\n\tif (_.isString(arr)) {\n\t\tret = arr.charAt(n)\n\t} else {\n\t\tret = arr[n]\n\t}\n\treturn ret\n}\n\n_.first = function(arr) {\n\tif (arr) return _.nth(arr, 0)\n}\n\n_.last = function(arr) {\n\tvar len = _.len(arr)\n\tif (len) {\n\t\treturn _.nth(arr, len - 1)\n\t}\n}\n\n_.asyncMap = function(arr, fn, cb) {\n\t// desperate\n\tvar ret = []\n\tvar count = 0\n\tvar hasDone, hasStart\n\n\teach(arr, function(arg, i) {\n\t\thasStart = true\n\t\tfn(arg, function(err, val) {\n\t\t\tif (hasDone) return\n\t\t\tcount++\n\t\t\tif (err) {\n\t\t\t\thasDone = true\n\t\t\t\treturn cb(err)\n\t\t\t}\n\t\t\tret[i] = val\n\t\t\tif (count == arr.length) {\n\t\t\t\thasDone = true\n\t\t\t\tcb(null, ret)\n\t\t\t}\n\t\t})\n\t})\n\n\tif (!hasStart) cb(null) // empty\n}\n\n_.uniq = function(arr) {\n\treturn _.uniqBy(arr)\n}\n\n_.uniqBy = function(arr, fn) {\n\tvar ret = []\n\tvar pool = []\n\tif (!is.fn(fn)) {\n\t\tfn = null\n\t}\n\teach(arr, function(item) {\n\t\tvar val = item\n\t\tif (fn) {\n\t\t\tval = fn(item)\n\t\t}\n\t\tif (!includes(pool, val)) {\n\t\t\tpool.push(val)\n\t\t\tret.push(item)\n\t\t}\n\t})\n\treturn ret\n}\n\n_.flatten = function(arrs) {\n\tvar ret = []\n\teach(arrs, function(arr) {\n\t\tif (is.arraylike(arr)) {\n\t\t\teach(arr, function(item) {\n\t\t\t\tret.push(item)\n\t\t\t})\n\t\t} else ret.push(arr)\n\t})\n\treturn ret\n}\n\n_.union = function() {\n\treturn _.uniq(_.flatten(arguments))\n}\n\n_.sample = function(arr, n) {\n\tvar ret = _.toArray(arr)\n\tvar len = ret.length\n\tvar need = Math.min(n || 1, len)\n\tfor (var i = 0; i < len; i++) {\n\t\tvar rand = _.random(i, len - 1)\n\t\tvar tmp = ret[rand]\n\t\tret[rand] = ret[i]\n\t\tret[i] = tmp\n\t}\n\tret.length = need\n\tif (null == n) {\n\t\treturn ret[0]\n\t}\n\treturn ret\n}\n\n_.shuffle = function(arr) {\n\treturn _.sample(arr, Infinity)\n}\n\n_.compact = function(arr) {\n\treturn _.filter(arr, _.identity)\n}\n\n_.rest = function(arr) {\n\treturn _.slice(arr, 1)\n}\n\n_.invoke = function() {\n\tvar args = arguments\n\tvar arr = args[0]\n\tvar fn = args[1]\n\tvar isFunc = is.fn(fn)\n\targs = _.slice(args, 2)\n\n\treturn _.map(arr, function(item) {\n\t\tif (isFunc) {\n\t\t\treturn fn.apply(item, args)\n\t\t}\n\t\tif (null != item) {\n\t\t\tvar method = item[fn]\n\t\t\tif (is.fn(method)) {\n\t\t\t\treturn method.apply(item, args)\n\t\t\t}\n\t\t}\n\t})\n}\n\n_.partition = function(arr, fn) {\n\tvar hash = _.groupBy(arr, function(val, i, arr) {\n\t\tvar ret = fn(val, i, arr)\n\t\tif (ret) return 1\n\t\treturn 2\n\t})\n\treturn [hash[1] || [], hash[2] || []]\n}\n\n_.groupBy = function(arr, fn) {\n\tvar hash = {}\n\t_.each(arr, function(val, i, arr) {\n\t\tvar ret = fn(val, i, arr)\n\t\thash[ret] = hash[ret] || []\n\t\thash[ret].push(val)\n\t})\n\treturn hash\n}\n\n_.range = function() {\n\tvar args = arguments\n\tif (args.length < 2) {\n\t\treturn _.range(args[1], args[0])\n\t}\n\tvar start = args[0] || 0\n\tvar last = args[1] || 0\n\tvar step = args[2]\n\tif (!is.number(step)) {\n\t\tstep = 1\n\t}\n\tvar count = last - start\n\tif (0 != step) {\n\t\tcount = count / step\n\t}\n\tvar ret = []\n\tvar val = start\n\tfor (var i = 0; i < count; i++) {\n\t\tret.push(val)\n\t\tval += step\n\t}\n\treturn ret\n}\n\n_.pullAt = function(arr) {\n\t// `_.at` but mutate\n\tvar indexes = _.slice(arguments, 1)\n\treturn mutateDifference(arr, indexes)\n}\n\n_.remove = function(arr, fn) {\n\t// `_.filter` but mutate\n\tvar len = _.len(arr) || 0\n\tvar indexes = []\n\twhile (len--) {\n\t\tif (fn(arr[len], len, arr)) {\n\t\t\tindexes.push(len)\n\t\t}\n\t}\n\treturn mutateDifference(arr, indexes)\n}\n\n_.fill = function(arr, val, start, end) {\n\tvar size = _.size(arr)\n\tstart = getRealIndex(start, arr) || 0\n\tend = getRealIndex(end, arr) || size\n\tfor (var i = start; i < end; i++) {\n\t\tarr[i] = val\n\t}\n\treturn arr\n}\n\n_.size = function(val) {\n\t// size is safe length\n\tvar size = 0\n\tif (val) {\n\t\tvar len = val.length\n\t\tif (_.isInteger(len) && len >= 0) {\n\t\t\tsize = len\n\t\t} else if (_.isObject(val)) {\n\t\t\tsize = _.keys(val).length\n\t\t}\n\t}\n\treturn size\n}\n\n// support negative\nfunction getRealIndex(index, arr) {\n\tvar size = _.size(arr)\n\tif (index < 0) {\n\t\tindex += size\n\t}\n\tif (index < 0) {\n\t\tindex = 0 // smallest is zero\n\t}\n\tif (index > size) {\n\t\tindex = size // biggest is size, because [start, end)\n\t}\n\treturn index || 0 // default zero\n}\n\nfunction mutateDifference(arr, indexes) {\n\tvar ret = []\n\tvar len = _.len(indexes)\n\tif (len) {\n\t\tindexes = indexes.sort(function(a, b) {\n\t\t\treturn a - b\n\t\t})\n\t\twhile (len--) {\n\t\t\tvar index = indexes[len]\n\t\t\tret.push(proto.splice.call(arr, index, 1)[0])\n\t\t}\n\t}\n\tret.reverse()\n\treturn ret\n}\n\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/array.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/cache.js":
+/*!************************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/cache.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("var cou = __webpack_require__(/*! cou */ \"./node_modules/_cou@1.4.0@cou/index.js\")\nvar is = cou.is\n\nmodule.exports = Cache\n\nfunction Cache() {\n\tthis.data = {}\n}\n\nvar proto = Cache.prototype\n\nproto.has = function(key) {\n\treturn is.owns(this.data, key)\n}\n\nproto.get = function(key) {\n\treturn this.data[key]\n}\n\nproto.set = function(key, val) {\n\tthis.data[key] = val\n}\n\nproto['delete'] = function(key) {\n\tdelete this.data[key]\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/cache.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/function.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/function.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = function(_) {\n\nvar is = _.is\nvar slice = _.slice\n\n_.bind = function(fn, ctx) {\n\tif (is.string(ctx)) {\n\t\tvar obj = fn\n\t\tfn = obj[ctx]\n\t\tctx = obj\n\t}\n\tif (!is.fn(fn)) return fn\n\tvar args = slice(arguments, 2)\n\tctx = ctx || this\n\treturn function() {\n\t\treturn fn.apply(ctx, _.flatten([args, arguments]))\n\t}\n}\n\n// from lang.js `Function.prototype.inherits`\n// so belong to function\n_.inherits = function(ctor, superCtor) {\n\tctor.super_ = superCtor\n\tctor.prototype = _.create(superCtor.prototype, {\n\t\tconstructor: ctor\n\t})\n}\n\n_.delay = function(fn, wait) {\n\tvar args = _.slice(arguments, 2)\n\treturn setTimeout(function() {\n\t\tfn.apply(this, args)\n\t}, wait)\n}\n\n_.before = function(n, fn) {\n\treturn function() {\n\t\tif (n > 1) {\n\t\t\tn--\n\t\t\treturn fn.apply(this, arguments)\n\t\t}\n\t}\n}\n\n_.once = function(fn) {\n\treturn _.before(2, fn)\n}\n\n_.after = function(n, fn) {\n\treturn function() {\n\t\tif (n > 1) {\n\t\t\tn--\n\t\t} else {\n\t\t\treturn fn.apply(this, arguments)\n\t\t}\n\t}\n}\n\n_.throttle = function(fn, wait, opt) {\n\twait = wait || 0\n\topt = _.extend({\n\t\tleading: true,\n\t\ttrailing: true,\n\t\tmaxWait: wait\n\t}, opt)\n\treturn _.debounce(fn, wait, opt)\n}\n\n_.debounce = function(fn, wait, opt) {\n\twait = wait || 0\n\topt = _.extend({\n\t\tleading: false,\n\t\ttrailing: true\n\t}, opt)\n\tvar maxWait = opt.maxWait\n\tvar lastExec = 0 // wait\n\tvar lastCall = 0 // just for maxWait\n\tvar now = _.now()\n\tvar timer\n\n\tif (!opt.leading) {\n\t\tlastExec = now\n\t}\n\n\tfunction ifIsCD() {\n\t\tif (now - lastExec > wait) return false\n\t\tif (maxWait && now - lastCall > maxWait) return false\n\t\treturn true\n\t}\n\n\tfunction exec(fn, ctx, args) {\n\t\tlastExec = _.now() // update last exec\n\t\treturn fn.apply(ctx, args)\n\t}\n\n\tfunction cancel() {\n\t\tif (timer) {\n\t\t\tclearTimeout(timer)\n\t\t\ttimer = null\n\t\t}\n\t}\n\n\tfunction debounced() {\n\t\tnow = _.now() // update now\n\t\tvar isCD = ifIsCD()\n\t\tlastCall = now // update last call\n\t\tvar me = this\n\t\tvar args = arguments\n\n\t\tcancel()\n\n\t\tif (!isCD) {\n\t\t\texec(fn, me, args)\n\t\t} else {\n\t\t\tif (opt.trailing) {\n\t\t\t\ttimer = _.delay(function() {\n\t\t\t\t\texec(fn, me, args)\n\t\t\t\t}, wait)\n\t\t\t}\n\t\t}\n\t}\n\n\tdebounced.cancel = cancel\n\n\treturn debounced\n}\n\nfunction memoize(fn) {\n\tvar cache = new memoize.Cache\n\tfunction memoized() {\n\t\tvar args = arguments\n\t\tvar key = args[0]\n\t\tif (!cache.has(key)) {\n\t\t\tvar ret = fn.apply(this, args)\n\t\t\tcache.set(key, ret)\n\t\t}\n\t\treturn cache.get(key)\n\t}\n\tmemoized.cache = cache\n\treturn memoized\n}\n\nmemoize.Cache = __webpack_require__(/*! ./cache */ \"./node_modules/_min-util@3.3.1@min-util/src/cache.js\")\n\n_.memoize = memoize\n\n_.wrap = function(val, fn) {\n\treturn function() {\n\t\tvar args = [val]\n\t\targs.push.apply(args, arguments)\n\t\treturn fn.apply(this, args)\n\t}\n}\n\n_.curry = function(fn) {\n\tvar len = fn.length\n\treturn setter([])\n\n\tfunction setter(args) {\n\t\treturn function() {\n\t\t\tvar arr = args.concat(_.slice(arguments))\n\t\t\tif (arr.length >= len) {\n\t\t\t\tarr.length = len\n\t\t\t\treturn fn.apply(this, arr)\n\t\t\t}\n\t\t\treturn setter(arr)\n\t\t}\n\t}\n}\n\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/function.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/index.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("var cou = __webpack_require__(/*! cou */ \"./node_modules/_cou@1.4.0@cou/index.js\")\n\nmodule.exports = cou.extend(_, cou)\n\n__webpack_require__(/*! ./lang */ \"./node_modules/_min-util@3.3.1@min-util/src/lang.js\")(_)\n__webpack_require__(/*! ./util */ \"./node_modules/_min-util@3.3.1@min-util/src/util.js\")(_)\n__webpack_require__(/*! ./array */ \"./node_modules/_min-util@3.3.1@min-util/src/array.js\")(_)\n__webpack_require__(/*! ./object */ \"./node_modules/_min-util@3.3.1@min-util/src/object.js\")(_)\n__webpack_require__(/*! ./function */ \"./node_modules/_min-util@3.3.1@min-util/src/function.js\")(_)\n__webpack_require__(/*! ./string */ \"./node_modules/_min-util@3.3.1@min-util/src/string.js\")(_)\n__webpack_require__(/*! ./math */ \"./node_modules/_min-util@3.3.1@min-util/src/math.js\")(_)\n\n_.mixin(_, _)\n\nfunction _(val) {\n\tif (!(this instanceof _)) return new _(val)\n\tthis.__value = val\n\tthis.__chain = false\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/lang.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/lang.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(_) {\n\nvar is = _.is\n\n_.isString = is.string\n\n_.isArray = is.array\n\n_.isArrayLike = is.arraylike\n\n_.isBoolean = is.bool\n\n_.isElement = is.element\n\n_.isEmpty = is.empty\n\n_.isFunction = is.fn\n\n_.isInteger = is.integer\n\n_.isNaN = is.nan\n\n_.isNumber = is.number\n\n_.isObject = is.object\n\n_.isPlainObject = is.plainObject\n\n_.isRegExp = is.regexp\n\n_.isString = is.string\n\n_.isUndefined = is.undef\n\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/lang.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/math.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/math.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(_) {\n\n_.sum = function(arr) {\n\treturn _.reduce(arr, function(sum, val) {\n\t\treturn sum + val\n\t}, 0)\n}\n\n_.max = function(arr, fn) {\n\tvar index = -1\n\tvar data = -Infinity\n\tfn = fn || _.identity\n\t_.each(arr, function(val, i) {\n\t\tval = fn(val)\n\t\tif (val > data) {\n\t\t\tdata = val\n\t\t\tindex = i\n\t\t}\n\t})\n\tif (index > -1) {\n\t\treturn arr[index]\n\t}\n\treturn data\n}\n\n_.min = function(arr, fn) {\n\tvar index = -1\n\tvar data = Infinity\n\tfn = fn || _.identity\n\t_.each(arr, function(val, i) {\n\t\tval = fn(val)\n\t\tif (val < data) {\n\t\t\tdata = val\n\t\t\tindex = i\n\t\t}\n\t})\n\tif (index > -1) {\n\t\treturn arr[index]\n\t}\n\treturn data\n}\n\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/math.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/object.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/object.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(_) {\n\nvar is = _.is\nvar each = _.each\nvar forIn = _.forIn\n\n_.only = function(obj, keys) {\n\tobj = obj || {}\n\tif (is.string(keys)) keys = keys.split(/ +/)\n\treturn _.reduce(keys, function(ret, key) {\n\t\tif (null != obj[key]) ret[key] = obj[key]\n\t\treturn ret\n\t}, {})\n}\n\n_.values = function(obj) {\n\treturn _.map(_.keys(obj), function(key) {\n\t\treturn obj[key]\n\t})\n}\n\n_.pick = function(obj, fn) {\n\tif (!is.fn(fn)) {\n\t\treturn _.pick(obj, function(val, key) {\n\t\t\treturn key == fn\n\t\t})\n\t}\n\tvar ret = {}\n\tforIn(obj, function(val, key, obj) {\n\t\tif (fn(val, key, obj)) {\n\t\t\tret[key] = val\n\t\t}\n\t})\n\treturn ret\n}\n\n_.functions = function(obj) {\n\treturn _.keys(_.pick(obj, function(val) {\n\t\treturn is.fn(val)\n\t}))\n}\n\n_.mapKeys = function(obj, fn) {\n\tvar ret = {}\n\tforIn(obj, function(val, key, obj) {\n\t\tvar newKey = fn(val, key, obj)\n\t\tret[newKey] = val\n\t})\n\treturn ret\n}\n\n_.mapObject = _.mapValues = function(obj, fn) {\n\tvar ret = {}\n\tforIn(obj, function(val, key, obj) {\n\t\tret[key] = fn(val, key, obj)\n\t})\n\treturn ret\n}\n\n// return value when walk through path, otherwise return empty\n_.get = function(obj, path) {\n\tpath = toPath(path)\n\tif (path.length) {\n\t\tvar flag = _.every(path, function(key) {\n\t\t\tif (null != obj) { // obj can be indexed\n\t\t\t\tobj = obj[key]\n\t\t\t\treturn true\n\t\t\t}\n\t\t})\n\t\tif (flag) return obj\n\t}\n}\n\n_.has = function(obj, path) {\n\tpath = toPath(path)\n\tif (path.length) {\n\t\tvar flag = _.every(path, function(key) {\n\t\t\tif (null != obj && is.owns(obj, key)) {\n\t\t\t\tobj = obj[key]\n\t\t\t\treturn true\n\t\t\t}\n\t\t})\n\t\tif (flag) return true\n\t}\n\treturn false\n}\n\n_.set = function(obj, path, val) {\n\tpath = toPath(path)\n\tvar cur = obj\n\t_.every(path, function(key, i) {\n\t\tif (is.oof(cur)) {\n\t\t\tif (i + 1 == path.length) {\n\t\t\t\tcur[key] = val\n\t\t\t} else {\n\t\t\t\tvar item = cur[key]\n\t\t\t\tif (null == item) {\n\t\t\t\t\t// fill value with {} or []\n\t\t\t\t\tvar item = {}\n\t\t\t\t\tif (~~key == key) {\n\t\t\t\t\t\titem = []\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tcur = cur[key] = item\n\t\t\t\treturn true\n\t\t\t}\n\t\t}\n\t})\n\treturn obj\n}\n\n_.create = (function() {\n\tfunction Object() {} // so it seems like Object.create\n\treturn function(proto, property) {\n\t\t// not same as Object.create, Object.create(proto, propertyDescription)\n\t\tif ('object' != typeof proto) {\n\t\t\t// null is ok\n\t\t\tproto = null\n\t\t}\n\t\tObject.prototype = proto\n\t\treturn _.extend(new Object, property)\n\t}\n})()\n\n_.defaults = function() {\n\tvar args = arguments\n\tvar target = args[0]\n\tvar sources = _.slice(args, 1)\n\tif (target) {\n\t\t_.each(sources, function(src) {\n\t\t\t_.mapObject(src, function(val, key) {\n\t\t\t\tif (is.undef(target[key])) {\n\t\t\t\t\ttarget[key] = val\n\t\t\t\t}\n\t\t\t})\n\t\t})\n\t}\n\treturn target\n}\n\n_.isMatch = function(obj, src) {\n\tvar ret = true\n\tobj = obj || {}\n\tforIn(src, function(val, key) {\n\t\tif (val !== obj[key]) {\n\t\t\tret = false\n\t\t\treturn false\n\t\t}\n\t})\n\treturn ret\n}\n\n_.toPlainObject = function(val) {\n\tvar ret = {}\n\tforIn(val, function(val, key) {\n\t\tret[key] = val\n\t})\n\treturn ret\n}\n\n_.invert = function(obj) {\n\tvar ret = {}\n\tforIn(obj, function(val, key) {\n\t\tret[val] = key\n\t})\n\treturn ret\n}\n\n// topath, copy from lodash\n\nvar rePropName = /[^.[\\]]+|\\[(?:(-?\\d+(?:\\.\\d+)?)|([\"'])((?:(?!\\2)[^\\n\\\\]|\\\\.)*?)\\2)\\]/g\nvar reEscapeChar = /\\\\(\\\\)?/g;\n\nfunction toPath(val) {\n\tif (is.array(val)) return val\n\tvar ret = []\n\t_.toString(val).replace(rePropName, function(match, number, quote, string) {\n\t\tvar item = number || match\n\t\tif (quote) {\n\t\t\titem = string.replace(reEscapeChar, '$1')\n\t\t}\n\t\tret.push(item)\n\t})\n\treturn ret\n}\n\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/object.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/string.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/string.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(_) {\n\n_.tostr = _.toString = tostr // lodash toString\n\nvar indexOf = _.indexOf\n\n_.split = function(str, separator, limit) {\n\tstr = tostr(str)\n\treturn str.split(separator, limit)\n}\n\n_.capitalize = function(str) {\n\tstr = tostr(str)\n\treturn str.charAt(0).toUpperCase() + str.substr(1)\n}\n\n_.decapitalize = function(str) {\n\tstr = tostr(str)\n\treturn str.charAt(0).toLowerCase() + str.substr(1)\n}\n\n_.camelCase = function(str) {\n\tstr = tostr(str)\n\tvar arr = str.split(/[^\\w]|_+/)\n\tarr = _.map(arr, function(val) {\n\t\treturn _.capitalize(val)\n\t})\n\treturn _.decapitalize(arr.join(''))\n}\n\n_.startsWith = function(str, val) {\n\treturn 0 == indexOf(str, val)\n}\n\n_.endsWith = function(str, val) {\n\tval += '' // null => 'null'\n\treturn val == _.slice(str, _.len(str) - _.len(val))\n}\n\n_.toLower = _.lower = function(str) {\n\t// lodash toLower\n\treturn tostr(str).toLowerCase()\n}\n\n_.toUpper = _.upper = function(str) {\n\t// lodash toUpper\n\treturn tostr(str).toUpperCase()\n}\n\n_.repeat = function(str, count) {\n\treturn _.map(_.range(count), function() {\n\t\treturn str\n\t}).join('')\n}\n\n_.padStart = function(str, len, chars) {\n\tstr = tostr(str)\n\tlen = len || 0\n\tvar delta = len - str.length\n\treturn getPadStr(chars, delta) + str\n}\n\n_.padEnd = function(str, len, chars) {\n\tstr = tostr(str)\n\tlen = len || 0\n\tvar delta = len - str.length\n\treturn str + getPadStr(chars, delta)\n}\n\n\nvar htmlEscapes = {\n  '&': '&amp',\n  '<': '&lt',\n  '>': '&gt',\n  '\"': '&quot',\n  \"'\": '&#39'\n}\n\n_.escape = function(str) {\n    return tostr(str).replace(/[&<>\"']/g, function(item) {\n        return htmlEscapes[item] || item\n    })\n}\n\n// 不支持定制 templateSettings\n_.template = function(str) {\n\tvar arr = ['with(data) {var ret = \"\"']\n\t_.each(_.split(str, '<%'), function(x, i) {\n\t\tvar two = x.split('%>')\n\t\tif (two[1]) {\n\t\t\tgenJS(_.trim(two[0]))\n\t\t\treturn filter(two[1])\n\t\t}\n\t\tfilter(two[0])\n\t})\n\n\tarr.push('return ret}')\n\tvar func = new Function('data', arr.join('\\n'))\n\tvar internalData = {\n\t\t_: _\n\t}\n\tvar ret = function(data) {\n\t\treturn func(_.extend({}, internalData, data))\n\t}\n\treturn ret\n\n\tfunction genJS(jsstr) {\n\t\tvar first = _.first(jsstr)\n\t\tif (first === '=' || first === '-') {\n\t\t\tvar text = _.slice(jsstr, 1)\n\t\t\tif (first === '-') {\n\t\t\t\ttext = '_.escape(' + text + ')'\n\t\t\t}\n\t\t\tarr.push('ret += ' + text) // 插入文本\n\t\t} else {\n\t\t\tarr.push(jsstr)\n\t\t}\n\t}\n\n\tfunction filter(html) {\n\t\tarr.push('ret += \"' + html.replace(/('|\"|\\\\)/g, '\\\\$1').replace(/\\r/g, '\\\\r').replace(/\\n/g, '\\\\n') + '\"')\n\t}\n}\n\nfunction getPadStr(chars, len) {\n\tchars = tostr(chars) || ' ' // '' will never end\n\tvar count = Math.floor(len / chars.length) + 1\n\treturn _.repeat(chars, count).slice(0, len)\n}\n\nfunction tostr(str) {\n\tif (str || 0 == str) return str + ''\n\treturn ''\n}\n\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/string.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_min-util@3.3.1@min-util/src/util.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/_min-util@3.3.1@min-util/src/util.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(_) {\n\nvar is = _.is\n\n_.now = function() {\n\treturn +new Date\n}\n\n_.constant = function(val) {\n\treturn function() {\n\t\treturn val\n\t}\n}\n\n_.identity = function(val) {\n\treturn val\n}\n\n_.random = function(min, max) {\n\treturn min + Math.floor(Math.random() * (max - min + 1))\n}\n\n_.mixin = function(dst, src, opt) {\n\tvar keys = _.functions(src)\n\tif (dst) {\n\t\tif (is.fn(dst)) {\n\t\t\topt = opt || {}\n\t\t\tvar isChain = !!opt.chain\n\t\t\t// add to prototype\n\t\t\tvar proto = dst.prototype\n\t\t\t_.each(keys, function(key) {\n\t\t\t\tvar fn = src[key]\n\t\t\t\tproto[key] = function() {\n\t\t\t\t\tvar me = this\n\t\t\t\t\tvar args = [me.__value]\n\t\t\t\t\targs.push.apply(args, arguments)\n\t\t\t\t\tvar ret = fn.apply(me, args)\n\t\t\t\t\tif (me.__chain) {\n\t\t\t\t\t\tme.__value = ret\n\t\t\t\t\t\treturn me\n\t\t\t\t\t}\n\t\t\t\t\treturn ret\n\t\t\t\t}\n\t\t\t})\n\t\t} else {\n\t\t\t_.each(keys, function(key) {\n\t\t\t\tdst[key] = src[key]\n\t\t\t})\n\t\t}\n\t}\n\treturn dst\n}\n\n_.chain = function(val) {\n\tvar ret = _(val)\n\tret.__chain = true\n\treturn ret\n}\n\n_.value = function() {\n\tthis.__chain = false\n\treturn this.__value\n}\n\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./node_modules/_min-util@3.3.1@min-util/src/util.js?");
+
+/***/ }),
+
+/***/ "./node_modules/_webpack@4.18.0@webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn this;\n})();\n\ntry {\n\t// This works if eval is allowed (see CSP)\n\tg = g || Function(\"return this\")() || (1, eval)(\"this\");\n} catch (e) {\n\t// This works if the window reference is available\n\tif (typeof window === \"object\") g = window;\n}\n\n// g can still be undefined, but nothing to do about it...\n// We return undefined, instead of nothing here, so it's\n// easier to handle this case. if(!global) { ...}\n\nmodule.exports = g;\n\n\n//# sourceURL=webpack://%5Bname%5D/(webpack)/buildin/global.js?");
+
+/***/ }),
+
+/***/ "./src/adapters/axios.js":
+/*!*******************************!*\
+  !*** ./src/adapters/axios.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = function(config) {\n  var defaults = this.defaults\n  if (defaults && defaults.axios) {\n    // https://github.com/axios/axios\n    return defaults.axios.request(config).then(response => {\n      return response\n    })\n  }\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/adapters/axios.js?");
+
+/***/ }),
+
+/***/ "./src/adapters/index.js":
+/*!*******************************!*\
+  !*** ./src/adapters/index.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const wx = __webpack_require__(/*! ./wx */ \"./src/adapters/wx.js\")\nconst quickapp = __webpack_require__(/*! ./quickapp */ \"./src/adapters/quickapp.js\")\nconst axios = __webpack_require__(/*! ./axios */ \"./src/adapters/axios.js\")\nconst jquery = __webpack_require__(/*! ./jquery */ \"./src/adapters/jquery.js\")\nconst xhr = __webpack_require__(/*! ./xhr */ \"./src/adapters/xhr.js\")\n\nexports.wx = wx\nexports.quickapp = quickapp\nexports.axios = axios\nexports.jquery = jquery\nexports.xhr = xhr\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/adapters/index.js?");
+
+/***/ }),
+
+/***/ "./src/adapters/jquery.js":
+/*!********************************!*\
+  !*** ./src/adapters/jquery.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const utils = __webpack_require__(/*! ../utils */ \"./src/utils.js\")\n\nmodule.exports = function(config) {\n  var defaults = this.defaults\n  if (defaults && defaults.jQuery) {\n    // http://api.jquery.com/jquery.ajax/\n    return new Promise((resolve, reject) => {\n      defaults.jQuery.ajax({\n        url: config.url,\n        data: config.data,\n        headers: config.headers,\n        method: config.method,\n        timeout: config.timeout,\n        withCredentials: config.withCredentials,\n        success (data, textStatus, jqXHR) {\n          resolve({\n            data,\n            status: 200,\n            headers: utils.parseHeadersFromXhr(jqXHR)\n          })\n        },\n        error (jqXHR, textStatus, errorThrown) {\n          reject(utils.createError(errorThrown, {\n            response: jqXHR,\n            textStatus: textStatus\n          }))\n        }\n      })\n    })\n  }\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/adapters/jquery.js?");
+
+/***/ }),
+
+/***/ "./src/adapters/quickapp.js":
+/*!**********************************!*\
+  !*** ./src/adapters/quickapp.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const utils = __webpack_require__(/*! ../utils */ \"./src/utils.js\")\n\nmodule.exports = function(config) {\n  var defaults = this.defaults\n  if (defaults && defaults.quickapp) {\n    // https://doc.quickapp.cn/features/system/fetch.html\n    return new Promise((resolve, reject) => {\n      defaults.quickapp.fetch({\n        url: config.url,\n        data: config.data,\n        header: config.headers,\n        method: config.method,\n        success (response) {\n          utils.clearTimer(timer)\n          var {data, code, headers} = response\n          resolve({\n            data,\n            status: code,\n            headers\n          })\n        },\n        fail (data, code) {\n          utils.clearTimer(timer)\n          reject({data, code})\n        }\n      })\n\n      if (config.timeout) {\n        timer = setTimeout(() => {\n          reject(utils.createError('timeout'))\n        }, config.timeout)\n      }\n    })\n  }\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/adapters/quickapp.js?");
+
+/***/ }),
+
+/***/ "./src/adapters/wx.js":
+/*!****************************!*\
+  !*** ./src/adapters/wx.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const utils = __webpack_require__(/*! ../utils */ \"./src/utils.js\")\n\nmodule.exports = function(config) {\n  var defaults = this.defaults\n  if (defaults && defaults.wx) {\n    // https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html#wxrequestobject\n    var timer\n    return new Promise((resolve, reject) => {\n      var task = defaults.wx.request({\n        url: config.url,\n        data: config.data,\n        header: config.headers,\n        method: config.method,\n        success (response) {\n          utils.clearTimer(timer)\n          var {data, statusCode, header} = response\n          resolve({\n            data,\n            status: statusCode,\n            headers: header\n          })\n        },\n        fail (err) {\n          utils.clearTimer(timer)\n          reject(err)\n        }\n      })\n\n      if (config.timeout) {\n        timer = setTimeout(() => {\n          if (task && task.abort) {\n            task.abort\n          }\n          reject(utils.createError('timeout'))\n        }, config.timeout)\n      }\n    })\n  }\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/adapters/wx.js?");
+
+/***/ }),
+
+/***/ "./src/adapters/xhr.js":
+/*!*****************************!*\
+  !*** ./src/adapters/xhr.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const utils = __webpack_require__(/*! ../utils */ \"./src/utils.js\")\nconst _ = __webpack_require__(/*! min-util */ \"./node_modules/_min-util@3.3.1@min-util/index.js\")\n\nmodule.exports = function(config) {\n  // default use XMLHttpRequest\n  return new Promise((resolve, reject) => {\n    var xhr = new XMLHttpRequest()\n    xhr.onload = ev => {\n      resolve({\n        status: xhr.status,\n        data: xhr.responseText,\n        headers: utils.parseHeadersFromXhr(xhr)\n      })\n    }\n    xhr.ontimeout = ev => {\n      reject(utils.createError('timeout'))\n    }\n    xhr.onerror = ev => {\n      reject(utils.createError('error'))\n    }\n    xhr.open(config.method, config.url, true)\n    if (config.timeout) {\n      xhr.timeout = config.timeout\n    }\n    if (config.withCredentials) {\n      xhr.withCredentials = config.withCredentials\n    }\n    _.forIn(config.headers, (value, key) => {\n      xhr.setRequestHeader(key, value)\n    })\n\n    if (config.cancelToken) {\n      config.cancelToken.promise.then(function onCancel(reason) {\n        if (xhr) {\n          xhr.abort()\n          reject(reason)\n          xhr = null\n        }\n      })\n    }\n\n    xhr.send(config.data)\n  })\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/adapters/xhr.js?");
+
+/***/ }),
+
+/***/ "./src/canceltoken.js":
+/*!****************************!*\
+  !*** ./src/canceltoken.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = Deferred\n\nfunction Deferred() {\n  this.promise = new Promise((resolve, reject) => {\n    this.resolve = resolve\n    this.reject = reject\n  })\n}\n\nDeferred.prototype.throwIfRequested = function() {\n  // 兼容 axios\n}\n\nDeferred.source = () => {\n  var deferred = new Deferred()\n  return {\n    token: deferred,\n    cancel (reason) {\n      deferred.resolve(reason)\n    }\n  }\n}\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/canceltoken.js?");
+
+/***/ }),
+
+/***/ "./src/http.js":
+/*!*********************!*\
+  !*** ./src/http.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const _ = __webpack_require__(/*! min-util */ \"./node_modules/_min-util@3.3.1@min-util/index.js\")\nconst Url = __webpack_require__(/*! min-url */ \"./node_modules/_min-url@1.5.0@min-url/index.js\")\nconst qs = __webpack_require__(/*! min-qs */ \"./node_modules/_min-qs@1.4.0@min-qs/index.js\")\nconst Queue = __webpack_require__(/*! ./queue */ \"./src/queue.js\")\nconst utils = __webpack_require__(/*! ./utils */ \"./src/utils.js\")\nconst adapters = __webpack_require__(/*! ./adapters */ \"./src/adapters/index.js\")\nconst CancelToken = __webpack_require__(/*! ./canceltoken */ \"./src/canceltoken.js\")\n\nconst JSON_TYPE = 'application/json'\nconst URL_TYPE = 'application/x-www-form-urlencoded'\nconst CONTENT_TYPE_KEY = utils.CONTENT_TYPE_KEY\nconst simpleMethods = ['get', 'head', 'delete', 'options']\nconst dataMethods = ['post', 'put', 'patch']\nconst httpMethods = [...simpleMethods, ...dataMethods]\n\nfunction HttpClient (opt) {\n  this.defaults = {\n    baseURL: '',\n    timeout: 0,\n    headers: {\n      common: {}\n    },\n    withCredentials: false\n  }\n  _.each(httpMethods, method => {\n    var header = this.defaults.headers[method] = {}\n    if (_.includes(dataMethods, 'method')) {\n      header[method] = JSON_TYPE\n    }\n  })\n\n  this.interceptors = {\n    request: new Queue(),\n    response: new Queue()\n  }\n\n  this.qs = qs\n  this.CancelToken = CancelToken\n  this.init(opt)\n}\n\nHttpClient.qs = qs\n\nvar proto = HttpClient.prototype\n\nproto.init = function (opt) {\n  // not exist in axios\n  opt = _.extend({}, opt)\n  this.defaults.headers.common = opt.headers || {}\n  delete opt.headers\n  _.extend(this.defaults, opt)\n}\n\nproto.create = function (opt) {\n  return new HttpClient(opt)\n}\n\nproto.request = function (arg1, arg2) {\n  if (_.isString(arg1)) {\n    return this.request(_.extend({url: arg1}, arg2))\n  }\n  var config = arg1 || {}\n  config.headers = config.headers || {} // 必须有值\n  config = _.extend({}, this.defaults, config)\n\n  var url = config.baseURL + config.url\n  url = Url.appendQuery(url, config.params)\n\n  var method = _.toLower(config.method) || 'get'\n  var defaultHeaders = this.defaults.headers\n  var headers = _.extend({}, defaultHeaders.common, defaultHeaders[method], config.headers)\n  var contentType = utils.getContentType(headers)\n  var guessRequestType = contentType\n\n  // 序列化 request data\n  var data = config.data\n  if (_.isPlainObject(data)) {\n    // 只序列化 plain object, 其他直接发送, 比如字符串, FormData, Blob 之类的\n    if (contentType === URL_TYPE) {\n      data = qs.stringify(data)\n    } else if (contentType === JSON_TYPE) {\n      data = JSON.stringify(data)\n    }\n    if (!guessRequestType) {\n      if (_.isString(data)) {\n        guessRequestType = URL_TYPE\n      }\n    }\n    if (!_.isString(data)) {\n      data = JSON.stringify(data) // 默认用 json\n      guessRequestType = guessRequestType || JSON_TYPE\n    }\n    if (!contentType && guessRequestType) {\n      headers[CONTENT_TYPE_KEY] = guessRequestType\n    }\n  } else {\n    if (utils.isFormData(data)) {\n      // Let the browser set it\n      delete headers[CONTENT_TYPE_KEY]\n    }\n  }\n\n  var timeout = config.timeout\n\n  // TODO auth...\n  config = {\n    url,\n    data,\n    headers,\n    method: _.toUpper(method),\n    cancelToken: config.cancelToken,\n    withCredentials: config.withCredentials\n  }\n\n  if (timeout) {\n    config.timeout = timeout\n  }\n\n  var ret = Promise.resolve(config)\n  ret = this.interceptors.request.intercept(ret) // after get config\n    .then(config => this.adapter.call(this, config))\n    .then(response => {\n      // 尝试解析 response.data, 总是尝试解析成 json(就像 axios 一样), 因为后端通常写不对 mime\n      if (_.isString(response.data)) {\n        if (!this.axios) {\n          var rawResponse = response.data\n          try {\n            response.data = JSON.parse(response.data)\n          } catch (err) {\n            response.data = rawResponse\n          }\n        }\n      }\n      response.config = config\n      response.headers = _.mapKeys(response.headers, (value, key) => {\n        return _.toLower(key) // All header names are lower cased\n      })\n      return response\n    })\n  ret = this.interceptors.response.intercept(ret) // after parse data\n  return ret\n}\n\n// axios adapter\nproto.adapter = function (config) {\n  var defaults = this.defaults\n  if (defaults.wx) {\n    return adapters.wx.call(this, config)\n  } else if (defaults.axios) {\n    return adapters.axios.call(this, config)\n  } else if (defaults.jQuery) {\n    return adapters.jquery.call(this, config)\n  } else if (defaults.quickapp) {\n    return adapters.quickapp.call(this, config)\n  } else if (typeof XMLHttpRequest === 'function') {\n    return adapters.xhr.call(this, config)\n  }\n}\n\n// TODO http.all http.spread like axios\n\n_.each(simpleMethods, method => {\n  proto[method] = function (url, config) {\n    return this.request(_.extend({\n      method,\n      url\n    }, config))\n  }\n})\n\n_.each(dataMethods, method => {\n  proto[method] = function (url, data, config) {\n    return this.request(_.extend({\n      url,\n      method,\n      data\n    }, config))\n  }\n})\n\nmodule.exports = exports = HttpClient\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/http.js?");
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const _ = __webpack_require__(/*! min-util */ \"./node_modules/_min-util@3.3.1@min-util/index.js\")\nconst HttpClient = __webpack_require__(/*! ./http */ \"./src/http.js\")\n\nconst instance = new HttpClient()\n\nmodule.exports = instance\n\n// module.exports = exports = http // always export a function\n\n// function http(...args) {\n//   return instance.request(...args)\n// }\n\n// for (var key in instance) {\n//   var val = instance[key]\n//   if (_.isFunction(val)) {\n//     val = _.bind(val, instance)\n//   }\n//   http[key] = val\n// }\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/queue.js":
+/*!**********************!*\
+  !*** ./src/queue.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const _ = __webpack_require__(/*! min-util */ \"./node_modules/_min-util@3.3.1@min-util/index.js\")\n\nmodule.exports = Queue\n\nfunction Queue() {\n  this.queue = []\n}\n\n_.extend(Queue.prototype, {\n  use (...middleware) {\n    this.queue.push(middleware)\n    return this\n  },\n  intercept (promise) {\n    return _.reduce(this.queue, (prev, middleware) => {\n      return prev.then(...middleware)\n    }, promise)\n  }\n})\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/queue.js?");
+
+/***/ }),
+
+/***/ "./src/utils.js":
+/*!**********************!*\
+  !*** ./src/utils.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const _ = __webpack_require__(/*! min-util */ \"./node_modules/_min-util@3.3.1@min-util/index.js\")\n\nconst CONTENT_TYPE_KEY = 'Content-Type'\nconst reContentType = new RegExp(CONTENT_TYPE_KEY, 'i')\n\nfunction getContentType(headers) {\n  var headerKeys = _.keys(headers)\n  var typeKey = _.find(headerKeys, key => {\n    return reContentType.test(key)\n  })\n  return headers[typeKey]\n}\n\nfunction parseHeadersFromXhr(xhr) {\n  return _.chain(xhr.getAllResponseHeaders())\n    .trim()\n    .split('\\n')\n    .reduce((ret, header) => {\n      var i = _.indexOf(header, ':')\n      var key = _.toLower(_.trim(_.slice(header, 0, i)))\n      var value = _.trim(_.slice(header, i + 1))\n      if (ret[key]) {\n        ret[key] = ',' + value // 多个 cookie 用 `,` 分隔, 无空格\n      } else {\n        ret[key] = value\n      }\n      return ret\n    }, {})\n    .value()\n}\n\nfunction isFormData(val) {\n  return (typeof FormData !== 'undefined') && (val instanceof FormData)\n}\n\nfunction timeout(time) {\n  return new Promise((resolve, reject) => {\n    if (timeout) {\n      setTimeout(() => {\n        reject(new Error('timeout'))\n      }, time)\n    }\n  })\n}\n\nfunction clearTimer(timer) {\n  if (timer) {\n    clearTimeout(timer)\n  }\n}\n\nfunction createError(message, obj) {\n  var err = new Error(message)\n  _.extend(err, obj)\n  return err\n}\n\nexports.CONTENT_TYPE_KEY = CONTENT_TYPE_KEY\nexports.getContentType = getContentType\nexports.parseHeadersFromXhr = parseHeadersFromXhr\nexports.isFormData = isFormData\nexports.timeout = timeout\nexports.clearTimer = clearTimer\nexports.createError = createError\n\n\n//# sourceURL=webpack://%5Bname%5D/./src/utils.js?");
+
+/***/ })
+
+/******/ });
+});

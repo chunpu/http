@@ -24,6 +24,8 @@ axios 对于处理 `application/x-www-form-urlencoded` 这样的请求很不方�
 
 axios 的建议是在浏览器使用 URLSearchParams, 但显然我们希望我们在各平台享受完全一致的开发体验, @chunpu/http 完全不建议使用 URLSearchParams, 而是选择默认使用 `qs.stringify` 来序列化对象数据, 但局限是内置的 qs stringify 只支持扁平数据, 不过这已经可以满足绝大部分的需求了
 
+axios 还支持配置 paramsSerializer TODO 没试过
+
 ### 接口设计
 
 我们先看看 http 本身传输的数据长什么样

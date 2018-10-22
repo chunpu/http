@@ -10,6 +10,17 @@
 <body>
 <script>
 // 可加上各平台模拟测试
+
+function Deferred() {
+  this.promise = new Promise((resolve, reject) => {
+    this.resolve = resolve
+    this.reject = reject
+  })
+  this.throwIfRequested = function() {}
+}
+
+var deferred = new Deferred()
+
 $(() => {
   var formData = new FormData()
   formData.append('key', 'value')
@@ -44,8 +55,19 @@ $(() => {
   axios.interceptors.response.use(response => {
     console.log('response', response)
     return response
-  }, err => {
-    console.log('axios err', err)
+  })
+
+  axios.post('/timeout', 0, {
+    // timeout: 1,
+    headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
+    responseType: 'text',
+    // cancelToken: source.token
+    cancelToken: deferred
+  }).then((...args) => {
+    console.log('axios success', ...args)
+  }).catch(err => {
+    console.log('axios error', err)
+    console.dir(err)
   })
 
   axios.post('/timeout', 0, {
@@ -53,14 +75,18 @@ $(() => {
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
     responseType: 'text',
     cancelToken: source.token
+    // cancelToken: deferred
   }).then((...args) => {
     console.log('axios success', ...args)
   }).catch(err => {
-    console.log('axios error', err.message)
+    console.log('axios error', err)
     console.dir(err)
   })
+
   setTimeout(() => {
-    source.cancel()
+    source.cancel(55555)
+    source.cancel(66666)
+    deferred.resolve(44444)
   }, 500)
 
 
@@ -84,26 +110,38 @@ $(() => {
     console.log('fetch error', ...args)
   })
 
-  http.defaults.timeout = 0.001 * 1000
+  var httpDeferred = new http.CancelToken
 
   http.interceptors.response.use(response => {
     console.log('http response', response)
     return response
-  }, err => {
-    console.log('http err', err)
   })
-
-  http.init({
-    // jQuery: jQuery
-  })
-  http.post('/json', formData, {
+  http.post('/timeout', formData, {
     params: {
       query: 'string'
-    }
+    },
+    cancelToken: httpDeferred
   }).then(response => {
     console.log('raw response', response)
+  }).catch((...args) => {
+    console.log('http error', ...args)
+  })
+  http.post('/timeout', formData, {
+    params: {
+      query: 'string'
+    },
+    cancelToken: httpDeferred
+  }).then(response => {
+    console.log('raw response', response)
+  }).catch((...args) => {
+    console.log('http error', ...args)
   })
 
+  setTimeout(() => {
+    // source.cancel(55555)
+    // source.cancel(66666)
+    httpDeferred.resolve(1024)
+  }, 500)
   // axios.post('/body', {
   //   key: 'value',
   //   axios: true,

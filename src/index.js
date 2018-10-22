@@ -3,16 +3,19 @@ const HttpClient = require('./http')
 
 const instance = new HttpClient()
 
-module.exports = exports = http // always export a function
+module.exports = instance
 
-function http(...args) {
-  return instance.request(...args)
-}
+// TODO sth wrong with quickapp, to be verified
+// module.exports = exports = http // always export a function
 
-for (var key in instance) {
-  var val = instance[key]
-  if (_.isFunction(val)) {
-    val = _.bind(val, instance)
-  }
-  http[key] = val
-}
+// function http(...args) {
+//   return instance.request(...args)
+// }
+
+// for (var key in instance) {
+//   var val = instance[key]
+//   if (_.isFunction(val)) {
+//     val = _.bind(val, instance) //
+//   }
+//   http[key] = val
+// }
