@@ -13,17 +13,13 @@ var config = {
   entry: {
     'http': './',
   },
-  // mode: 'production',
-  mode: 'development',
+  mode: 'production',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
     libraryTarget: 'umd',
     library: '[name]'
   },
-  // optimization: {
-  //   minimize: true
-  // },
   plugins: [
     new webpack.BannerPlugin(banner),
     new webpack.DefinePlugin({

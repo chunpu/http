@@ -1,5 +1,5 @@
 const _ = require('min-util')
-const httpClient = require('..')
+const httpClient = require('../')
 const assert = require('assert')
 
 var mockTimeout = 0.2 * 1000

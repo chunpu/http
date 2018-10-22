@@ -110,7 +110,10 @@ $(() => {
     console.log('fetch error', ...args)
   })
 
-  var httpDeferred = new http.CancelToken
+  var httpDeferred = new http.CancelToken()
+  var httpSource = http.CancelToken.source()
+
+  http.defaults.timeout = 1000
 
   http.interceptors.response.use(response => {
     console.log('http response', response)
@@ -118,9 +121,10 @@ $(() => {
   })
   http.post('/timeout', formData, {
     params: {
-      query: 'string'
+      query: 'string',
+      from: 'chunpuhttp'
     },
-    cancelToken: httpDeferred
+    cancelToken: httpSource.token
   }).then(response => {
     console.log('raw response', response)
   }).catch((...args) => {
@@ -128,7 +132,8 @@ $(() => {
   })
   http.post('/timeout', formData, {
     params: {
-      query: 'string'
+      query: 'string',
+      from: 'chunpuhttp'
     },
     cancelToken: httpDeferred
   }).then(response => {
@@ -138,10 +143,10 @@ $(() => {
   })
 
   setTimeout(() => {
-    // source.cancel(55555)
-    // source.cancel(66666)
-    httpDeferred.resolve(1024)
+    httpSource.cancel('http source cancel')
+    httpDeferred.resolve('http deferred cancel')
   }, 500)
+
   // axios.post('/body', {
   //   key: 'value',
   //   axios: true,

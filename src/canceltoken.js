@@ -7,10 +7,6 @@ function Deferred() {
   })
 }
 
-Deferred.prototype.throwIfRequested = function() {
-  // 兼容 axios
-}
-
 Deferred.source = () => {
   var deferred = new Deferred()
   return {
@@ -19,4 +15,8 @@ Deferred.source = () => {
       deferred.resolve(new Error(reason))
     }
   }
+}
+
+Deferred.prototype.throwIfRequested = function() {
+  // 兼容 axios
 }
