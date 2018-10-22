@@ -46,9 +46,12 @@ $(() => {
   const source = CancelToken.source()
   // axios.defaults.timeout = 0.001 * 1000
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-
+  // axios.defaults.cancelToken = source.token
   axios.interceptors.request.use(config => {
     console.log('config', config)
+    if (config.cancelToken !== null) {
+      config.cancelToken = source.token
+    }
     return config
   })
 
@@ -58,11 +61,11 @@ $(() => {
   })
 
   axios.post('/timeout', 0, {
-    // timeout: 1,
+    params: {
+      from: 'axios'
+    },
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
-    responseType: 'text',
-    // cancelToken: source.token
-    cancelToken: deferred
+    responseType: 'text'
   }).then((...args) => {
     console.log('axios success', ...args)
   }).catch(err => {
@@ -71,11 +74,12 @@ $(() => {
   })
 
   axios.post('/timeout', 0, {
-    // timeout: 1,
+    params: {
+      from: 'axios'
+    },
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
     responseType: 'text',
-    cancelToken: source.token
-    // cancelToken: deferred
+    cancelToken: null
   }).then((...args) => {
     console.log('axios success', ...args)
   }).catch(err => {

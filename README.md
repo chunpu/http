@@ -154,7 +154,7 @@ http.init({
 ]
 ```
 
-### axios
+### axios (node.js)
 
 ```js
 const axios = require('axios')
@@ -165,6 +165,8 @@ http.init({
   axios: axios
 })
 ```
+
+Please use http with `axios mode` in Node.js platform
 
 ### jQuery / Zepto
 
