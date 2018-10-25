@@ -33,7 +33,7 @@ Features
 - [Intercept request and response](#interceptors)
 - [More Automatic Transform request and response data](#automatic-transform-request-data)
 - [Batch Cancel requests](#cancel-requests)
-- More adapters inside, [axios](#axios-nodejs), [jQuery](#jquery--zepto), XMLHttpRequest
+- More adapters inside: [axios](#axios-nodejs), [jQuery](#jquery--zepto), XMLHttpRequest
 
 Inspired by [axios](https://github.com/axios/axios)
 
@@ -251,7 +251,7 @@ Cancel Requests
 
 compatible with axios Cancellation
 
-source is sth like deferred
+For easy understanding, `cancelToken` equals `deferred` equals `source.token`
 
 ```js
 const source = http.CancelToken.source()
