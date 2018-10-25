@@ -24,6 +24,17 @@ npm i @chunpu/http
 
 [![CircleCI](https://circleci.com/gh/chunpu/http.svg?style=svg)](https://circleci.com/gh/chunpu/http)
 
+Features
+---
+
+- [Largely axios-compatible API](#api)
+- Support More platforms like [微信小程序](#微信小程序), [快应用](#快应用)
+- Support the Promise API
+- [Intercept request and response](#interceptors)
+- [More Automatic Transform request and response data](#automatic-transform-request-data)
+- [Batch Cancel requests](#cancel-requests)
+- More adapters inside, [axios](#axios-nodejs), [jQuery](#jquery--zepto), XMLHttpRequest
+
 Inspired by [axios](https://github.com/axios/axios)
 
 Send Http Request just like axios in `微信小程序`, `快应用`, `jQuery`, or `XMLHttpRequest` by default
@@ -90,9 +101,9 @@ Request Object
 - `timeout` request timeout, 支持快应用和微信小程序
 - `withCredentials` whether use cors, default `false`
 
-### Auto Handle Request Data
+### Automatic Transform Request Data
 
-data will be handled by the value of `headers['content-type']`, Plain Object data will be auto stringify
+Respect the request `headers['content-type']` setting, data will be transform by the content type, Plain Object data will be auto stringify
 
 - `application/json` will `JSON.stringify` the data object
 - `application/x-www-form-urlencoded` will `qs.stringify` the data object
@@ -103,10 +114,12 @@ data also support FormData, Blob, String
 Response Object
 ---
 
-- `data` response data, will always try to `JSON.parse`, because most server not respect the response mime
+- `data` response data
 - `headers` `name: value` headers, all header names are lower cased
 - `status` status code, number
 - `config` the request object
+
+Not Respect the response `headers['content-type']` value, will always try to `JSON.parse` the data, because most server not respect the response mime
 
 
 Platform Support
@@ -211,7 +224,7 @@ Always stringify Data to `querystring`, which can really work not like axios...
 http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 ```
 
-Interceptors / Hook
+Interceptors
 ---
 
 ```js
