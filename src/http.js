@@ -11,7 +11,7 @@ const URL_TYPE = 'application/x-www-form-urlencoded'
 const CONTENT_TYPE_KEY = utils.CONTENT_TYPE_KEY
 const simpleMethods = ['get', 'head', 'delete', 'options']
 const dataMethods = ['post', 'put', 'patch']
-const httpMethods = [...simpleMethods, ...dataMethods]
+const httpMethods = [].concat(simpleMethods, dataMethods)
 
 function HttpClient (opt) {
   var me = this
@@ -104,7 +104,7 @@ proto.request = function (arg1, arg2) {
 
   var timeout = config.timeout
 
-  // TODO auth...
+  // TODO auth
   config = {
     url,
     data,

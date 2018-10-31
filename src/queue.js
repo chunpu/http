@@ -7,13 +7,13 @@ function Queue() {
 }
 
 _.extend(Queue.prototype, {
-  use (...middleware) {
-    this.queue.push(middleware)
+  use: function() {
+    this.queue.push(arguments)
     return this
   },
-  intercept (promise) {
-    return _.reduce(this.queue, function(prev, middleware) {
-      return prev.then(...middleware)
+  intercept: function(promise) {
+    return _.reduce(this.queue, function(prev, middlewares) {
+      return prev.then.apply(prev, middlewares)
     }, promise)
   }
 })
