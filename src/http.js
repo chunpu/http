@@ -120,7 +120,7 @@ proto.request = function (arg1, arg2) {
 
   var ret = Promise.resolve(config)
   ret = me.interceptors.request.intercept(ret) // after get config
-    .then(function(config) {me.adapter.call(me, config)})
+    .then(function(config) {return me.adapter.call(me, config)})
     .then(function(response) {
       // 尝试解析 response.data, 总是尝试解析成 json(就像 axios 一样), 因为后端通常写不对 mime
       if (_.isString(response.data)) {
