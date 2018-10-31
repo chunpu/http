@@ -14,9 +14,9 @@ module.exports = function(config) {
           utils.clearTimer(timer)
           var {data, code, headers} = response
           resolve({
-            data,
+            data: data,
             status: code,
-            headers
+            headers: headers
           })
         },
         fail: function(data, code) {

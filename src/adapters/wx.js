@@ -15,7 +15,7 @@ module.exports = function(config) {
           utils.clearTimer(timer)
           var {data, statusCode, header} = response
           resolve({
-            data,
+            data: data,
             status: statusCode,
             headers: header
           })

@@ -106,9 +106,9 @@ proto.request = function (arg1, arg2) {
 
   // TODO auth
   config = {
-    url,
-    data,
-    headers,
+    url: url,
+    data: data,
+    headers: headers,
     method: _.toUpper(method),
     cancelToken: config.cancelToken,
     withCredentials: config.withCredentials
@@ -164,8 +164,8 @@ proto.adapter = function (config) {
 _.each(simpleMethods, function(method) {
   proto[method] = function (url, config) {
     return this.request(_.extend({
-      method,
-      url
+      method: method,
+      url: url
     }, config))
   }
 })
@@ -173,9 +173,9 @@ _.each(simpleMethods, function(method) {
 _.each(dataMethods, function(method) {
   proto[method] = function (url, data, config) {
     return this.request(_.extend({
-      url,
-      method,
-      data
+      url: url,
+      method: method,
+      data: data
     }, config))
   }
 })

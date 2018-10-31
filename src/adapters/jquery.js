@@ -14,7 +14,7 @@ module.exports = function(config) {
         withCredentials: config.withCredentials,
         success: function(data, textStatus, jqXHR) {
           resolve({
-            data,
+            data: data,
             status: 200,
             headers: utils.parseHeadersFromXhr(jqXHR)
           })
