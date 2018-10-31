@@ -14,6 +14,8 @@ var config = {
     'http': './',
   },
   mode: 'production',
+  // devtool: false,
+  // mode: 'development',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
@@ -24,6 +26,9 @@ var config = {
     new webpack.BannerPlugin(banner),
     new webpack.DefinePlugin({
       VERSION: JSON.stringify(pkg.version)
+    }),
+    new webpack.ProvidePlugin({
+      Promise: 'min-promise'
     })
   ]
 }

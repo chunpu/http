@@ -13,11 +13,10 @@ module.exports = function(config) {
         method: config.method,
         success: function(response) {
           utils.clearTimer(timer)
-          var {data, statusCode, header} = response
           resolve({
-            data: data,
-            status: statusCode,
-            headers: header
+            data: response.data,
+            status: response.statusCode,
+            headers: response.header
           })
         },
         fail: function(err) {

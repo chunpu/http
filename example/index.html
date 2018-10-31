@@ -10,44 +10,49 @@
 <body>
 <script>
 // 可加上各平台模拟测试
+var Promise = http.Promise
 
 function Deferred() {
-  this.promise = new Promise((resolve, reject) => {
-    this.resolve = resolve
-    this.reject = reject
+  var me = this
+  me.promise = new Promise(function(resolve, reject) {
+    me.resolve = resolve
+    me.reject = reject
   })
-  this.throwIfRequested = function() {}
+  me.throwIfRequested = function() {}
 }
-
 var deferred = new Deferred()
 
-$(() => {
+$(function() {
+
+
   var formData = new FormData()
   formData.append('key', 'value')
 
-  fetch('/json', {
-    method: 'POST',
-    body: formData
-  }).then(response => {
-    return response.json()
-  }).then(x => {
-    console.log(x, 99999999)
-  }).catch(err => {
-    console.log(err, 99999999)
+  if (window.fetch) {
+    fetch('/json', {
+      method: 'POST',
+      body: formData
+    }).then(function(response) {
+      return response.json()
+    }).then(function(x) {
+      console.log(x, 99999999)
+    }).catch(function(err) {
+      console.log(err, 99999999)
+    })
+  }
+
+  $.ajax('/json', {data: {}, timeout: 1}).then(function(data) {
+    console.log('jquery success', data)
+  }, function(data) {
+    console.log('jquery error', data)
   })
 
-  $.ajax('/json', {data: {}, timeout: 1}).then((...args) => {
-    console.log('jquery success', ...args)
-  }, (...args) => {
-    console.log('jquery error', ...args, args)
-  })
-
-  const CancelToken = axios.CancelToken
-  const source = CancelToken.source()
+  var CancelToken = axios.CancelToken
+  var source = CancelToken.source()
   // axios.defaults.timeout = 0.001 * 1000
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
   // axios.defaults.cancelToken = source.token
-  axios.interceptors.request.use(config => {
+  axios.interceptors.request.use(function(config) {
     console.log('config', config)
     if (config.cancelToken !== null) {
       config.cancelToken = source.token
@@ -55,7 +60,7 @@ $(() => {
     return config
   })
 
-  axios.interceptors.response.use(response => {
+  axios.interceptors.response.use(function(response) {
     console.log('response', response)
     return response
   })
@@ -66,9 +71,9 @@ $(() => {
     },
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
     responseType: 'text'
-  }).then((...args) => {
-    console.log('axios success', ...args)
-  }).catch(err => {
+  }).then(function(data) {
+    console.log('axios success', data)
+  }).catch(function(err) {
     console.log('axios error', err)
     console.dir(err)
   })
@@ -80,46 +85,45 @@ $(() => {
     headers: {'content-type': 'application/x-www-form-urlencoded', 'a-b': 'b'},
     responseType: 'text',
     cancelToken: null
-  }).then((...args) => {
-    console.log('axios success', ...args)
-  }).catch(err => {
+  }).then(function(data) {
+    console.log('axios success', data)
+  }).catch(function(err) {
     console.log('axios error', err)
     console.dir(err)
   })
 
-  setTimeout(() => {
+  setTimeout(function() {
     source.cancel(55555)
     source.cancel(66666)
     deferred.resolve(44444)
   }, 500)
 
-
-  fetch('/badjson', {
-    body: JSON.stringify({
-      fetch: true
-    }),
-    headers: {
-      'content-type': 'application/json'
-    },
-    method: 'POST'
-  }).then((...args) => {
-    console.log('fetch success', ...args)
-    var response = args[0]
-    var headers = [...response.headers]
-    console.log('headers', headers)
-    return response.text()
-  }).then(data => {
-    console.log(7777, data)
-  }).catch((...args) => {
-    console.log('fetch error', ...args)
-  })
+  if (window.fetch) {
+    fetch('/badjson', {
+      body: JSON.stringify({
+        fetch: true
+      }),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST'
+    }).then(function(data) {
+      console.log('fetch success', data)
+      var response = data
+      return response.text()
+    }).then(function(data) {
+      console.log(7777, data)
+    }).catch(function(err) {
+      console.log('fetch error', err)
+    })
+  }
 
   var httpDeferred = new http.CancelToken()
   var httpSource = http.CancelToken.source()
 
   http.defaults.timeout = 1000
 
-  http.interceptors.response.use(response => {
+  http.interceptors.response.use(function(response) {
     console.log('http response', response)
     return response
   })
@@ -129,10 +133,10 @@ $(() => {
       from: 'chunpuhttp'
     },
     cancelToken: httpSource.token
-  }).then(response => {
+  }).then(function(response) {
     console.log('raw response', response)
-  }).catch((...args) => {
-    console.log('http error', ...args)
+  }).catch(function(err) {
+    console.log('http error', err)
   })
   http.post('/timeout', formData, {
     params: {
@@ -140,13 +144,13 @@ $(() => {
       from: 'chunpuhttp'
     },
     cancelToken: httpDeferred
-  }).then(response => {
+  }).then(function(response) {
     console.log('raw response', response)
-  }).catch((...args) => {
-    console.log('http error', ...args)
+  }).catch(function(err) {
+    console.log('http error', err)
   })
 
-  setTimeout(() => {
+  setTimeout(function() {
     httpSource.cancel('http source cancel')
     httpDeferred.resolve('http deferred cancel')
   }, 500)

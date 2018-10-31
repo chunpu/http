@@ -36,6 +36,7 @@ function HttpClient (opt) {
   }
 
   this.qs = qs
+  this.Promise = Promise
   this.CancelToken = CancelToken
   this.init(opt)
 }

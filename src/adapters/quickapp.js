@@ -12,16 +12,15 @@ module.exports = function(config) {
         method: config.method,
         success: function(response) {
           utils.clearTimer(timer)
-          var {data, code, headers} = response
           resolve({
-            data: data,
-            status: code,
-            headers: headers
+            data: response.data,
+            status: response.code,
+            headers: response.headers
           })
         },
         fail: function(data, code) {
           utils.clearTimer(timer)
-          reject({data, code})
+          reject({data: data, code: code})
         }
       })
 
