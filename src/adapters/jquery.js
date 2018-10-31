@@ -12,14 +12,14 @@ module.exports = function(config) {
         method: config.method,
         timeout: config.timeout,
         withCredentials: config.withCredentials,
-        success (data, textStatus, jqXHR) {
+        success: function(data, textStatus, jqXHR) {
           resolve({
             data,
             status: 200,
             headers: utils.parseHeadersFromXhr(jqXHR)
           })
         },
-        error (jqXHR, textStatus, errorThrown) {
+        error: function(jqXHR, textStatus, errorThrown) {
           reject(utils.createError(errorThrown, {
             response: jqXHR,
             textStatus: textStatus

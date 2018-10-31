@@ -10,7 +10,7 @@ module.exports = function(config) {
         data: config.data,
         header: config.headers,
         method: config.method,
-        success (response) {
+        success: function(response) {
           utils.clearTimer(timer)
           var {data, code, headers} = response
           resolve({
@@ -19,7 +19,7 @@ module.exports = function(config) {
             headers
           })
         },
-        fail (data, code) {
+        fail: function(data, code) {
           utils.clearTimer(timer)
           reject({data, code})
         }
