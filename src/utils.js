@@ -1,7 +1,7 @@
-const _ = require('min-util')
+var _ = require('min-util')
 
-const CONTENT_TYPE_KEY = 'Content-Type'
-const reContentType = new RegExp(CONTENT_TYPE_KEY, 'i')
+var CONTENT_TYPE_KEY = 'Content-Type'
+var reContentType = new RegExp(CONTENT_TYPE_KEY, 'i')
 
 function getContentType(headers) {
   var headerKeys = _.keys(headers)

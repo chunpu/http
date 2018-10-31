@@ -1,4 +1,4 @@
-const utils = require('../utils')
+var utils = require('../utils')
 
 module.exports = function(config) {
   var defaults = this.defaults

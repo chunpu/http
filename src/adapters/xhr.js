@@ -1,5 +1,5 @@
-const utils = require('../utils')
-const _ = require('min-util')
+var utils = require('../utils')
+var _ = require('min-util')
 
 module.exports = function(config) {
   // default use XMLHttpRequest

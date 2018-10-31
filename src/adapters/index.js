@@ -1,8 +1,8 @@
-const wx = require('./wx')
-const quickapp = require('./quickapp')
-const axios = require('./axios')
-const jquery = require('./jquery')
-const xhr = require('./xhr')
+var wx = require('./wx')
+var quickapp = require('./quickapp')
+var axios = require('./axios')
+var jquery = require('./jquery')
+var xhr = require('./xhr')
 
 exports.wx = wx
 exports.quickapp = quickapp

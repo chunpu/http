@@ -1,6 +1,6 @@
-const _ = require('min-util')
-const HttpClient = require('./http')
+var _ = require('min-util')
+var HttpClient = require('./http')
 
-const instance = new HttpClient()
+var instance = new HttpClient()
 
 module.exports = instance

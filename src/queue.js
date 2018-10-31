@@ -1,4 +1,4 @@
-const _ = require('min-util')
+var _ = require('min-util')
 
 module.exports = Queue
 

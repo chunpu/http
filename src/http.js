@@ -1,17 +1,17 @@
-const _ = require('min-util')
-const Url = require('min-url')
-const qs = require('min-qs')
-const Queue = require('./queue')
-const utils = require('./utils')
-const adapters = require('./adapters')
-const CancelToken = require('./canceltoken')
+var _ = require('min-util')
+var Url = require('min-url')
+var qs = require('min-qs')
+var Queue = require('./queue')
+var utils = require('./utils')
+var adapters = require('./adapters')
+var CancelToken = require('./canceltoken')
 
-const JSON_TYPE = 'application/json'
-const URL_TYPE = 'application/x-www-form-urlencoded'
-const CONTENT_TYPE_KEY = utils.CONTENT_TYPE_KEY
-const simpleMethods = ['get', 'head', 'delete', 'options']
-const dataMethods = ['post', 'put', 'patch']
-const httpMethods = [].concat(simpleMethods, dataMethods)
+var JSON_TYPE = 'application/json'
+var URL_TYPE = 'application/x-www-form-urlencoded'
+var CONTENT_TYPE_KEY = utils.CONTENT_TYPE_KEY
+var simpleMethods = ['get', 'head', 'delete', 'options']
+var dataMethods = ['post', 'put', 'patch']
+var httpMethods = [].concat(simpleMethods, dataMethods)
 
 function HttpClient (opt) {
   var me = this
