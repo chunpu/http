@@ -5,7 +5,7 @@ const reContentType = new RegExp(CONTENT_TYPE_KEY, 'i')
 
 function getContentType(headers) {
   var headerKeys = _.keys(headers)
-  var typeKey = _.find(headerKeys, key => {
+  var typeKey = _.find(headerKeys, function(key) {
     return reContentType.test(key)
   })
   return headers[typeKey]
@@ -15,7 +15,7 @@ function parseHeadersFromXhr(xhr) {
   return _.chain(xhr.getAllResponseHeaders())
     .trim()
     .split('\n')
-    .reduce((ret, header) => {
+    .reduce(function(ret, header) {
       var i = _.indexOf(header, ':')
       var key = _.toLower(_.trim(_.slice(header, 0, i)))
       var value = _.trim(_.slice(header, i + 1))
@@ -34,9 +34,9 @@ function isFormData(val) {
 }
 
 function timeout(time) {
-  return new Promise((resolve, reject) => {
+  return new Promise(function(resolve, reject) {
     if (timeout) {
-      setTimeout(() => {
+      setTimeout(function() {
         reject(new Error('timeout'))
       }, time)
     }

@@ -3,19 +3,19 @@ const _ = require('min-util')
 
 module.exports = function(config) {
   // default use XMLHttpRequest
-  return new Promise((resolve, reject) => {
+  return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest()
-    xhr.onload = ev => {
+    xhr.onload = function(ev) {
       resolve({
         status: xhr.status,
         data: xhr.responseText,
         headers: utils.parseHeadersFromXhr(xhr)
       })
     }
-    xhr.ontimeout = ev => {
+    xhr.ontimeout = function(ev) {
       reject(utils.createError('timeout'))
     }
-    xhr.onerror = ev => {
+    xhr.onerror = function(ev) {
       reject(utils.createError('error'))
     }
     xhr.open(config.method, config.url, true)
@@ -25,7 +25,7 @@ module.exports = function(config) {
     if (config.withCredentials) {
       xhr.withCredentials = config.withCredentials
     }
-    _.forIn(config.headers, (value, key) => {
+    _.forIn(config.headers, function(value, key) {
       xhr.setRequestHeader(key, value)
     })
 

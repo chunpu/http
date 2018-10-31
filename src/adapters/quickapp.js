@@ -4,7 +4,7 @@ module.exports = function(config) {
   var defaults = this.defaults
   if (defaults && defaults.quickapp) {
     // https://doc.quickapp.cn/features/system/fetch.html
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject) {
       defaults.quickapp.fetch({
         url: config.url,
         data: config.data,
@@ -26,7 +26,7 @@ module.exports = function(config) {
       })
 
       if (config.timeout) {
-        timer = setTimeout(() => {
+        timer = setTimeout(function() {
           reject(utils.createError('timeout'))
         }, config.timeout)
       }

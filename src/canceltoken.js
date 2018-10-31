@@ -1,17 +1,18 @@
 module.exports = Deferred
 
 function Deferred() {
-  this.promise = new Promise((resolve, reject) => {
-    this.resolve = resolve
-    this.reject = reject
+  var me = this
+  me.promise = new Promise(function(resolve, reject) {
+    me.resolve = resolve
+    me.reject = reject
   })
 }
 
-Deferred.source = () => {
+Deferred.source = function() {
   var deferred = new Deferred()
   return {
     token: deferred,
-    cancel (reason) {
+    cancel: function(reason) {
       deferred.resolve(new Error(reason))
     }
   }

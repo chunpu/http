@@ -4,7 +4,7 @@ module.exports = function(config) {
   var defaults = this.defaults
   if (defaults && defaults.jQuery) {
     // http://api.jquery.com/jquery.ajax/
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject) {
       var xhr = defaults.jQuery.ajax({
         url: config.url,
         data: config.data,

@@ -14,6 +14,7 @@ const dataMethods = ['post', 'put', 'patch']
 const httpMethods = [...simpleMethods, ...dataMethods]
 
 function HttpClient (opt) {
+  var me = this
   this.defaults = {
     baseURL: '',
     timeout: 0,
@@ -22,8 +23,8 @@ function HttpClient (opt) {
     },
     withCredentials: false
   }
-  _.each(httpMethods, method => {
-    var header = this.defaults.headers[method] = {}
+  _.each(httpMethods, function(method) {
+    var header = me.defaults.headers[method] = {}
     if (_.includes(dataMethods, 'method')) {
       header[method] = JSON_TYPE
     }
@@ -56,6 +57,7 @@ proto.create = function (opt) {
 }
 
 proto.request = function (arg1, arg2) {
+  var me = this
   if (_.isString(arg1)) {
     return this.request(_.extend({url: arg1}, arg2))
   }
@@ -117,12 +119,12 @@ proto.request = function (arg1, arg2) {
   }
 
   var ret = Promise.resolve(config)
-  ret = this.interceptors.request.intercept(ret) // after get config
-    .then(config => this.adapter.call(this, config))
-    .then(response => {
+  ret = me.interceptors.request.intercept(ret) // after get config
+    .then(function(config) {me.adapter.call(me, config)})
+    .then(function(response) {
       // 尝试解析 response.data, 总是尝试解析成 json(就像 axios 一样), 因为后端通常写不对 mime
       if (_.isString(response.data)) {
-        if (!this.axios) {
+        if (!me.axios) {
           var rawResponse = response.data
           try {
             response.data = JSON.parse(response.data)
@@ -132,12 +134,12 @@ proto.request = function (arg1, arg2) {
         }
       }
       response.config = config
-      response.headers = _.mapKeys(response.headers, (value, key) => {
+      response.headers = _.mapKeys(response.headers, function(value, key) {
         return _.toLower(key) // All header names are lower cased
       })
       return response
     })
-  ret = this.interceptors.response.intercept(ret) // after parse data
+  ret = me.interceptors.response.intercept(ret) // after parse data
   return ret
 }
 
@@ -159,7 +161,7 @@ proto.adapter = function (config) {
 
 // TODO add http.all http.spread like axios
 
-_.each(simpleMethods, method => {
+_.each(simpleMethods, function(method) {
   proto[method] = function (url, config) {
     return this.request(_.extend({
       method,
@@ -168,7 +170,7 @@ _.each(simpleMethods, method => {
   }
 })
 
-_.each(dataMethods, method => {
+_.each(dataMethods, function(method) {
   proto[method] = function (url, data, config) {
     return this.request(_.extend({
       url,

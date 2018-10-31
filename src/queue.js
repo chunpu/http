@@ -12,7 +12,7 @@ _.extend(Queue.prototype, {
     return this
   },
   intercept (promise) {
-    return _.reduce(this.queue, (prev, middleware) => {
+    return _.reduce(this.queue, function(prev, middleware) {
       return prev.then(...middleware)
     }, promise)
   }

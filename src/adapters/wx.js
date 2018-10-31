@@ -5,7 +5,7 @@ module.exports = function(config) {
   if (defaults && defaults.wx) {
     // https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html#wxrequestobject
     var timer
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject) {
       var task = defaults.wx.request({
         url: config.url,
         data: config.data,
@@ -27,7 +27,7 @@ module.exports = function(config) {
       })
 
       if (config.timeout) {
-        timer = setTimeout(() => {
+        timer = setTimeout(function() {
           if (task && task.abort) {
             task.abort
           }
